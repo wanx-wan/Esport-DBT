@@ -1,0 +1,1959 @@
+
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
+
+
+/* =========================================================
+   Clean Table UI
+   ไม่เปลี่ยน logic / ไม่แตะข้อมูล / ไม่แตะกราฟ
+   ========================================================= */
+
+/* ซ่อนตัวควบคุมตารางกลาง เพราะไม่ได้ใช้งานจริง */
+.table-control-card {
+    display: none !important;
+}
+
+/* ---------- Table Card ---------- */
+
+.clean-table-card,
+.data-table-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 14px auto 0 auto;
+    padding: 14px;
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 18px;
+
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.section-card .data-table-card,
+.mini-card .data-table-card {
+    margin-top: 14px;
+    margin-bottom: 0;
+    background: #FFFFFF;
+    border-radius: 18px;
+    box-shadow: none;
+}
+
+/* ---------- Table Header ---------- */
+
+.table-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    width: 100%;
+}
+
+.table-title-group {
+    min-width: 0;
+}
+
+.table-title-group h3 {
+    margin: 0;
+    color: #1A237E;
+    font-size: 15.5px;
+    font-weight: 900;
+    line-height: 1.45;
+}
+
+.clean-table-note {
+    margin: 5px 0 0 0;
+    color: #607D8B;
+    font-size: 12.6px;
+    line-height: 1.6;
+}
+
+/* ---------- Button ---------- */
+
+.toggle-table-btn {
+    border: 0;
+    border-radius: 999px;
+    background: #EEF2FF;
+    color: #1A237E;
+
+    font-family: inherit;
+    font-size: 12.8px;
+    font-weight: 900;
+
+    padding: 8px 14px;
+    min-height: 34px;
+
+    cursor: pointer;
+    box-shadow: none;
+    white-space: nowrap;
+}
+
+.toggle-table-btn:hover {
+    background: #3949AB;
+    color: #FFFFFF;
+}
+
+/* ---------- Collapsible ---------- */
+
+.table-collapsible {
+    margin-top: 12px;
+}
+
+/* ---------- Help Detail ---------- */
+
+.table-help-detail {
+    width: 100%;
+    margin: 0 0 12px 0;
+    border: 1px solid #DDE3F3;
+    border-radius: 14px;
+    background: #F7F8FC;
+    overflow: hidden;
+}
+
+.table-help-detail summary {
+    cursor: pointer;
+    padding: 10px 13px;
+
+    color: #1A237E;
+    font-size: 12.8px;
+    font-weight: 900;
+    line-height: 1.5;
+
+    list-style-position: inside;
+}
+
+.table-help-detail[open] summary {
+    border-bottom: 1px solid #DDE3F3;
+    background: #FFFFFF;
+}
+
+.table-help-body {
+    padding: 12px;
+}
+
+/* ---------- Formula / Explanation inside details ---------- */
+
+.formula-note {
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-left: 4px solid #3949AB;
+    border-radius: 13px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+
+.formula-title,
+.table-explain-title {
+    color: #1A237E;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+.formula-note ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #263238;
+    font-size: 12.8px;
+    line-height: 1.7;
+}
+
+.table-explain {
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 13px;
+    padding: 12px 14px;
+    margin-bottom: 0;
+}
+
+.table-explain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+}
+
+.explain-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12.8px;
+    line-height: 1.55;
+}
+
+.explain-item b {
+    color: #1A237E;
+}
+
+.explain-item span {
+    color: #607D8B;
+}
+
+/* ---------- Actual Table ---------- */
+
+.clean-table-wrapper,
+.table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 16px;
+}
+
+.clean-smart-table,
+.smart-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #FFFFFF;
+    font-size: 13px;
+}
+
+.clean-smart-table thead th,
+.smart-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    background: #1A237E;
+    color: #FFFFFF;
+
+    text-align: left;
+    padding: 11px 13px;
+
+    font-weight: 900;
+    border-bottom: 1px solid #DDE3F3;
+    white-space: nowrap;
+}
+
+.clean-smart-table thead th:first-child,
+.smart-table thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.clean-smart-table thead th:last-child,
+.smart-table thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.clean-smart-table tbody td,
+.smart-table tbody td {
+    padding: 11px 13px;
+    border-bottom: 1px solid #EEF2FF;
+
+    color: #263238;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+.clean-smart-table tbody tr:last-child td,
+.smart-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.clean-smart-table tbody tr:hover td,
+.smart-table tbody tr:hover td {
+    background: #F7F8FC;
+}
+
+/* ยกเลิกการไฮไลต์แถวแรก เพราะทำให้ตารางดูมีความหมายเกินจริง */
+.smart-table tbody tr:first-child td {
+    background: transparent;
+}
+
+.smart-table .num-cell,
+.clean-smart-table .num-cell {
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 800;
+    color: #1A237E;
+}
+
+.smart-table .text-cell,
+.clean-smart-table .text-cell {
+    text-align: left;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- Empty State ---------- */
+
+.table-empty {
+    margin-top: 12px;
+    padding: 13px;
+    text-align: center;
+
+    color: #607D8B;
+    background: #F7F8FC;
+    border-radius: 13px;
+
+    font-size: 13px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 980px) {
+    .table-action-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .toggle-table-btn {
+        width: 100%;
+    }
+
+    .table-explain-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .clean-table-card,
+    .data-table-card {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    .clean-table-wrapper,
+    .table-wrapper {
+        border-radius: 14px;
+    }
+
+    .clean-smart-table,
+    .smart-table {
+        min-width: 640px;
+        font-size: 12.8px;
+    }
+}
+
+@media (max-width: 520px) {
+    .clean-smart-table,
+    .smart-table {
+        min-width: 600px;
+    }
+
+    .clean-smart-table thead th,
+    .smart-table thead th,
+    .clean-smart-table tbody td,
+    .smart-table tbody td {
+        padding: 10px 11px;
+    }
+}
+
+
+
+/* =========================================================
+   Page 1 Clean Layout Spacing
+   จัดระยะห่างใหม่ตามหลัก UI/UX
+   ========================================================= */
+
+.dashboard-page {
+    max-width: 1320px !important;
+    padding: 28px 24px 40px 24px !important;
+}
+
+.page-header {
+    margin-bottom: 22px !important;
+    padding: 0 !important;
+}
+
+.page-title {
+    font-size: clamp(24px, 2.4vw, 30px) !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+}
+
+.page-subtitle {
+    margin-top: 8px !important;
+    max-width: 920px !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+}
+
+/* Card หลัก */
+.section-card {
+    padding: 22px !important;
+    margin-bottom: 24px !important;
+    border-radius: 22px !important;
+    box-shadow: 0 8px 24px rgba(13, 71, 161, 0.055) !important;
+}
+
+/* Card ย่อย */
+.mini-card {
+    padding: 20px !important;
+    border-radius: 22px !important;
+    box-shadow: 0 8px 24px rgba(13, 71, 161, 0.055) !important;
+}
+
+/* ลดเส้น divider ที่ทำให้หน้าแตกเป็นช่วงมากเกินไป */
+.section-divider {
+    display: none !important;
+}
+
+/* Grid spacing */
+.grid-2 {
+    gap: 24px !important;
+    margin-bottom: 24px !important;
+}
+
+/* Header ใน card */
+.section-head,
+.mini-head {
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+}
+
+.section-title {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.4 !important;
+}
+
+.mini-title {
+    font-size: clamp(18px, 1.6vw, 20px) !important;
+    line-height: 1.4 !important;
+}
+
+.section-desc,
+.mini-desc {
+    font-size: 13.2px !important;
+    line-height: 1.65 !important;
+}
+
+/* Chart */
+.chart-wrap {
+    margin-top: 4px !important;
+    border-radius: 18px !important;
+}
+
+/* Insight ใต้กราฟ */
+.section-insight {
+    margin-top: 12px !important;
+    padding: 11px 14px !important;
+
+    background: #F7F8FC !important;
+    border-left: 4px solid #3949AB !important;
+    border-radius: 14px !important;
+
+    font-size: 13.2px !important;
+    line-height: 1.65 !important;
+}
+
+/* ตาราง Plotly หน้า 1.1 */
+.overview-summary-scroll {
+    border-radius: 18px !important;
+    border: 1px solid #DDE3F3 !important;
+    background: #FFFFFF !important;
+}
+
+.overview-summary-inner {
+    border-radius: 18px !important;
+    overflow: hidden !important;
+}
+
+/* ลดช่องว่างส่วนล่างของ Plotly */
+.js-plotly-plot,
+.plot-container {
+    width: 100% !important;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+    .dashboard-page {
+        padding: 24px 16px 36px 16px !important;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: 22px !important;
+    }
+
+    .section-card,
+    .mini-card {
+        padding: 18px !important;
+        border-radius: 18px !important;
+        margin-bottom: 22px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+    .dashboard-page {
+        padding: 20px 12px 32px 12px !important;
+    }
+
+    .section-card,
+    .mini-card {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .section-insight {
+        padding: 10px 12px !important;
+        font-size: 12.8px !important;
+    }
+}
+
+
+    :root {
+        --primary: #1A237E;
+        --primary-2: #3949AB;
+        --blue-soft: #E8EAF6;
+        --bg: #F7F8FC;
+        --text: #263238;
+        --muted: #607D8B;
+        --grid: #DDE3F3;
+        --white: #FFFFFF;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif;
+    }
+
+    .dashboard-page {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 32px 28px 44px 28px;
+        box-sizing: border-box;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+        padding: 4px 4px 8px 4px;
+    }
+
+    .page-title {
+        margin: 0;
+        color: var(--primary);
+        font-size: 30px;
+        line-height: 1.28;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+    }
+
+    .page-subtitle {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.75;
+        max-width: 980px;
+    }
+
+    .section-card {
+        background: var(--white);
+        border: 1px solid #DDE3F3;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(13, 71, 161, 0.06);
+        padding: 26px 26px 22px 26px;
+        margin-bottom: 42px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .section-head {
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--grid);
+    }
+
+    .section-title {
+        margin: 0;
+        color: var(--primary);
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 800;
+    }
+
+    .section-desc {
+        margin: 8px 0 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 32px;
+        align-items: stretch;
+    }
+
+    .mini-card {
+        background: var(--white);
+        border: 1px solid #DDE3F3;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(13, 71, 161, 0.06);
+        padding: 24px 24px 20px 24px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .mini-head {
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--grid);
+    }
+
+    .mini-title {
+        margin: 0;
+        color: var(--primary);
+        font-size: 20px;
+        line-height: 1.35;
+        font-weight: 800;
+    }
+
+    .mini-desc {
+        margin: 7px 0 0 0;
+        color: var(--muted);
+        font-size: 13.5px;
+        line-height: 1.6;
+    }
+
+    .chart-wrap {
+        width: 100%;
+        min-width: 0;
+        overflow: visible;
+    }
+
+    /* เฉพาะตาราง 1.1: ให้เลื่อนซ้าย-ขวาได้เมื่อหน้าจอเล็กลง */
+    .overview-summary-scroll {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+    }
+
+    .overview-summary-inner {
+        min-width: 900px;
+    }
+
+    .overview-summary-scroll .js-plotly-plot,
+    .overview-summary-scroll .plot-container {
+        min-width: 900px !important;
+    }
+
+    .section-insight {
+        margin-top: 16px;
+        padding: 13px 16px;
+        background: #F7F8FC;
+        border-left: 4px solid var(--primary-2);
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .section-note {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.6;
+    }
+
+    .section-divider {
+        height: 1px;
+        background: var(--grid);
+        margin: -14px 0 42px 0;
+    }
+
+    .js-plotly-plot, .plot-container {
+        width: 100% !important;
+    }
+
+    @media (max-width: 980px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-page {
+            padding: 24px 16px 36px 16px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        .section-card,
+        .mini-card {
+            padding: 20px 16px 18px 16px;
+            border-radius: 16px;
+            margin-bottom: 34px;
+        }
+
+        .section-title,
+        .mini-title {
+            font-size: 19px;
+        }
+
+        .section-desc,
+        .mini-desc {
+            font-size: 13.5px;
+        }
+
+        .section-insight {
+            font-size: 13px;
+        }
+
+        .overview-summary-inner,
+        .overview-summary-scroll .js-plotly-plot,
+        .overview-summary-scroll .plot-container {
+            min-width: 900px !important;
+        }
+    }
+</style>
+<style id="dd-final-refactor-css">
+:root{--dd-primary:#1A237E;--dd-primary-2:#3949AB;--dd-soft:#E8EAF6;--dd-bg:#F7F8FC;--dd-text:#263238;--dd-muted:#607D8B;--dd-grid:#DDE3F3;--dd-accent:#F9A825;--dd-white:#fff;--dd-radius:20px;--dd-shadow:0 10px 28px rgba(13,71,161,.08)}
+html,body{background:var(--dd-bg)!important;color:var(--dd-text)!important;font-family:Prompt,'Noto Sans Thai',Sarabun,Tahoma,Arial,sans-serif!important;line-height:1.65}.dashboard-page{max-width:1320px!important;padding:34px 28px 48px!important}.page-header{margin-bottom:26px!important} .page-title{   color:var(--dd-primary)!important;   font-weight:900!important;   line-height:1.3!important;   letter-spacing:-.2px!important; } .page-subtitle{   color:var(--dd-muted)!important;   line-height:1.75!important; } .section-card,.mini-card,.data-card,.kpi-card{border-radius:var(--dd-radius)!important;box-shadow:var(--dd-shadow)!important;border:1px solid var(--dd-grid)!important;background:#fff!important;padding:26px!important;margin-bottom:34px!important;overflow:visible!important}.section-head,.mini-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:16px!important;border-bottom:1px solid var(--dd-grid)!important;padding-bottom:14px!important;margin-bottom:18px!important}.section-head>div,.mini-head>div{min-width:0}.section-title,.mini-title{font-weight:800!important;color:var(--dd-primary)!important;line-height:1.35!important}.section-desc,.mini-desc,.section-note,.metric-note{color:var(--dd-muted)!important;line-height:1.75!important}.section-insight{background:#F8FAFF!important;border-left:4px solid var(--dd-accent)!important;border-radius:14px!important;padding:12px 14px!important;margin:16px 0 0!important;line-height:1.75!important}.dd-title-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;min-width:fit-content}.dd-modal-trigger,.dd-link-button{appearance:none;border:1px solid #DDE3F3;background:#fff;color:var(--dd-primary);border-radius:999px;padding:9px 13px;font-weight:800;font-size:13px;line-height:1;cursor:pointer;box-shadow:0 4px 12px rgba(13,71,161,.07);text-decoration:none;display:inline-flex;align-items:center;gap:6px}.dd-modal-trigger:hover,.dd-link-button:hover{background:var(--dd-soft);transform:translateY(-1px)}.dd-modal-trigger:focus-visible,.dd-link-button:focus-visible,.dd-modal-close:focus-visible{outline:3px solid rgba(249,168,37,.45);outline-offset:3px}.dd-obj-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.dd-obj-badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:#FFF8E1;color:#795548;border:1px solid #FFE0B2;padding:4px 8px;font-weight:800;font-size:11.5px;line-height:1}.dd-executive-narrative{display:grid;grid-template-columns:1fr;gap:7px;background:#fff;border:1px solid var(--dd-grid);border-radius:18px;box-shadow:0 6px 18px rgba(13,71,161,.05);padding:16px 18px;margin:18px 0 24px}.dd-executive-narrative div{font-size:14px;line-height:1.7}.dd-executive-narrative b{color:var(--dd-primary)}.dd-method-note{background:#F8FAFF;border:1px dashed #B7C1E8;border-radius:16px;padding:14px 16px;margin:16px 0 24px;color:var(--dd-text);font-size:14px;line-height:1.75}.table-responsive,.table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}.summary-table-card,.data-table-card.dd-moved-source{display:none!important}.dd-modal-backdrop{position:fixed;inset:0;background:rgba(8,20,60,.52);z-index:9999;display:none;align-items:center;justify-content:center;padding:18px}.dd-modal-backdrop[aria-hidden="false"]{display:flex}.dd-modal-dialog{width:min(1120px,96vw);max-height:min(86vh,920px);background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.4);display:flex;flex-direction:column;overflow:hidden}.dd-modal-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--dd-grid);background:#F8FAFF}.dd-modal-title{margin:0;color:var(--dd-primary);font-size:19px;font-weight:900;line-height:1.35}.dd-modal-close{appearance:none;border:0;background:var(--dd-primary);color:#fff;border-radius:999px;padding:9px 13px;cursor:pointer;font-weight:800;font-size:13px}.dd-modal-body{padding:20px;overflow:auto;max-height:calc(86vh - 70px);font-size:14px;line-height:1.75}.dd-modal-body .table-collapsible{display:block!important}.dd-modal-body table{width:100%;border-collapse:collapse}.dd-modal-body th,.dd-modal-body td{padding:10px 12px;border-bottom:1px solid var(--dd-grid);vertical-align:top}.dd-modal-body th{background:#F8FAFF;color:var(--dd-primary);font-weight:800}.dd-iframe{width:100%;height:min(72vh,760px);border:0;border-radius:14px;background:#fff}.dd-empty-state{border:1px dashed var(--dd-grid);background:#fff;border-radius:16px;padding:16px;color:var(--dd-muted)}@media(max-width:980px){.dashboard-page{padding:24px 16px 40px!important}.section-card,.mini-card{padding:20px!important;margin-bottom:24px!important}.section-head,.mini-head{flex-direction:column!important;align-items:flex-start!important}.dd-title-actions{justify-content:flex-start}.grid-2,.grid-3,.grid-4,.addon-grid{grid-template-columns:1fr!important}.s3,.s4,.s6,.s8,.s12{grid-column:span 1!important}.dd-modal-dialog{width:96vw;max-height:88vh}.dd-modal-body{padding:16px;max-height:calc(88vh - 70px)}.dd-modal-trigger,.dd-link-button{min-height:42px;padding:11px 14px}.dd-iframe{height:72vh}}@media(max-width:560px){.page-title{font-size:24px!important}.section-title{font-size:19px!important}.dd-executive-narrative{padding:14px}.dd-modal-header{padding:14px 16px}.dd-modal-title{font-size:17px}}
+</style>
+<style>
+.dd-inline-chart-wrap{
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+  margin-top:12px;
+  border:1px solid var(--dd-grid);
+  border-radius:16px;
+  background:#fff;
+}
+
+.dd-inline-chart-wrap .js-plotly-plot,
+.dd-inline-chart-wrap .plot-container{
+  width:100% !important;
+}
+
+.dd-inline-chart-wrap .svg-container{
+  width:100% !important;
+}
+</style>
+<style id="dd-remove-nested-card-look">
+/* ลดอาการ card ซ้อน card ในหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน */
+.section-card .dd-inline-model-summary,
+.section-card .dd-inline-plain{
+  margin-top:14px !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+}
+
+/* กราฟที่นำมาแสดงใน card หลัก ไม่ต้องทำเป็น card อีกชั้น */
+.section-card .dd-inline-chart-wrap{
+  width:100% !important;
+  min-width:0 !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  margin-top:12px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* ตารางที่นำมาแสดงใน card หลัก ให้เป็น table ธรรมดา ไม่ใช่ card ซ้อน */
+.section-card .dd-inline-table-wrap{
+  width:100% !important;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  margin-top:12px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* กัน class เดิมจากไฟล์ลูกทำให้เกิดกรอบซ้อน */
+.section-card .summary-table-card,
+.section-card .data-table-card,
+.section-card .dashboard-card,
+.section-card .addon-card{
+  box-shadow:none !important;
+}
+
+/* Plotly responsive */
+.dd-inline-chart-wrap .js-plotly-plot,
+.dd-inline-chart-wrap .plot-container,
+.dd-inline-chart-wrap .svg-container{
+  width:100% !important;
+  max-width:100% !important;
+}
+</style>
+<style>
+.dd-inline-model-summary{
+  margin-top:16px;
+  padding-top:2px;
+}
+
+.dd-inline-title{
+  color:var(--dd-primary);
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.dd-inline-desc{
+  color:var(--dd-muted);
+  font-size:13.5px;
+  line-height:1.65;
+  margin-bottom:14px;
+}
+
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:14px;
+}
+
+.metric-card{
+  background:#F7F8FC;
+  border:1px solid #DDE3F3;
+  border-radius:16px;
+  padding:16px 18px;
+}
+
+.metric-label{
+  color:var(--dd-muted);
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:6px;
+}
+
+.metric-value{
+  color:var(--dd-primary);
+  font-size:24px;
+  line-height:1.25;
+  font-weight:900;
+}
+
+@media(max-width:900px){
+  .metric-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+<style id="dd-advanced-inline-table-pattern">
+/* ตารางในหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน ให้ใช้ pattern เดียวกับหน้าอื่น */
+.dd-inline-table-box{
+  width:100%;
+  margin-top:14px;
+  border:1px solid var(--dd-grid);
+  border-radius:16px;
+  background:#FFFFFF;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(13,71,161,.05);
+}
+
+.dd-inline-table-wrap{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:0 !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+
+.dd-inline-table-wrap table{
+  width:100%;
+  min-width:720px;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:13.5px;
+  color:var(--dd-text);
+  background:#FFFFFF;
+}
+
+.dd-inline-table-wrap thead th,
+.dd-inline-table-wrap table th{
+  background:#3949AB !important;
+  color:#FFFFFF !important;
+  font-weight:900;
+  text-align:left;
+  padding:12px 14px;
+  border-bottom:1px solid #DDE3F3;
+  white-space:nowrap;
+  line-height:1.45;
+}
+
+.dd-inline-table-wrap thead th:first-child,
+.dd-inline-table-wrap table tr:first-child th:first-child{
+  border-top-left-radius:14px;
+}
+
+.dd-inline-table-wrap thead th:last-child,
+.dd-inline-table-wrap table tr:first-child th:last-child{
+  border-top-right-radius:14px;
+}
+
+.dd-inline-table-wrap tbody td,
+.dd-inline-table-wrap table td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--dd-grid);
+  vertical-align:top;
+  line-height:1.6;
+  background:#FFFFFF;
+}
+
+.dd-inline-table-wrap tbody tr:nth-child(even) td{
+  background:#F8FAFF;
+}
+
+.dd-inline-table-wrap tbody tr:hover td{
+  background:#EEF2FF;
+}
+
+.dd-inline-table-wrap tbody tr:last-child td{
+  border-bottom:0;
+}
+
+/* กัน style เดิมจาก html_table หรือไฟล์ลูก */
+.dd-inline-table-wrap .dataframe,
+.dd-inline-table-wrap .summary-table,
+.dd-inline-table-wrap .data-table{
+  width:100% !important;
+  border:0 !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+
+/* ไม่ให้เกิด card ซ้อน card ในตาราง inline */
+.section-card .dd-inline-table-box .summary-table-card,
+.section-card .dd-inline-table-box .data-table-card,
+.section-card .dd-inline-table-box .dashboard-card,
+.section-card .dd-inline-table-box .addon-card{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+@media(max-width:900px){
+  .dd-inline-table-wrap table{
+    min-width:680px;
+    font-size:13px;
+  }
+
+  .dd-inline-table-wrap th,
+  .dd-inline-table-wrap td{
+    padding:10px 12px;
+  }
+}
+</style>
+<style id="dd-metric-tooltip-css">
+/* Tooltip สำหรับ metric card ในหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน */
+.metric-card{
+  position:relative;
+}
+
+.metric-label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.dd-help{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  background:#E8EAF6;
+  color:#1A237E;
+  border:1px solid #C5CAE9;
+  font-size:12px;
+  font-weight:900;
+  cursor:help;
+  position:relative;
+  line-height:1;
+  flex:0 0 auto;
+}
+
+.dd-help::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 10px);
+  transform:translateX(-50%);
+  width:min(320px,72vw);
+  background:#1A237E;
+  color:#FFFFFF;
+  border-radius:14px;
+  padding:12px 14px;
+  box-shadow:0 14px 34px rgba(13,71,161,.24);
+  font-size:12.5px;
+  font-weight:500;
+  line-height:1.65;
+  text-align:left;
+  white-space:normal;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:99999;
+}
+
+.dd-help::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 3px);
+  transform:translateX(-50%);
+  border-width:7px 7px 0 7px;
+  border-style:solid;
+  border-color:#1A237E transparent transparent transparent;
+  opacity:0;
+  visibility:hidden;
+  z-index:99999;
+}
+
+.dd-help:hover::after,
+.dd-help:hover::before,
+.dd-help:focus::after,
+.dd-help:focus::before{
+  opacity:1;
+  visibility:visible;
+}
+
+.dd-help:focus{
+  outline:3px solid rgba(249,168,37,.45);
+  outline-offset:2px;
+}
+
+/* Tooltip ในตาราง inline เช่น ตารางสรุปคุณภาพโมเดล */
+.dd-inline-table-wrap .dd-help{
+  margin-left:6px;
+  vertical-align:middle;
+}
+
+@media(max-width:700px){
+  .dd-help::after{
+    left:auto;
+    right:-8px;
+    transform:none;
+    width:min(300px,78vw);
+  }
+
+  .dd-help::before{
+    left:auto;
+    right:2px;
+    transform:none;
+  }
+}
+</style>
+<style id="dd-flat-table-no-nested-card">
+/* =========================================================
+   Flat Table Pattern
+   ใช้กับหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน
+   ให้ตารางเต็ม card และไม่เกิด card ซ้อน card
+   ========================================================= */
+
+/* ปิดหน้าตาแบบ card ซ้อนของกล่องตารางเดิม */
+.dd-inline-table-box{
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+  margin:14px 0 0 0 !important;
+  overflow:visible !important;
+}
+
+/* ตารางอยู่เต็มพื้นที่ของ card หลัก */
+.section-card .dd-inline-table-wrap{
+  width:100% !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  margin:14px 0 0 0 !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+
+/* ตารางหลัก */
+.section-card .dd-inline-table-wrap table{
+  width:100% !important;
+  min-width:720px;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  background:#FFFFFF !important;
+  color:var(--dd-text) !important;
+  font-size:13.5px !important;
+  line-height:1.6 !important;
+  margin:0 !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+/* Header ตารางเป็นสีน้ำเงินแบบเดียวกัน */
+.section-card .dd-inline-table-wrap table th{
+  background:#3949AB !important;
+  color:#FFFFFF !important;
+  font-weight:900 !important;
+  text-align:left !important;
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid #DDE3F3 !important;
+  white-space:nowrap !important;
+}
+
+/* มุมหัวตารางโค้งเฉพาะตัวตาราง ไม่ใช่ card ซ้อน */
+.section-card .dd-inline-table-wrap table tr:first-child th:first-child{
+  border-top-left-radius:14px !important;
+}
+
+.section-card .dd-inline-table-wrap table tr:first-child th:last-child{
+  border-top-right-radius:14px !important;
+}
+
+/* Cell ตาราง */
+.section-card .dd-inline-table-wrap table td{
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid var(--dd-grid) !important;
+  vertical-align:top !important;
+  background:#FFFFFF !important;
+}
+
+/* แถวสลับสีอ่านง่าย */
+.section-card .dd-inline-table-wrap table tbody tr:nth-child(even) td{
+  background:#F8FAFF !important;
+}
+
+.section-card .dd-inline-table-wrap table tbody tr:hover td{
+  background:#EEF2FF !important;
+}
+
+.section-card .dd-inline-table-wrap table tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+
+/* ล้าง style จาก pandas/html_table เดิม */
+.section-card .dd-inline-table-wrap table.dataframe,
+.section-card .dd-inline-table-wrap table.summary-table,
+.section-card .dd-inline-table-wrap table.data-table{
+  border:0 !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+
+/* ล้าง card ที่อาจติดมากับ HTML เดิม */
+.section-card .dd-inline-table-wrap .summary-table-card,
+.section-card .dd-inline-table-wrap .data-table-card,
+.section-card .dd-inline-table-wrap .dashboard-card,
+.section-card .dd-inline-table-wrap .addon-card{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+/* Tooltip ในตารางไม่ทำให้ layout แตก */
+.section-card .dd-inline-table-wrap .dd-help{
+  margin-left:6px;
+  vertical-align:middle;
+}
+
+@media(max-width:900px){
+  .section-card .dd-inline-table-wrap table{
+    min-width:680px;
+    font-size:13px !important;
+  }
+
+  .section-card .dd-inline-table-wrap table th,
+  .section-card .dd-inline-table-wrap table td{
+    padding:10px 12px !important;
+  }
+}
+</style>
+<style id="dd-policy-modal-clean-css">
+/* =========================================================
+   Policy Modal Clean Detail Mode
+   ใช้กับ modal pop-up หน้า 6
+   ========================================================= */
+
+html,
+body{
+  background:#FFFFFF !important;
+  color:#263238 !important;
+  font-family:Prompt,'Noto Sans Thai',Sarabun,Tahoma,Arial,sans-serif !important;
+  line-height:1.65 !important;
+}
+
+body.dd-policy-modal-asset{
+  padding:0 !important;
+  margin:0 !important;
+  overflow-x:hidden !important;
+}
+
+/* ไม่ต้องโชว์ header หน้าเต็มซ้ำใน modal */
+body.dd-policy-modal-asset .page-header{
+  display:none !important;
+}
+
+/* ให้เนื้อหาเต็มพื้นที่ iframe/modal */
+body.dd-policy-modal-asset .dashboard-page,
+body.dd-policy-modal-asset main{
+  max-width:100% !important;
+  width:100% !important;
+  padding:0 4px 28px !important;
+  margin:0 !important;
+  background:#FFFFFF !important;
+}
+
+/* ล้าง card ซ้อน card ใน modal */
+body.dd-policy-modal-asset .section-card,
+body.dd-policy-modal-asset .mini-card,
+body.dd-policy-modal-asset .data-card,
+body.dd-policy-modal-asset .kpi-card,
+body.dd-policy-modal-asset .summary-table-card,
+body.dd-policy-modal-asset .data-table-card,
+body.dd-policy-modal-asset .dashboard-card,
+body.dd-policy-modal-asset .addon-card,
+body.dd-policy-modal-asset .dd-flat-block{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  padding:0 0 22px 0 !important;
+  margin:0 0 26px 0 !important;
+  overflow:visible !important;
+  border-bottom:1px solid #DDE3F3 !important;
+}
+
+/* หัวข้อใน modal */
+body.dd-policy-modal-asset .section-head,
+body.dd-policy-modal-asset .mini-head{
+  display:block !important;
+  border:0 !important;
+  padding:0 !important;
+  margin:0 0 14px 0 !important;
+}
+
+body.dd-policy-modal-asset .section-title,
+body.dd-policy-modal-asset .mini-title,
+body.dd-policy-modal-asset h2,
+body.dd-policy-modal-asset h3{
+  color:#1A237E !important;
+  font-weight:900 !important;
+  line-height:1.4 !important;
+  margin:0 0 8px 0 !important;
+}
+
+body.dd-policy-modal-asset .section-desc,
+body.dd-policy-modal-asset .mini-desc,
+body.dd-policy-modal-asset .metric-note,
+body.dd-policy-modal-asset .section-note{
+  color:#607D8B !important;
+  line-height:1.75 !important;
+  margin:4px 0 12px 0 !important;
+}
+
+/* ลบปุ่มที่ไม่ควรมีใน modal */
+body.dd-policy-modal-asset .dd-title-actions,
+body.dd-policy-modal-asset .table-action-row button,
+body.dd-policy-modal-asset button.toggle-table-btn,
+body.dd-policy-modal-asset .toggle-table-btn,
+body.dd-policy-modal-asset .dd-modal-trigger,
+body.dd-policy-modal-asset .dd-link-button,
+body.dd-policy-modal-asset button[onclick*="toggle"],
+body.dd-policy-modal-asset button[onclick*="Table"],
+body.dd-policy-modal-asset button[onclick*="table"]{
+  display:none !important;
+}
+
+/* ถ้า table-action-row เหลือแต่หัวข้อ ให้เป็นข้อความธรรมดา */
+body.dd-policy-modal-asset .table-action-row{
+  display:block !important;
+  padding:0 !important;
+  margin:0 0 10px 0 !important;
+  border:0 !important;
+  background:transparent !important;
+}
+
+/* บังคับให้ทุกส่วนที่เคยซ่อนแสดงทันที */
+body.dd-policy-modal-asset .table-collapsible,
+body.dd-policy-modal-asset .summary-table-panel,
+body.dd-policy-modal-asset .summary-table-card,
+body.dd-policy-modal-asset .data-table-card,
+body.dd-policy-modal-asset .table-responsive,
+body.dd-policy-modal-asset .table-wrap,
+body.dd-policy-modal-asset #priority-summary-table,
+body.dd-policy-modal-asset #whatif-summary-table{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  max-height:none !important;
+  overflow:visible !important;
+}
+
+/* สูตร / คำอธิบาย / insight */
+body.dd-policy-modal-asset .section-insight,
+body.dd-policy-modal-asset .dd-method-note,
+body.dd-policy-modal-asset .formula-box,
+body.dd-policy-modal-asset .formula-card,
+body.dd-policy-modal-asset .explanation-box,
+body.dd-policy-modal-asset .explanation-card{
+  background:#F8FAFF !important;
+  border-left:4px solid #F9A825 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin:12px 0 16px 0 !important;
+  box-shadow:none !important;
+  border-top:0 !important;
+  border-right:0 !important;
+  border-bottom:0 !important;
+}
+
+/* กราฟเต็มพื้นที่ modal */
+body.dd-policy-modal-asset .chart-wrap{
+  width:100% !important;
+  max-width:100% !important;
+  margin:10px 0 18px 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+body.dd-policy-modal-asset .js-plotly-plot,
+body.dd-policy-modal-asset .plot-container,
+body.dd-policy-modal-asset .svg-container{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+/* ตารางเต็มพื้นที่ ไม่เป็น card ซ้อน */
+body.dd-policy-modal-asset .dd-clean-table-wrap,
+body.dd-policy-modal-asset .table-responsive,
+body.dd-policy-modal-asset .table-wrap{
+  width:100% !important;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  margin:12px 0 18px 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+
+/* ตาราง pattern เดียวกับหน้าอื่น */
+body.dd-policy-modal-asset table{
+  width:100% !important;
+  min-width:760px !important;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  background:#FFFFFF !important;
+  color:#263238 !important;
+  font-size:13.5px !important;
+  line-height:1.6 !important;
+  margin:0 !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+body.dd-policy-modal-asset table th{
+  background:#3949AB !important;
+  color:#FFFFFF !important;
+  font-weight:900 !important;
+  text-align:left !important;
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid #DDE3F3 !important;
+  white-space:normal !important;
+  vertical-align:top !important;
+}
+
+body.dd-policy-modal-asset table tr:first-child th:first-child{
+  border-top-left-radius:14px !important;
+}
+
+body.dd-policy-modal-asset table tr:first-child th:last-child{
+  border-top-right-radius:14px !important;
+}
+
+body.dd-policy-modal-asset table td{
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid #DDE3F3 !important;
+  vertical-align:top !important;
+  background:#FFFFFF !important;
+  color:#263238 !important;
+  white-space:normal !important;
+}
+
+body.dd-policy-modal-asset table tbody tr:nth-child(even) td{
+  background:#F8FAFF !important;
+}
+
+body.dd-policy-modal-asset table tbody tr:hover td{
+  background:#EEF2FF !important;
+}
+
+body.dd-policy-modal-asset table tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+
+/* ล้าง style จาก pandas/html_table เดิม */
+body.dd-policy-modal-asset table.dataframe,
+body.dd-policy-modal-asset table.summary-table,
+body.dd-policy-modal-asset table.priority-table,
+body.dd-policy-modal-asset table.whatif-table,
+body.dd-policy-modal-asset table.data-table{
+  width:100% !important;
+  border:0 !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+
+/* parent modal iframe ให้เต็มขึ้น */
+.dd-modal-dialog{
+  width:min(1280px,96vw) !important;
+  max-height:92vh !important;
+}
+
+.dd-modal-body{
+  padding:16px !important;
+  max-height:calc(92vh - 70px) !important;
+}
+
+.dd-clean-detail-frame,
+.dd-policy-detail-frame,
+.dd-iframe{
+  width:100% !important;
+  height:min(78vh,840px) !important;
+  border:0 !important;
+  border-radius:14px !important;
+  background:#FFFFFF !important;
+}
+
+@media(max-width:900px){
+  body.dd-policy-modal-asset table{
+    min-width:720px !important;
+    font-size:13px !important;
+  }
+
+  body.dd-policy-modal-asset table th,
+  body.dd-policy-modal-asset table td{
+    padding:10px 12px !important;
+  }
+
+  .dd-modal-body{
+    padding:12px !important;
+  }
+
+  .dd-clean-detail-frame,
+  .dd-policy-detail-frame,
+  .dd-iframe{
+    height:78vh !important;
+  }
+}
+</style>
+<style id="comfortable-insight-policy-chart-css">
+/* =========================================================
+   1) Pattern กลางสำหรับข้อความสรุปใต้กราฟ
+   ========================================================= */
+
+/* กล่องสรุปใต้กราฟ: ไม่ใช้เส้นประ */
+.section-insight,
+.dd-method-note{
+  background:#F8FAFF !important;
+  border:0 !important;
+  border-left:4px solid #F9A825 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin:16px 0 0 0 !important;
+  box-shadow:none !important;
+  color:#607D8B !important;
+  line-height:1.75 !important;
+}
+
+/* ตัวหนาในข้อความสรุปให้เป็นสีเทาเหมือนกันทั้งระบบ */
+.section-insight b,
+.section-insight strong,
+.section-insight .highlight,
+.section-insight .emphasis,
+.dd-method-note b,
+.dd-method-note strong{
+  color:#607D8B !important;
+  font-weight:800 !important;
+}
+
+/* ถ้ามี span หรือ inline style ที่บังคับสีน้ำเงิน ให้ลดความเข้มลง */
+.section-insight span[style],
+.section-insight b[style],
+.section-insight strong[style]{
+  color:#607D8B !important;
+}
+
+/* =========================================================
+   2) หน้า Policy: กราฟใน card หลักต้องไม่เป็น card ซ้อน
+   ใช้กับ:
+   - จัดลำดับความเร่งด่วนเชิงนโยบาย
+   - วิเคราะห์ทางเลือกเชิงนโยบาย
+   ========================================================= */
+
+.policy-priority-inline-card,
+.policy-whatif-inline-card{
+  overflow:visible !important;
+}
+
+/* chart-wrap ที่ดึงมาจาก asset เดิม ไม่ให้มีกรอบซ้อน */
+.policy-priority-inline-card .chart-wrap,
+.policy-whatif-inline-card .chart-wrap,
+.policy-priority-inline-card .dd-flat-policy-chart,
+.policy-whatif-inline-card .dd-flat-policy-chart{
+  width:100% !important;
+  max-width:100% !important;
+  margin:14px 0 0 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+/* กันกรอบจาก class เดิมที่ติดมากับไฟล์ลูก */
+.policy-priority-inline-card .section-card,
+.policy-priority-inline-card .dashboard-card,
+.policy-priority-inline-card .addon-card,
+.policy-priority-inline-card .data-card,
+.policy-priority-inline-card .summary-table-card,
+.policy-priority-inline-card .data-table-card,
+.policy-whatif-inline-card .section-card,
+.policy-whatif-inline-card .dashboard-card,
+.policy-whatif-inline-card .addon-card,
+.policy-whatif-inline-card .data-card,
+.policy-whatif-inline-card .summary-table-card,
+.policy-whatif-inline-card .data-table-card{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+/* section-head ชั้นที่ 2 ที่ใช้เป็นหัวข้อกราฟ ไม่ให้ดูเป็น block ซ้อน */
+.policy-priority-inline-card > .section-head + .section-head,
+.policy-whatif-inline-card > .section-head + .section-head{
+  border-bottom:0 !important;
+  padding-bottom:0 !important;
+  margin-top:8px !important;
+  margin-bottom:10px !important;
+}
+
+/* Insight ใต้กราฟในสอง card นี้ให้เป็น pattern เดียวกัน */
+.policy-priority-inline-card .section-insight,
+.policy-whatif-inline-card .section-insight{
+  background:#F8FAFF !important;
+  border:0 !important;
+  border-left:4px solid #F9A825 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin:16px 0 0 0 !important;
+  box-shadow:none !important;
+  color:#607D8B !important;
+}
+
+.policy-priority-inline-card .section-insight b,
+.policy-priority-inline-card .section-insight strong,
+.policy-whatif-inline-card .section-insight b,
+.policy-whatif-inline-card .section-insight strong{
+  color:#607D8B !important;
+  font-weight:800 !important;
+}
+
+/* Plotly เต็มพื้นที่ */
+.policy-priority-inline-card .js-plotly-plot,
+.policy-priority-inline-card .plot-container,
+.policy-priority-inline-card .svg-container,
+.policy-whatif-inline-card .js-plotly-plot,
+.policy-whatif-inline-card .plot-container,
+.policy-whatif-inline-card .svg-container{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+/* ลดความรู้สึกแน่นบนมือถือ */
+@media(max-width:980px){
+  .section-insight,
+  .dd-method-note{
+    padding:11px 13px !important;
+  }
+
+  .policy-priority-inline-card .chart-wrap,
+  .policy-whatif-inline-card .chart-wrap{
+    margin-top:12px !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="dashboard-page">
+<header class="page-header">
+<h1 class="page-title">ภาพรวมผู้ตอบแบบสอบถาม</h1>
+<div class="page-subtitle">
+            สรุปคุณภาพข้อมูล โครงสร้างกลุ่มตัวอย่าง อายุ และผลการเรียนเฉลี่ยสะสม
+            เพื่อใช้เป็นพื้นฐานก่อนเข้าสู่การวิเคราะห์พฤติกรรมและความสนใจด้านอีสปอร์ต
+        </div>
+</header><div aria-label="Executive Narrative" class="dd-executive-narrative">
+<div><b>พบอะไร :</b> ข้อมูลกลุ่มตัวอย่างพร้อมใช้วิเคราะห์และอธิบายโครงสร้างผู้ตอบ</div>
+<div><b>สำคัญอย่างไร :</b> ช่วยให้การอ่านผลทุกหน้ามีฐานข้อมูลที่ชัดเจน</div>
+<div><b>ควรทำอะไรต่อ :</b> ใช้หน้านี้ตรวจคุณภาพข้อมูลก่อนตีความกราฟเชิงลึก</div>
+</div>
+<section class="section-card">
+<div class="section-head">
+<h2 class="section-title">รายงานภาพรวมข้อมูล</h2><div class="dd-obj-row"><span class="dd-obj-badge">DATA : กลุ่มตัวอย่าง</span></div>
+</div>
+<div class="chart-wrap overview-summary-scroll">
+<div class="overview-summary-inner">
+<div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+<script charset="utf-8" src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script> <div class="plotly-graph-div" id="70cc0530-3a64-41f0-b56d-8cccd82c5f49" style="height:430px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("70cc0530-3a64-41f0-b56d-8cccd82c5f49")) {                    Plotly.newPlot(                        "70cc0530-3a64-41f0-b56d-8cccd82c5f49",                        [{"cells":{"align":"left","fill":{"color":[["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF"],["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF"],["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF"]]},"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"height":72,"line":{"color":"#DDE3F3"},"values":[["\u003cb\u003eจำนวนข้อมูลดิบ\u003c\u002fb\u003e","\u003cb\u003eข้อมูลที่ใช้วิเคราะห์\u003c\u002fb\u003e","\u003cb\u003eข้อมูลที่ถูกลบ\u003c\u002fb\u003e","\u003cb\u003eแนวโน้มเข้าร่วมกิจกรรม\u003c\u002fb\u003e"],["\u003cb\u003e170 คน\u003c\u002fb\u003e","\u003cb\u003e170 คน\u003c\u002fb\u003e","\u003cb\u003e0 แถว\u003c\u002fb\u003e","\u003cb\u003e29.4%\u003c\u002fb\u003e"],["\u003cb\u003eความหมาย:\u003c\u002fb\u003e จำนวนผู้ตอบแบบสอบถามทั้งหมดก่อนเข้าสู่กระบวนการทำความสะอาดข้อมูล\u003cbr\u003e\u003cb\u003eการนำไปใช้:\u003c\u002fb\u003e ใช้อธิบายขนาดกลุ่มตัวอย่างเริ่มต้นของงานวิจัย","\u003cb\u003eความหมาย:\u003c\u002fb\u003e ข้อมูลที่ผ่านการตรวจสอบและพร้อมใช้วิเคราะห์ คิดเป็น 100.0%\u003cbr\u003eของข้อมูลดิบ\u003cbr\u003e\u003cb\u003eการนำไปใช้:\u003c\u002fb\u003e ใช้เป็นฐานข้อมูลหลักสำหรับสร้างกราฟ Dashboard โมเดล\u003cbr\u003eและข้อเสนอเชิงนโยบาย","\u003cb\u003eความหมาย:\u003c\u002fb\u003e ข้อมูลที่ถูกลบจากกระบวนการ Clean Data คิดเป็น 0.0% ของข้อมูลดิบ\u003cbr\u003e\u003cb\u003eการนำไปใช้:\u003c\u002fb\u003e ใช้แสดงความโปร่งใสของกระบวนการเตรียมข้อมูลและคุณภาพข้อมูลก่อนวิเคราะห์","\u003cb\u003eความหมาย:\u003c\u002fb\u003e ร้อยละของผู้เรียนที่มีแนวโน้มสนใจหรืออาจเข้าร่วมกิจกรรมอีสปอร์ต\u003cbr\u003e\u003cb\u003eการนำไปใช้:\u003c\u002fb\u003e ใช้เป็นตัวชี้วัดเริ่มต้นสำหรับวางแผนกิจกรรม ชมรม โครงการ\u003cbr\u003eหรือมาตรการสนับสนุนในสถานศึกษา"]]},"columnwidth":[22,16,62],"header":{"align":"left","fill":{"color":"#1A237E"},"font":{"color":"#FFFFFF","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14},"height":42,"line":{"color":"#FFFFFF"},"values":["\u003cb\u003eประเด็นรายงาน\u003c\u002fb\u003e","\u003cb\u003eผลลัพธ์\u003c\u002fb\u003e","\u003cb\u003eรายละเอียดสำหรับการตีความ\u003c\u002fb\u003e"]},"type":"table"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":20,"r":20,"t":18,"b":18},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":430,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+</div>
+<div class="section-insight" style="">ข้อมูลพร้อมใช้วิเคราะห์ <b>170 คน</b> จากข้อมูลดิบทั้งหมด <b>170 คน</b> และพบแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ต <b>29.4%</b></div>
+</section>
+<div class="section-divider"></div>
+<div class="grid-2">
+<section class="mini-card">
+<div class="mini-head">
+<h2 class="mini-title">สัดส่วนตามเพศ</h2><div class="dd-obj-row"><span class="dd-obj-badge">DATA : กลุ่มตัวอย่าง</span></div>
+<div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-01-1')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="7149642a-47e8-47bb-836d-182e200fda8e" style="height:430px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("7149642a-47e8-47bb-836d-182e200fda8e")) {                    Plotly.newPlot(                        "7149642a-47e8-47bb-836d-182e200fda8e",                        [{"customdata":[["เพศ: \u003cb\u003eชาย\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e26 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e15.3%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายโครงสร้างกลุ่มตัวอย่างตามเพศ",15.294117647058824],["เพศ: \u003cb\u003eหญิง\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e144 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e84.7%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายโครงสร้างกลุ่มตัวอย่างตามเพศ",84.70588235294117]],"direction":"clockwise","hole":0.66,"hovertemplate":"%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","labels":["ชาย","หญิง"],"marker":{"colors":["#1A237E","#3949AB"],"line":{"color":"#FFFFFF","width":3}},"name":"เพศ","showlegend":false,"sort":false,"text":["15.3%","84.7%"],"textfont":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"textinfo":"label+text","values":[26,144],"type":"pie"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"annotations":[{"align":"center","font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif"},"showarrow":false,"text":"\u003cb style='font-size:30px'\u003e170\u003c\u002fb\u003e\u003cbr\u003e\u003cspan style='font-size:12px;color:#607D8B'\u003eผู้ตอบ\u003c\u002fspan\u003e","x":0.5,"xref":"paper","y":0.5,"yref":"paper"}],"margin":{"l":20,"r":20,"t":10,"b":10},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":430,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+                จำนวนผู้ตอบแบบสอบถามทั้งหมด <b>170 คน</b>
+</div>
+</section>
+<section class="mini-card">
+<div class="mini-head">
+<h2 class="mini-title">จำนวนผู้ตอบตามระดับชั้น</h2><div class="dd-obj-row"><span class="dd-obj-badge">DATA : กลุ่มตัวอย่าง</span></div>
+<div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-01-2')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="59e590e1-a72f-4482-9cae-f67ec005a91b" style="height:430px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("59e590e1-a72f-4482-9cae-f67ec005a91b")) {                    Plotly.newPlot(                        "59e590e1-a72f-4482-9cae-f67ec005a91b",                        [{"cliponaxis":false,"customdata":[["ระดับชั้น: \u003cb\u003eปวช.1\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e20.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายการกระจายตัวของกลุ่มตัวอย่างตามระดับชั้น",20.588235294117645],["ระดับชั้น: \u003cb\u003eปวช.2\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e21.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายการกระจายตัวของกลุ่มตัวอย่างตามระดับชั้น",21.764705882352942],["ระดับชั้น: \u003cb\u003eปวช.3\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e15.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายการกระจายตัวของกลุ่มตัวอย่างตามระดับชั้น",15.88235294117647],["ระดับชั้น: \u003cb\u003eปวส.1\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e25.3%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายการกระจายตัวของกลุ่มตัวอย่างตามระดับชั้น",25.294117647058822],["ระดับชั้น: \u003cb\u003eปวส.2\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e16.5%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายการกระจายตัวของกลุ่มตัวอย่างตามระดับชั้น",16.470588235294116]],"hovertemplate":"%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.4},"opacity":0.94},"name":"ระดับชั้น","showlegend":false,"text":["35 คน\u003cbr\u003e20.6%","37 คน\u003cbr\u003e21.8%","27 คน\u003cbr\u003e15.9%","43 คน\u003cbr\u003e25.3%","28 คน\u003cbr\u003e16.5%"],"textposition":"outside","x":["ปวช.1","ปวช.2","ปวช.3","ปวส.1","ปวส.2"],"y":[35,37,27,43,28],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":70,"r":40,"t":25,"b":70},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":430,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ระดับชั้น"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true},"yaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"จำนวนผู้ตอบ"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,56.760000000000005],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+                ระดับชั้นที่มีผู้ตอบมากที่สุดคือ <b>ปวส.1</b> (43 คน · 25.3%)
+            </div>
+</section>
+</div>
+<div class="section-divider" style="margin-top:42px;"></div>
+<div class="grid-2">
+<section class="mini-card">
+<div class="mini-head">
+<h2 class="mini-title">จำนวนผู้ตอบตามอายุ</h2><div class="dd-obj-row"><span class="dd-obj-badge">DATA : กลุ่มตัวอย่าง</span></div>
+<div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-01-3')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="27d76949-49ae-4704-8e99-2118fac25edd" style="height:430px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("27d76949-49ae-4704-8e99-2118fac25edd")) {                    Plotly.newPlot(                        "27d76949-49ae-4704-8e99-2118fac25edd",                        [{"cliponaxis":false,"customdata":[["อายุ: \u003cb\u003e15 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e20 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e11.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",11.76470588235294],["อายุ: \u003cb\u003e16 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e34 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e20.0%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",20.0],["อายุ: \u003cb\u003e17 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e34 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e20.0%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",20.0],["อายุ: \u003cb\u003e18 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e21.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",21.764705882352942],["อายุ: \u003cb\u003e19 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e29 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e17.1%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",17.058823529411764],["อายุ: \u003cb\u003e20 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e14 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e8.2%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",8.235294117647058],["อายุ: \u003cb\u003e22 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e1 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e0.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",0.5882352941176471],["อายุ: \u003cb\u003e23 ปี\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ: \u003cb\u003e1 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น: \u003cb\u003e0.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่าง",0.5882352941176471]],"hovertemplate":"%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#3949AB","line":{"color":"#FFFFFF","width":1.4},"opacity":0.94},"name":"อายุ","showlegend":false,"text":[20.0,34.0,34.0,37.0,29.0,14.0,1.0,1.0],"textposition":"outside","x":["15 ปี","16 ปี","17 ปี","18 ปี","19 ปี","20 ปี","22 ปี","23 ปี"],"y":[20,34,34,37,29,14,1,1],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":70,"r":40,"t":25,"b":70},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":430,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"อายุ"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true},"yaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"จำนวนผู้ตอบ"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,48.84],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+                อายุที่พบมากที่สุดคือ <b>18 ปี</b> (37 คน · 21.8%)
+            </div>
+</section>
+<section class="mini-card">
+<div class="mini-head">
+<h2 class="mini-title">การกระจาย GPA ตามระดับชั้น</h2><div class="dd-obj-row"><span class="dd-obj-badge">DATA : กลุ่มตัวอย่าง</span></div>
+<div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-01-4')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="0bcb4c1c-3801-487d-81ad-fe735e26c39b" style="height:430px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("0bcb4c1c-3801-487d-81ad-fe735e26c39b")) {                    Plotly.newPlot(                        "0bcb4c1c-3801-487d-81ad-fe735e26c39b",                        [{"boxmean":true,"boxpoints":"outliers","customdata":["\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.40\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.84\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.73\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.52\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.84\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.95\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.01\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.66\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.80\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.64\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.12\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.70\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.34\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.16\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.37\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.66\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.01\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.67\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.14\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.40\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.48\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.28\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.98\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม"],"fillcolor":"rgba(13,71,161,0.10)","hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1A237E","width":2},"marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":0.8},"opacity":0.65,"size":6},"name":"ปวช.1","showlegend":false,"y":[3.0,3.0,3.0,3.4,2.84,2.73,3.52,3.98,3.84,3.95,3.01,3.66,3.8,3.0,3.0,3.0,3.28,3.64,3.12,3.98,3.7,3.34,3.16,2.0,3.33,3.37,3.66,3.01,2.92,3.67,3.0,3.0,3.14,3.4,3.48],"type":"box"},{"boxmean":true,"boxpoints":"outliers","customdata":["\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.62\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.26\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.53\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.39\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.02\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.53\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.12\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.01\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.55\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.41\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.52\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.56\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.48\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.51\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.44\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.87\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.46\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.70\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.46\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.39\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e1.25\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e1.55\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.55\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.21\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.65\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.70\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e1.57\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.70\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.42\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.82\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e37 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.25 - 4.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม"],"fillcolor":"rgba(13,71,161,0.10)","hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1A237E","width":2},"marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":0.8},"opacity":0.65,"size":6},"name":"ปวช.2","showlegend":false,"y":[2.0,3.62,3.26,3.53,3.39,3.02,3.53,3.12,2.01,3.42,3.55,3.41,3.52,2.56,3.48,3.33,3.15,3.51,2.44,3.87,3.46,2.7,3.46,4.0,2.39,1.25,1.55,2.0,2.55,3.21,3.65,2.7,1.57,2.7,2.42,2.82,2.0],"type":"box"},{"boxmean":true,"boxpoints":"outliers","customdata":["\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.59\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.71\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e1.48\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e1.94\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.34\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.52\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.76\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.74\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.47\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.50\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.13\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.67\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.52\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.05\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.95\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.91\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.56\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.68\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.84\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.41\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.52\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวช.3\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.25\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.07\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.23\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e1.48 - 3.78\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม"],"fillcolor":"rgba(13,71,161,0.10)","hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1A237E","width":2},"marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":0.8},"opacity":0.65,"size":6},"name":"ปวช.3","showlegend":false,"y":[3.59,2.71,3.78,1.48,1.94,3.0,3.34,3.52,2.76,3.74,3.47,3.5,3.13,2.67,3.52,3.23,3.0,3.3,2.05,2.95,2.91,3.56,2.68,2.84,3.41,3.52,3.25],"type":"box"},{"boxmean":true,"boxpoints":"outliers","customdata":["\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.83\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.50\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.71\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.67\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.90\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.31\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.71\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.56\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.65\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.79\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.34\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.57\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.66\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.41\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.32\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.90\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.50\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.71\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.45\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.31\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.51\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.53\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.60\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.59\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.26\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.81\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.15\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.59\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.58\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.91\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.60\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.92\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.68\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.44\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.32\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.05\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.1\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.58\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.30\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.36\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.00 - 3.96\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม"],"fillcolor":"rgba(13,71,161,0.10)","hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1A237E","width":2},"marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":0.8},"opacity":0.65,"size":6},"name":"ปวส.1","showlegend":false,"y":[3.83,3.96,3.5,3.71,3.67,3.9,3.3,3.31,3.71,3.56,3.33,3.65,2.79,3.34,3.57,3.66,3.41,3.32,3.9,3.5,3.71,3.45,3.31,3.51,3.53,2.0,2.6,2.59,3.26,3.81,3.15,2.59,3.58,3.36,3.0,2.91,2.6,2.92,3.68,2.44,3.32,3.05,2.58],"type":"box"},{"boxmean":true,"boxpoints":"outliers","customdata":["\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.18\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.62\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.43\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.58\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.58\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.50\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.20\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.45\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.68\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.00\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.20\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.82\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.26\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.89\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.34\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.65\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.92\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.44\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.40\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e2.30\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.40\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.47\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.56\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.14\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.14\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.10\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม","\u003cb\u003eระดับชั้น : ปวส.2\u003c\u002fb\u003e\u003cbr\u003eGPA ของผู้เรียนคนนี้ : \u003cb\u003e3.10\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003e\u003cb\u003eสรุปภาพรวมของระดับชั้นนี้\u003c\u002fb\u003e\u003cbr\u003eจำนวนข้อมูลที่ใช้วิเคราะห์ : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eGPA เฉลี่ย : \u003cb\u003e3.33\u003c\u002fb\u003e\u003cbr\u003eค่ามัธยฐาน GPA : \u003cb\u003e3.42\u003c\u002fb\u003e\u003cbr\u003eช่วง GPA ที่พบ : \u003cb\u003e2.30 - 3.93\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eใช้เพื่อดูการกระจายของ GPA ในภาพรวม"],"fillcolor":"rgba(13,71,161,0.10)","hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1A237E","width":2},"marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":0.8},"opacity":0.65,"size":6},"name":"ปวส.2","showlegend":false,"y":[3.18,2.62,3.43,3.58,3.58,3.5,3.2,3.45,3.68,3.93,3.0,3.2,3.82,3.26,3.89,3.34,3.65,3.92,3.44,2.4,2.3,3.4,3.47,3.56,3.14,3.14,3.1,3.1],"type":"box"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":70,"r":40,"t":25,"b":70},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":430,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ระดับชั้น"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true},"yaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"GPA"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,4.1],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+                GPA เฉลี่ยรวมของกลุ่มตัวอย่างคือ <b>3.18</b>
+</div>
+</section>
+</div>
+</div>
+<script>
+function toggleDataTable(tableId, btn) {
+    const el = document.getElementById(tableId);
+    if (!el) return;
+
+    const isHidden = el.style.display === "none" || el.style.display === "";
+    el.style.display = isHidden ? "block" : "none";
+    btn.textContent = isHidden ? "ซ่อนตารางข้อมูล" : "แสดงตารางข้อมูล";
+}
+</script>
+<div aria-hidden="true" aria-labelledby="dd-modal-01-1-title" aria-modal="true" class="dd-modal-backdrop" id="dd-modal-01-1" role="dialog" tabindex="-1">
+<div class="dd-modal-dialog" role="document">
+<div class="dd-modal-header">
+<h2 class="dd-modal-title" id="dd-modal-01-1-title">ตารางสรุปผู้ตอบตามเพศ</h2>
+<button class="dd-modal-close" onclick="closeDDModal('dd-modal-01-1')" type="button">ปิด</button>
+</div>
+<div class="dd-modal-body"><div class="clean-table-card dd-modal-content-block" data-page="page1" id="tbl-gender-summary-card">
+<div class="table-action-row">
+<div class="table-title-group">
+<h3>ตารางสรุปผู้ตอบตามเพศ</h3>
+<p class="clean-table-note">ใช้เพื่อดูโครงสร้างกลุ่มตัวอย่างตามเพศ ไม่ใช่การเปรียบเทียบความสามารถของผู้เรียน</p>
+</div>
+</div>
+<div class="table-collapsible" id="tbl-gender-summary">
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>จำนวนผู้ตอบ = นับจำนวนข้อมูลในแต่ละกลุ่มเพศ</li><li>ร้อยละ = (จำนวนผู้ตอบในเพศนั้น ÷ จำนวนผู้ตอบทั้งหมด) × 100</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>เพศ</b>
+<span>กลุ่มข้อมูลที่นำมาเปรียบเทียบ</span>
+</div>
+<div class="explain-item">
+<b>จำนวน</b>
+<span>จำนวนผู้ตอบในกลุ่มเพศนั้น</span>
+</div>
+<div class="explain-item">
+<b>ร้อยละ</b>
+<span>สัดส่วนของกลุ่มเพศนั้นเมื่อเทียบกับผู้ตอบทั้งหมด</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table">
+<thead>
+<tr><th>เพศ</th><th>จำนวน</th><th>ร้อยละ</th></tr>
+</thead>
+<tbody>
+<tr data-count="26.0" data-original-index="0" data-percent="15.294117647058824" data-score=""><td class="text-cell">ชาย</td><td class="num-cell">26 คน</td><td class="num-cell">15.3%</td></tr><tr data-count="144.0" data-original-index="1" data-percent="84.70588235294117" data-score=""><td class="text-cell">หญิง</td><td class="num-cell">144 คน</td><td class="num-cell">84.7%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-empty" style="display:none;">
+                ไม่พบข้อมูลในตารางตามเงื่อนไขที่เลือก
+            </div>
+</div>
+</div></div>
+</div>
+</div>
+<div aria-hidden="true" aria-labelledby="dd-modal-01-2-title" aria-modal="true" class="dd-modal-backdrop" id="dd-modal-01-2" role="dialog" tabindex="-1">
+<div class="dd-modal-dialog" role="document">
+<div class="dd-modal-header">
+<h2 class="dd-modal-title" id="dd-modal-01-2-title">ตารางสรุปผู้ตอบตามระดับชั้น</h2>
+<button class="dd-modal-close" onclick="closeDDModal('dd-modal-01-2')" type="button">ปิด</button>
+</div>
+<div class="dd-modal-body"><div class="clean-table-card dd-modal-content-block" data-page="page1" id="tbl-level-summary-card">
+<div class="table-action-row">
+<div class="table-title-group">
+<h3>ตารางสรุปผู้ตอบตามระดับชั้น</h3>
+<p class="clean-table-note">ใช้เพื่อดูว่ากลุ่มตัวอย่างกระจายตัวอยู่ในระดับชั้นใดมากหรือน้อย</p>
+</div>
+</div>
+<div class="table-collapsible" id="tbl-level-summary">
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>จำนวนผู้ตอบ = นับจำนวนผู้ตอบในแต่ละระดับชั้น</li><li>ร้อยละ = (จำนวนผู้ตอบในระดับชั้นนั้น ÷ จำนวนผู้ตอบทั้งหมด) × 100</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>ระดับชั้น</b>
+<span>ระดับชั้นของผู้ตอบแบบสอบถาม</span>
+</div>
+<div class="explain-item">
+<b>จำนวน</b>
+<span>จำนวนผู้ตอบในระดับชั้นนั้น</span>
+</div>
+<div class="explain-item">
+<b>ร้อยละ</b>
+<span>สัดส่วนของระดับชั้นนั้นเมื่อเทียบกับผู้ตอบทั้งหมด</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table">
+<thead>
+<tr><th>ระดับชั้น</th><th>จำนวน</th><th>ร้อยละ</th></tr>
+</thead>
+<tbody>
+<tr data-count="35.0" data-original-index="0" data-percent="20.588235294117645" data-score=""><td class="text-cell">ปวช.1</td><td class="num-cell">35 คน</td><td class="num-cell">20.6%</td></tr><tr data-count="37.0" data-original-index="1" data-percent="21.764705882352942" data-score=""><td class="text-cell">ปวช.2</td><td class="num-cell">37 คน</td><td class="num-cell">21.8%</td></tr><tr data-count="27.0" data-original-index="2" data-percent="15.88235294117647" data-score=""><td class="text-cell">ปวช.3</td><td class="num-cell">27 คน</td><td class="num-cell">15.9%</td></tr><tr data-count="43.0" data-original-index="3" data-percent="25.294117647058822" data-score=""><td class="text-cell">ปวส.1</td><td class="num-cell">43 คน</td><td class="num-cell">25.3%</td></tr><tr data-count="28.0" data-original-index="4" data-percent="16.470588235294116" data-score=""><td class="text-cell">ปวส.2</td><td class="num-cell">28 คน</td><td class="num-cell">16.5%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-empty" style="display:none;">
+                ไม่พบข้อมูลในตารางตามเงื่อนไขที่เลือก
+            </div>
+</div>
+</div></div>
+</div>
+</div>
+<div aria-hidden="true" aria-labelledby="dd-modal-01-3-title" aria-modal="true" class="dd-modal-backdrop" id="dd-modal-01-3" role="dialog" tabindex="-1">
+<div class="dd-modal-dialog" role="document">
+<div class="dd-modal-header">
+<h2 class="dd-modal-title" id="dd-modal-01-3-title">ตารางสรุปผู้ตอบตามอายุ</h2>
+<button class="dd-modal-close" onclick="closeDDModal('dd-modal-01-3')" type="button">ปิด</button>
+</div>
+<div class="dd-modal-body"><div class="clean-table-card dd-modal-content-block" data-page="page1" id="tbl-age-summary-card">
+<div class="table-action-row">
+<div class="table-title-group">
+<h3>ตารางสรุปผู้ตอบตามอายุ</h3>
+<p class="clean-table-note">ใช้เพื่ออธิบายช่วงอายุของกลุ่มตัวอย่างในภาพรวม</p>
+</div>
+</div>
+<div class="table-collapsible" id="tbl-age-summary">
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>จำนวนผู้ตอบ = นับจำนวนผู้ตอบในแต่ละช่วงอายุ</li><li>ร้อยละ = (จำนวนผู้ตอบในอายุนั้น ÷ จำนวนผู้ตอบที่มีข้อมูลอายุ) × 100</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>อายุ</b>
+<span>อายุของผู้ตอบแบบสอบถาม</span>
+</div>
+<div class="explain-item">
+<b>จำนวน</b>
+<span>จำนวนผู้ตอบในอายุนั้น</span>
+</div>
+<div class="explain-item">
+<b>ร้อยละ</b>
+<span>สัดส่วนของอายุนั้นเมื่อเทียบกับผู้ตอบที่มีข้อมูลอายุ</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table">
+<thead>
+<tr><th>อายุ</th><th>จำนวน</th><th>ร้อยละ</th></tr>
+</thead>
+<tbody>
+<tr data-count="20.0" data-original-index="0" data-percent="11.76470588235294" data-score=""><td class="text-cell">15 ปี</td><td class="num-cell">20 คน</td><td class="num-cell">11.8%</td></tr><tr data-count="34.0" data-original-index="1" data-percent="20.0" data-score=""><td class="text-cell">16 ปี</td><td class="num-cell">34 คน</td><td class="num-cell">20.0%</td></tr><tr data-count="34.0" data-original-index="2" data-percent="20.0" data-score=""><td class="text-cell">17 ปี</td><td class="num-cell">34 คน</td><td class="num-cell">20.0%</td></tr><tr data-count="37.0" data-original-index="3" data-percent="21.764705882352942" data-score=""><td class="text-cell">18 ปี</td><td class="num-cell">37 คน</td><td class="num-cell">21.8%</td></tr><tr data-count="29.0" data-original-index="4" data-percent="17.058823529411764" data-score=""><td class="text-cell">19 ปี</td><td class="num-cell">29 คน</td><td class="num-cell">17.1%</td></tr><tr data-count="14.0" data-original-index="5" data-percent="8.235294117647058" data-score=""><td class="text-cell">20 ปี</td><td class="num-cell">14 คน</td><td class="num-cell">8.2%</td></tr><tr data-count="1.0" data-original-index="6" data-percent="0.5882352941176471" data-score=""><td class="text-cell">22 ปี</td><td class="num-cell">1 คน</td><td class="num-cell">0.6%</td></tr><tr data-count="1.0" data-original-index="7" data-percent="0.5882352941176471" data-score=""><td class="text-cell">23 ปี</td><td class="num-cell">1 คน</td><td class="num-cell">0.6%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-empty" style="display:none;">
+                ไม่พบข้อมูลในตารางตามเงื่อนไขที่เลือก
+            </div>
+</div>
+</div></div>
+</div>
+</div>
+<div aria-hidden="true" aria-labelledby="dd-modal-01-4-title" aria-modal="true" class="dd-modal-backdrop" id="dd-modal-01-4" role="dialog" tabindex="-1">
+<div class="dd-modal-dialog" role="document">
+<div class="dd-modal-header">
+<h2 class="dd-modal-title" id="dd-modal-01-4-title">ตารางสรุป GPA ตามระดับชั้น</h2>
+<button class="dd-modal-close" onclick="closeDDModal('dd-modal-01-4')" type="button">ปิด</button>
+</div>
+<div class="dd-modal-body"><div class="clean-table-card dd-modal-content-block" data-page="page1" id="tbl-gpa-summary-card">
+<div class="table-action-row">
+<div class="table-title-group">
+<h3>ตารางสรุป GPA ตามระดับชั้น</h3>
+<p class="clean-table-note">ใช้เพื่อดูภาพรวมผลการเรียน ไม่ควรใช้ตัดสินผู้เรียนรายบุคคล</p>
+</div>
+</div>
+<div class="table-collapsible" id="tbl-gpa-summary">
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>GPA เฉลี่ย = ผลรวม GPA ของผู้ตอบในระดับชั้นนั้น ÷ จำนวนผู้ตอบในระดับชั้นนั้น</li><li>ค่ามัธยฐาน GPA = ค่ากลางของ GPA เมื่อเรียงข้อมูลจากน้อยไปมาก</li><li>GPA ต่ำสุด/สูงสุด = ค่า GPA ต่ำที่สุดและสูงที่สุดของผู้ตอบในระดับชั้นนั้น</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>ระดับชั้น</b>
+<span>ระดับชั้นของผู้ตอบแบบสอบถาม</span>
+</div>
+<div class="explain-item">
+<b>จำนวน</b>
+<span>จำนวนผู้ตอบที่มีข้อมูล GPA ในระดับชั้นนั้น</span>
+</div>
+<div class="explain-item">
+<b>GPA เฉลี่ย</b>
+<span>ค่าเฉลี่ยผลการเรียนของผู้ตอบในระดับชั้นนั้น</span>
+</div>
+<div class="explain-item">
+<b>ค่ามัธยฐาน GPA</b>
+<span>ค่ากลางของ GPA ช่วยลดผลกระทบจากค่าที่สูงหรือต่ำผิดปกติ</span>
+</div>
+<div class="explain-item">
+<b>GPA ต่ำสุด/สูงสุด</b>
+<span>ช่วงของ GPA ที่พบในระดับชั้นนั้น</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table">
+<thead>
+<tr><th>ระดับชั้น</th><th>จำนวน</th><th>GPA เฉลี่ย</th><th>ค่ามัธยฐาน GPA</th><th>GPA ต่ำสุด</th><th>GPA สูงสุด</th></tr>
+</thead>
+<tbody>
+<tr data-count="35.0" data-original-index="0" data-percent="" data-score="3.28"><td class="text-cell">ปวช.1</td><td class="num-cell">35 คน</td><td class="num-cell">3.28</td><td class="num-cell">3.28</td><td class="num-cell">2.00</td><td class="num-cell">3.98</td></tr><tr data-count="37.0" data-original-index="1" data-percent="" data-score="2.92"><td class="text-cell">ปวช.2</td><td class="num-cell">37 คน</td><td class="num-cell">2.92</td><td class="num-cell">3.15</td><td class="num-cell">1.25</td><td class="num-cell">4.00</td></tr><tr data-count="27.0" data-original-index="2" data-percent="" data-score="3.07"><td class="text-cell">ปวช.3</td><td class="num-cell">27 คน</td><td class="num-cell">3.07</td><td class="num-cell">3.23</td><td class="num-cell">1.48</td><td class="num-cell">3.78</td></tr><tr data-count="43.0" data-original-index="3" data-percent="" data-score="3.3"><td class="text-cell">ปวส.1</td><td class="num-cell">43 คน</td><td class="num-cell">3.30</td><td class="num-cell">3.36</td><td class="num-cell">2.00</td><td class="num-cell">3.96</td></tr><tr data-count="28.0" data-original-index="4" data-percent="" data-score="3.33"><td class="text-cell">ปวส.2</td><td class="num-cell">28 คน</td><td class="num-cell">3.33</td><td class="num-cell">3.42</td><td class="num-cell">2.30</td><td class="num-cell">3.93</td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-empty" style="display:none;">
+                ไม่พบข้อมูลในตารางตามเงื่อนไขที่เลือก
+            </div>
+</div>
+</div></div>
+</div>
+</div>
+<script id="dd-final-refactor-js">
+(function(){
+  const lastFocus = {};
+  function focusables(root){return Array.from(root.querySelectorAll('a[href],button:not([disabled]),textarea,input,select,iframe,[tabindex]:not([tabindex="-1"])')).filter(el=>el.offsetParent!==null || el.tagName==='IFRAME');}
+  window.openDDModal = function(id){const bg=document.getElementById(id); if(!bg) return; lastFocus[id]=document.activeElement; bg.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; const fs=focusables(bg); (fs[0]||bg).focus();};
+  window.closeDDModal = function(id){const bg=document.getElementById(id); if(!bg) return; bg.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus[id] && lastFocus[id].focus) lastFocus[id].focus();};
+  document.addEventListener('keydown', function(e){const open=document.querySelector('.dd-modal-backdrop[aria-hidden="false"]'); if(!open) return; if(e.key==='Escape'){e.preventDefault(); closeDDModal(open.id);} if(e.key==='Tab'){const fs=focusables(open); if(!fs.length) return; const first=fs[0], last=fs[fs.length-1]; if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus();} else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus();}}});
+  document.addEventListener('click', function(e){const bg=e.target.closest('.dd-modal-backdrop'); if(bg && e.target===bg){closeDDModal(bg.id);}});
+})();
+</script>
+</body>
+</html>
