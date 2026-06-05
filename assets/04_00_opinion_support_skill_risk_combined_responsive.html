@@ -1,0 +1,1832 @@
+
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
+    :root {
+        --primary: #1A237E;
+        --primary-2: #3949AB;
+        --blue-mid: #5C6BC0;
+        --blue-soft: #E8EAF6;
+        --bg: #F7F8FC;
+        --text: #263238;
+        --muted: #607D8B;
+        --grid: #DDE3F3;
+        --white: #FFFFFF;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif;
+    }
+
+    .dashboard-page {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 32px 28px 44px 28px;
+        box-sizing: border-box;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+        padding: 4px 4px 8px 4px;
+    }
+
+    .page-title {
+        margin: 0;
+        color: var(--primary);
+        font-size: 30px;
+        line-height: 1.28;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+    }
+
+    .page-subtitle {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.75;
+        max-width: 1120px;
+    }
+
+    .section-card {
+        background: var(--white);
+        border: 1px solid #DDE3F3;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(13, 71, 161, 0.06);
+        padding: 26px 26px 22px 26px;
+        margin-bottom: 44px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .section-head {
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--grid);
+    }
+
+    .section-title {
+        margin: 0;
+        color: var(--primary);
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 800;
+    }
+
+    .section-desc {
+        margin: 8px 0 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .chart-wrap {
+        width: 100%;
+        min-width: 0;
+        overflow: visible;
+    }
+
+    .section-insight {
+        margin-top: 16px;
+        padding: 13px 16px;
+        background: #F7F8FC;
+        border-left: 4px solid var(--primary-2);
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .section-note {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.6;
+    }
+
+    .section-divider {
+        height: 1px;
+        background: var(--grid);
+        margin: -14px 0 44px 0;
+    }
+
+    .js-plotly-plot, .plot-container {
+        width: 100% !important;
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-page {
+            padding: 24px 16px 36px 16px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        .section-card {
+            padding: 20px 16px 18px 16px;
+            border-radius: 16px;
+            margin-bottom: 36px;
+        }
+
+        .section-title {
+            font-size: 19px;
+        }
+
+        .section-desc {
+            font-size: 13.5px;
+        }
+
+        .section-insight {
+            font-size: 13px;
+        }
+    }
+
+
+/* =========================================================
+   Page 4 Clean Table UI
+   ลด visual noise / ตารางขอบมน / สูตรพับได้
+   ========================================================= */
+
+.graph-control-note {
+    display: none !important;
+}
+
+/* ตอนปิดตาราง เหลือเฉพาะปุ่มเล็กใต้ Insight */
+.summary-table-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 12px auto 0 auto;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+
+    box-sizing: border-box;
+}
+
+/* ปุ่มดูตาราง */
+.table-action-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.toggle-table-btn {
+    border: 0;
+    border-radius: 999px;
+    background: #EEF2FF;
+    color: #1A237E;
+
+    font-family: inherit;
+    font-size: 12.8px;
+    font-weight: 900;
+
+    padding: 8px 14px;
+    min-height: 34px;
+
+    cursor: pointer;
+    box-shadow: none;
+    white-space: nowrap;
+}
+
+.toggle-table-btn:hover {
+    background: #3949AB;
+    color: #FFFFFF;
+}
+
+/* กล่องตารางเมื่อเปิด */
+.table-collapsible {
+    margin-top: 10px;
+    padding: 14px;
+
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 18px;
+
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.table-open-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #EEF2FF;
+}
+
+.table-open-head h3 {
+    margin: 0;
+    color: #1A237E;
+    font-size: 15.5px;
+    font-weight: 900;
+    line-height: 1.45;
+}
+
+/* พับสูตรและคำอธิบาย */
+.table-help-detail {
+    min-width: 220px;
+    max-width: 100%;
+
+    border: 1px solid #DDE3F3;
+    border-radius: 999px;
+    background: #F7F8FC;
+
+    overflow: hidden;
+}
+
+.table-help-detail summary {
+    cursor: pointer;
+    padding: 8px 12px;
+
+    color: #1A237E;
+    font-size: 12.3px;
+    font-weight: 900;
+    line-height: 1.45;
+
+    list-style-position: inside;
+    white-space: nowrap;
+}
+
+.table-help-detail[open] {
+    border-radius: 14px;
+    background: #FFFFFF;
+}
+
+.table-help-detail[open] summary {
+    border-bottom: 1px solid #DDE3F3;
+    background: #F7F8FC;
+}
+
+.table-help-body {
+    padding: 12px;
+}
+
+/* สูตร / คำอธิบายคอลัมน์ */
+.formula-note {
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-left: 4px solid #3949AB;
+    border-radius: 13px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+
+.formula-title,
+.table-explain-title {
+    color: #1A237E;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+.formula-note ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #263238;
+    font-size: 12.8px;
+    line-height: 1.7;
+}
+
+.table-explain {
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 13px;
+    padding: 12px 14px;
+    margin-bottom: 0;
+}
+
+.table-explain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+}
+
+.explain-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12.8px;
+    line-height: 1.55;
+}
+
+.explain-item b {
+    color: #1A237E;
+}
+
+.explain-item span {
+    color: #607D8B;
+}
+
+/* ตารางจริง */
+.table-wrapper,
+.clean-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 16px;
+}
+
+.smart-table,
+.clean-smart-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #FFFFFF;
+    font-size: 13px;
+}
+
+.smart-table thead th,
+.clean-smart-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    background: #1A237E;
+    color: #FFFFFF;
+
+    text-align: left;
+    padding: 11px 13px;
+
+    font-weight: 900;
+    border-bottom: 1px solid #DDE3F3;
+    white-space: nowrap;
+}
+
+.smart-table thead th:first-child,
+.clean-smart-table thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.smart-table thead th:last-child,
+.clean-smart-table thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.smart-table tbody td,
+.clean-smart-table tbody td {
+    padding: 11px 13px;
+    border-bottom: 1px solid #EEF2FF;
+
+    color: #263238;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+.smart-table tbody tr:last-child td,
+.clean-smart-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.smart-table tbody tr:hover td,
+.clean-smart-table tbody tr:hover td {
+    background: #F7F8FC;
+}
+
+/* ยกเลิกแถวแรกสีเหลือง เพื่อลดความรบกวนสายตา */
+.smart-table tbody tr.top-row td,
+.smart-table tbody tr:first-child td {
+    background: transparent !important;
+}
+
+.smart-table .num-cell,
+.clean-smart-table .num-cell {
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 800;
+    color: #1A237E;
+}
+
+.smart-table .text-cell,
+.clean-smart-table .text-cell {
+    text-align: left;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+.table-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+
+    color: #607D8B;
+    background: #F7F8FC;
+    border-radius: 12px;
+
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+    .table-action-row {
+        justify-content: stretch;
+    }
+
+    .toggle-table-btn {
+        width: 100%;
+    }
+
+    .table-collapsible {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    .table-open-head {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .table-help-detail {
+        width: 100%;
+        min-width: 0;
+        border-radius: 14px;
+    }
+
+    .table-help-detail summary {
+        white-space: normal;
+    }
+
+    .table-explain-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .smart-table,
+    .clean-smart-table {
+        font-size: 12.8px;
+    }
+
+    .smart-table thead th,
+    .clean-smart-table thead th,
+    .smart-table tbody td,
+    .clean-smart-table tbody td {
+        padding: 10px 11px;
+    }
+}
+
+
+/* =========================================================
+   Page 4 Clean Layout Spacing
+   จัดระยะห่างตามหลัก UI/UX และลดองค์ประกอบที่ไม่จำเป็น
+   ========================================================= */
+
+.dashboard-page {
+    max-width: 1320px !important;
+    padding: 28px 24px 40px 24px !important;
+}
+
+.page-header {
+    margin-bottom: 22px !important;
+    padding: 0 !important;
+}
+
+.page-title {
+    font-size: clamp(24px, 2.4vw, 30px) !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+}
+
+.page-subtitle {
+    margin-top: 8px !important;
+    max-width: 980px !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+}
+
+/* Card หลักแต่ละกราฟ */
+.section-card {
+    padding: 22px !important;
+    margin-bottom: 24px !important;
+
+    border-radius: 22px !important;
+    border: 1px solid #DDE3F3 !important;
+    background: #FFFFFF !important;
+
+    box-shadow: 0 8px 24px rgba(13, 71, 161, 0.055) !important;
+}
+
+/* ไม่ต้องใช้เส้นคั่น เพราะ card แยกกลุ่มชัดอยู่แล้ว */
+.section-divider {
+    display: none !important;
+}
+
+/* Header ใน card */
+.section-head {
+    margin-bottom: 12px !important;
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.section-title {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.4 !important;
+    font-weight: 900 !important;
+}
+
+.section-desc {
+    margin-top: 6px !important;
+    font-size: 13.2px !important;
+    line-height: 1.65 !important;
+}
+
+/* กราฟ */
+.chart-wrap {
+    margin-top: 4px !important;
+    border-radius: 18px !important;
+    overflow: visible !important;
+}
+
+/* Insight ใต้กราฟ */
+.section-insight {
+    margin-top: 12px !important;
+    padding: 11px 14px !important;
+
+    background: #F7F8FC !important;
+    border-left: 4px solid #3949AB !important;
+    border-radius: 14px !important;
+
+    color: #607D8B !important;
+    font-size: 13.2px !important;
+    line-height: 1.65 !important;
+}
+
+/* ซ่อน note ที่ซ้ำกับข้อมูลในตารางและ insight */
+.section-note {
+    display: none !important;
+}
+
+/* ลดช่องว่างของ Plotly container */
+.js-plotly-plot,
+.plot-container {
+    width: 100% !important;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+    .dashboard-page {
+        padding: 24px 16px 36px 16px !important;
+    }
+
+    .section-card {
+        padding: 18px !important;
+        border-radius: 18px !important;
+        margin-bottom: 22px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+    .dashboard-page {
+        padding: 20px 12px 32px 12px !important;
+    }
+
+    .section-card {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .section-insight {
+        padding: 10px 12px !important;
+        font-size: 12.8px !important;
+    }
+}
+
+</style>
+<style id="dd-final-refactor-css">
+:root{--dd-primary:#1A237E;--dd-primary-2:#3949AB;--dd-soft:#E8EAF6;--dd-bg:#F7F8FC;--dd-text:#263238;--dd-muted:#607D8B;--dd-grid:#DDE3F3;--dd-accent:#F9A825;--dd-white:#fff;--dd-radius:20px;--dd-shadow:0 10px 28px rgba(13,71,161,.08)}
+html,body{background:var(--dd-bg)!important;color:var(--dd-text)!important;font-family:Prompt,'Noto Sans Thai',Sarabun,Tahoma,Arial,sans-serif!important;line-height:1.65}.dashboard-page{max-width:1320px!important;padding:34px 28px 48px!important}.page-header{margin-bottom:26px!important} .page-title{   color:var(--dd-primary)!important;   font-weight:900!important;   line-height:1.3!important;   letter-spacing:-.2px!important; } .page-subtitle{   color:var(--dd-muted)!important;   line-height:1.75!important; } .section-card,.mini-card,.data-card,.kpi-card{border-radius:var(--dd-radius)!important;box-shadow:var(--dd-shadow)!important;border:1px solid var(--dd-grid)!important;background:#fff!important;padding:26px!important;margin-bottom:34px!important;overflow:visible!important}.section-head,.mini-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:16px!important;border-bottom:1px solid var(--dd-grid)!important;padding-bottom:14px!important;margin-bottom:18px!important}.section-head>div,.mini-head>div{min-width:0}.section-title,.mini-title{font-weight:800!important;color:var(--dd-primary)!important;line-height:1.35!important}.section-desc,.mini-desc,.section-note,.metric-note{color:var(--dd-muted)!important;line-height:1.75!important}.section-insight{background:#F8FAFF!important;border-left:4px solid var(--dd-accent)!important;border-radius:14px!important;padding:12px 14px!important;margin:16px 0 0!important;line-height:1.75!important}.dd-title-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;min-width:fit-content}.dd-modal-trigger,.dd-link-button{appearance:none;border:1px solid #DDE3F3;background:#fff;color:var(--dd-primary);border-radius:999px;padding:9px 13px;font-weight:800;font-size:13px;line-height:1;cursor:pointer;box-shadow:0 4px 12px rgba(13,71,161,.07);text-decoration:none;display:inline-flex;align-items:center;gap:6px}.dd-modal-trigger:hover,.dd-link-button:hover{background:var(--dd-soft);transform:translateY(-1px)}.dd-modal-trigger:focus-visible,.dd-link-button:focus-visible,.dd-modal-close:focus-visible{outline:3px solid rgba(249,168,37,.45);outline-offset:3px}.dd-obj-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.dd-obj-badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:#FFF8E1;color:#795548;border:1px solid #FFE0B2;padding:4px 8px;font-weight:800;font-size:11.5px;line-height:1}.dd-executive-narrative{display:grid;grid-template-columns:1fr;gap:7px;background:#fff;border:1px solid var(--dd-grid);border-radius:18px;box-shadow:0 6px 18px rgba(13,71,161,.05);padding:16px 18px;margin:18px 0 24px}.dd-executive-narrative div{font-size:14px;line-height:1.7}.dd-executive-narrative b{color:var(--dd-primary)}.dd-method-note{background:#F8FAFF;border:1px dashed #B7C1E8;border-radius:16px;padding:14px 16px;margin:16px 0 24px;color:var(--dd-text);font-size:14px;line-height:1.75}.table-responsive,.table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}.summary-table-card,.data-table-card.dd-moved-source{display:none!important}.dd-modal-backdrop{position:fixed;inset:0;background:rgba(8,20,60,.52);z-index:9999;display:none;align-items:center;justify-content:center;padding:18px}.dd-modal-backdrop[aria-hidden="false"]{display:flex}.dd-modal-dialog{width:min(1120px,96vw);max-height:min(86vh,920px);background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.4);display:flex;flex-direction:column;overflow:hidden}.dd-modal-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--dd-grid);background:#F8FAFF}.dd-modal-title{margin:0;color:var(--dd-primary);font-size:19px;font-weight:900;line-height:1.35}.dd-modal-close{appearance:none;border:0;background:var(--dd-primary);color:#fff;border-radius:999px;padding:9px 13px;cursor:pointer;font-weight:800;font-size:13px}.dd-modal-body{padding:20px;overflow:auto;max-height:calc(86vh - 70px);font-size:14px;line-height:1.75}.dd-modal-body .table-collapsible{display:block!important}.dd-modal-body table{width:100%;border-collapse:collapse}.dd-modal-body th,.dd-modal-body td{padding:10px 12px;border-bottom:1px solid var(--dd-grid);vertical-align:top}.dd-modal-body th{background:#F8FAFF;color:var(--dd-primary);font-weight:800}.dd-iframe{width:100%;height:min(72vh,760px);border:0;border-radius:14px;background:#fff}.dd-empty-state{border:1px dashed var(--dd-grid);background:#fff;border-radius:16px;padding:16px;color:var(--dd-muted)}@media(max-width:980px){.dashboard-page{padding:24px 16px 40px!important}.section-card,.mini-card{padding:20px!important;margin-bottom:24px!important}.section-head,.mini-head{flex-direction:column!important;align-items:flex-start!important}.dd-title-actions{justify-content:flex-start}.grid-2,.grid-3,.grid-4,.addon-grid{grid-template-columns:1fr!important}.s3,.s4,.s6,.s8,.s12{grid-column:span 1!important}.dd-modal-dialog{width:96vw;max-height:88vh}.dd-modal-body{padding:16px;max-height:calc(88vh - 70px)}.dd-modal-trigger,.dd-link-button{min-height:42px;padding:11px 14px}.dd-iframe{height:72vh}}@media(max-width:560px){.page-title{font-size:24px!important}.section-title{font-size:19px!important}.dd-executive-narrative{padding:14px}.dd-modal-header{padding:14px 16px}.dd-modal-title{font-size:17px}}
+</style>
+<style>
+.dd-inline-chart-wrap{
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+  margin-top:12px;
+  border:1px solid var(--dd-grid);
+  border-radius:16px;
+  background:#fff;
+}
+
+.dd-inline-chart-wrap .js-plotly-plot,
+.dd-inline-chart-wrap .plot-container{
+  width:100% !important;
+}
+
+.dd-inline-chart-wrap .svg-container{
+  width:100% !important;
+}
+</style>
+<style id="dd-remove-nested-card-look">
+/* ลดอาการ card ซ้อน card ในหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน */
+.section-card .dd-inline-model-summary,
+.section-card .dd-inline-plain{
+  margin-top:14px !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+}
+
+/* กราฟที่นำมาแสดงใน card หลัก ไม่ต้องทำเป็น card อีกชั้น */
+.section-card .dd-inline-chart-wrap{
+  width:100% !important;
+  min-width:0 !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  margin-top:12px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* ตารางที่นำมาแสดงใน card หลัก ให้เป็น table ธรรมดา ไม่ใช่ card ซ้อน */
+.section-card .dd-inline-table-wrap{
+  width:100% !important;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  margin-top:12px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* กัน class เดิมจากไฟล์ลูกทำให้เกิดกรอบซ้อน */
+.section-card .summary-table-card,
+.section-card .data-table-card,
+.section-card .dashboard-card,
+.section-card .addon-card{
+  box-shadow:none !important;
+}
+
+/* Plotly responsive */
+.dd-inline-chart-wrap .js-plotly-plot,
+.dd-inline-chart-wrap .plot-container,
+.dd-inline-chart-wrap .svg-container{
+  width:100% !important;
+  max-width:100% !important;
+}
+</style>
+<style>
+.dd-inline-model-summary{
+  margin-top:16px;
+  padding-top:2px;
+}
+
+.dd-inline-title{
+  color:var(--dd-primary);
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.dd-inline-desc{
+  color:var(--dd-muted);
+  font-size:13.5px;
+  line-height:1.65;
+  margin-bottom:14px;
+}
+
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-top:14px;
+}
+
+.metric-card{
+  background:#F7F8FC;
+  border:1px solid #DDE3F3;
+  border-radius:16px;
+  padding:16px 18px;
+}
+
+.metric-label{
+  color:var(--dd-muted);
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:6px;
+}
+
+.metric-value{
+  color:var(--dd-primary);
+  font-size:24px;
+  line-height:1.25;
+  font-weight:900;
+}
+
+@media(max-width:900px){
+  .metric-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+<style id="dd-advanced-inline-table-pattern">
+/* ตารางในหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน ให้ใช้ pattern เดียวกับหน้าอื่น */
+.dd-inline-table-box{
+  width:100%;
+  margin-top:14px;
+  border:1px solid var(--dd-grid);
+  border-radius:16px;
+  background:#FFFFFF;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(13,71,161,.05);
+}
+
+.dd-inline-table-wrap{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:0 !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+
+.dd-inline-table-wrap table{
+  width:100%;
+  min-width:720px;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:13.5px;
+  color:var(--dd-text);
+  background:#FFFFFF;
+}
+
+.dd-inline-table-wrap thead th,
+.dd-inline-table-wrap table th{
+  background:#3949AB !important;
+  color:#FFFFFF !important;
+  font-weight:900;
+  text-align:left;
+  padding:12px 14px;
+  border-bottom:1px solid #DDE3F3;
+  white-space:nowrap;
+  line-height:1.45;
+}
+
+.dd-inline-table-wrap thead th:first-child,
+.dd-inline-table-wrap table tr:first-child th:first-child{
+  border-top-left-radius:14px;
+}
+
+.dd-inline-table-wrap thead th:last-child,
+.dd-inline-table-wrap table tr:first-child th:last-child{
+  border-top-right-radius:14px;
+}
+
+.dd-inline-table-wrap tbody td,
+.dd-inline-table-wrap table td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--dd-grid);
+  vertical-align:top;
+  line-height:1.6;
+  background:#FFFFFF;
+}
+
+.dd-inline-table-wrap tbody tr:nth-child(even) td{
+  background:#F8FAFF;
+}
+
+.dd-inline-table-wrap tbody tr:hover td{
+  background:#EEF2FF;
+}
+
+.dd-inline-table-wrap tbody tr:last-child td{
+  border-bottom:0;
+}
+
+/* กัน style เดิมจาก html_table หรือไฟล์ลูก */
+.dd-inline-table-wrap .dataframe,
+.dd-inline-table-wrap .summary-table,
+.dd-inline-table-wrap .data-table{
+  width:100% !important;
+  border:0 !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+
+/* ไม่ให้เกิด card ซ้อน card ในตาราง inline */
+.section-card .dd-inline-table-box .summary-table-card,
+.section-card .dd-inline-table-box .data-table-card,
+.section-card .dd-inline-table-box .dashboard-card,
+.section-card .dd-inline-table-box .addon-card{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+@media(max-width:900px){
+  .dd-inline-table-wrap table{
+    min-width:680px;
+    font-size:13px;
+  }
+
+  .dd-inline-table-wrap th,
+  .dd-inline-table-wrap td{
+    padding:10px 12px;
+  }
+}
+</style>
+<style id="dd-metric-tooltip-css">
+/* Tooltip สำหรับ metric card ในหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน */
+.metric-card{
+  position:relative;
+}
+
+.metric-label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.dd-help{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  background:#E8EAF6;
+  color:#1A237E;
+  border:1px solid #C5CAE9;
+  font-size:12px;
+  font-weight:900;
+  cursor:help;
+  position:relative;
+  line-height:1;
+  flex:0 0 auto;
+}
+
+.dd-help::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 10px);
+  transform:translateX(-50%);
+  width:min(320px,72vw);
+  background:#1A237E;
+  color:#FFFFFF;
+  border-radius:14px;
+  padding:12px 14px;
+  box-shadow:0 14px 34px rgba(13,71,161,.24);
+  font-size:12.5px;
+  font-weight:500;
+  line-height:1.65;
+  text-align:left;
+  white-space:normal;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:99999;
+}
+
+.dd-help::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 3px);
+  transform:translateX(-50%);
+  border-width:7px 7px 0 7px;
+  border-style:solid;
+  border-color:#1A237E transparent transparent transparent;
+  opacity:0;
+  visibility:hidden;
+  z-index:99999;
+}
+
+.dd-help:hover::after,
+.dd-help:hover::before,
+.dd-help:focus::after,
+.dd-help:focus::before{
+  opacity:1;
+  visibility:visible;
+}
+
+.dd-help:focus{
+  outline:3px solid rgba(249,168,37,.45);
+  outline-offset:2px;
+}
+
+/* Tooltip ในตาราง inline เช่น ตารางสรุปคุณภาพโมเดล */
+.dd-inline-table-wrap .dd-help{
+  margin-left:6px;
+  vertical-align:middle;
+}
+
+@media(max-width:700px){
+  .dd-help::after{
+    left:auto;
+    right:-8px;
+    transform:none;
+    width:min(300px,78vw);
+  }
+
+  .dd-help::before{
+    left:auto;
+    right:2px;
+    transform:none;
+  }
+}
+</style>
+<style id="dd-flat-table-no-nested-card">
+/* =========================================================
+   Flat Table Pattern
+   ใช้กับหน้า วิเคราะห์แนวโน้มและกลุ่มผู้เรียน
+   ให้ตารางเต็ม card และไม่เกิด card ซ้อน card
+   ========================================================= */
+
+/* ปิดหน้าตาแบบ card ซ้อนของกล่องตารางเดิม */
+.dd-inline-table-box{
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+  margin:14px 0 0 0 !important;
+  overflow:visible !important;
+}
+
+/* ตารางอยู่เต็มพื้นที่ของ card หลัก */
+.section-card .dd-inline-table-wrap{
+  width:100% !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  margin:14px 0 0 0 !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+
+/* ตารางหลัก */
+.section-card .dd-inline-table-wrap table{
+  width:100% !important;
+  min-width:720px;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  background:#FFFFFF !important;
+  color:var(--dd-text) !important;
+  font-size:13.5px !important;
+  line-height:1.6 !important;
+  margin:0 !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+/* Header ตารางเป็นสีน้ำเงินแบบเดียวกัน */
+.section-card .dd-inline-table-wrap table th{
+  background:#3949AB !important;
+  color:#FFFFFF !important;
+  font-weight:900 !important;
+  text-align:left !important;
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid #DDE3F3 !important;
+  white-space:nowrap !important;
+}
+
+/* มุมหัวตารางโค้งเฉพาะตัวตาราง ไม่ใช่ card ซ้อน */
+.section-card .dd-inline-table-wrap table tr:first-child th:first-child{
+  border-top-left-radius:14px !important;
+}
+
+.section-card .dd-inline-table-wrap table tr:first-child th:last-child{
+  border-top-right-radius:14px !important;
+}
+
+/* Cell ตาราง */
+.section-card .dd-inline-table-wrap table td{
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid var(--dd-grid) !important;
+  vertical-align:top !important;
+  background:#FFFFFF !important;
+}
+
+/* แถวสลับสีอ่านง่าย */
+.section-card .dd-inline-table-wrap table tbody tr:nth-child(even) td{
+  background:#F8FAFF !important;
+}
+
+.section-card .dd-inline-table-wrap table tbody tr:hover td{
+  background:#EEF2FF !important;
+}
+
+.section-card .dd-inline-table-wrap table tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+
+/* ล้าง style จาก pandas/html_table เดิม */
+.section-card .dd-inline-table-wrap table.dataframe,
+.section-card .dd-inline-table-wrap table.summary-table,
+.section-card .dd-inline-table-wrap table.data-table{
+  border:0 !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+
+/* ล้าง card ที่อาจติดมากับ HTML เดิม */
+.section-card .dd-inline-table-wrap .summary-table-card,
+.section-card .dd-inline-table-wrap .data-table-card,
+.section-card .dd-inline-table-wrap .dashboard-card,
+.section-card .dd-inline-table-wrap .addon-card{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+/* Tooltip ในตารางไม่ทำให้ layout แตก */
+.section-card .dd-inline-table-wrap .dd-help{
+  margin-left:6px;
+  vertical-align:middle;
+}
+
+@media(max-width:900px){
+  .section-card .dd-inline-table-wrap table{
+    min-width:680px;
+    font-size:13px !important;
+  }
+
+  .section-card .dd-inline-table-wrap table th,
+  .section-card .dd-inline-table-wrap table td{
+    padding:10px 12px !important;
+  }
+}
+</style>
+<style id="dd-policy-modal-clean-css">
+/* =========================================================
+   Policy Modal Clean Detail Mode
+   ใช้กับ modal pop-up หน้า 6
+   ========================================================= */
+
+html,
+body{
+  background:#FFFFFF !important;
+  color:#263238 !important;
+  font-family:Prompt,'Noto Sans Thai',Sarabun,Tahoma,Arial,sans-serif !important;
+  line-height:1.65 !important;
+}
+
+body.dd-policy-modal-asset{
+  padding:0 !important;
+  margin:0 !important;
+  overflow-x:hidden !important;
+}
+
+/* ไม่ต้องโชว์ header หน้าเต็มซ้ำใน modal */
+body.dd-policy-modal-asset .page-header{
+  display:none !important;
+}
+
+/* ให้เนื้อหาเต็มพื้นที่ iframe/modal */
+body.dd-policy-modal-asset .dashboard-page,
+body.dd-policy-modal-asset main{
+  max-width:100% !important;
+  width:100% !important;
+  padding:0 4px 28px !important;
+  margin:0 !important;
+  background:#FFFFFF !important;
+}
+
+/* ล้าง card ซ้อน card ใน modal */
+body.dd-policy-modal-asset .section-card,
+body.dd-policy-modal-asset .mini-card,
+body.dd-policy-modal-asset .data-card,
+body.dd-policy-modal-asset .kpi-card,
+body.dd-policy-modal-asset .summary-table-card,
+body.dd-policy-modal-asset .data-table-card,
+body.dd-policy-modal-asset .dashboard-card,
+body.dd-policy-modal-asset .addon-card,
+body.dd-policy-modal-asset .dd-flat-block{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  padding:0 0 22px 0 !important;
+  margin:0 0 26px 0 !important;
+  overflow:visible !important;
+  border-bottom:1px solid #DDE3F3 !important;
+}
+
+/* หัวข้อใน modal */
+body.dd-policy-modal-asset .section-head,
+body.dd-policy-modal-asset .mini-head{
+  display:block !important;
+  border:0 !important;
+  padding:0 !important;
+  margin:0 0 14px 0 !important;
+}
+
+body.dd-policy-modal-asset .section-title,
+body.dd-policy-modal-asset .mini-title,
+body.dd-policy-modal-asset h2,
+body.dd-policy-modal-asset h3{
+  color:#1A237E !important;
+  font-weight:900 !important;
+  line-height:1.4 !important;
+  margin:0 0 8px 0 !important;
+}
+
+body.dd-policy-modal-asset .section-desc,
+body.dd-policy-modal-asset .mini-desc,
+body.dd-policy-modal-asset .metric-note,
+body.dd-policy-modal-asset .section-note{
+  color:#607D8B !important;
+  line-height:1.75 !important;
+  margin:4px 0 12px 0 !important;
+}
+
+/* ลบปุ่มที่ไม่ควรมีใน modal */
+body.dd-policy-modal-asset .dd-title-actions,
+body.dd-policy-modal-asset .table-action-row button,
+body.dd-policy-modal-asset button.toggle-table-btn,
+body.dd-policy-modal-asset .toggle-table-btn,
+body.dd-policy-modal-asset .dd-modal-trigger,
+body.dd-policy-modal-asset .dd-link-button,
+body.dd-policy-modal-asset button[onclick*="toggle"],
+body.dd-policy-modal-asset button[onclick*="Table"],
+body.dd-policy-modal-asset button[onclick*="table"]{
+  display:none !important;
+}
+
+/* ถ้า table-action-row เหลือแต่หัวข้อ ให้เป็นข้อความธรรมดา */
+body.dd-policy-modal-asset .table-action-row{
+  display:block !important;
+  padding:0 !important;
+  margin:0 0 10px 0 !important;
+  border:0 !important;
+  background:transparent !important;
+}
+
+/* บังคับให้ทุกส่วนที่เคยซ่อนแสดงทันที */
+body.dd-policy-modal-asset .table-collapsible,
+body.dd-policy-modal-asset .summary-table-panel,
+body.dd-policy-modal-asset .summary-table-card,
+body.dd-policy-modal-asset .data-table-card,
+body.dd-policy-modal-asset .table-responsive,
+body.dd-policy-modal-asset .table-wrap,
+body.dd-policy-modal-asset #priority-summary-table,
+body.dd-policy-modal-asset #whatif-summary-table{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  height:auto !important;
+  max-height:none !important;
+  overflow:visible !important;
+}
+
+/* สูตร / คำอธิบาย / insight */
+body.dd-policy-modal-asset .section-insight,
+body.dd-policy-modal-asset .dd-method-note,
+body.dd-policy-modal-asset .formula-box,
+body.dd-policy-modal-asset .formula-card,
+body.dd-policy-modal-asset .explanation-box,
+body.dd-policy-modal-asset .explanation-card{
+  background:#F8FAFF !important;
+  border-left:4px solid #F9A825 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin:12px 0 16px 0 !important;
+  box-shadow:none !important;
+  border-top:0 !important;
+  border-right:0 !important;
+  border-bottom:0 !important;
+}
+
+/* กราฟเต็มพื้นที่ modal */
+body.dd-policy-modal-asset .chart-wrap{
+  width:100% !important;
+  max-width:100% !important;
+  margin:10px 0 18px 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+body.dd-policy-modal-asset .js-plotly-plot,
+body.dd-policy-modal-asset .plot-container,
+body.dd-policy-modal-asset .svg-container{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+/* ตารางเต็มพื้นที่ ไม่เป็น card ซ้อน */
+body.dd-policy-modal-asset .dd-clean-table-wrap,
+body.dd-policy-modal-asset .table-responsive,
+body.dd-policy-modal-asset .table-wrap{
+  width:100% !important;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  margin:12px 0 18px 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+
+/* ตาราง pattern เดียวกับหน้าอื่น */
+body.dd-policy-modal-asset table{
+  width:100% !important;
+  min-width:760px !important;
+  border-collapse:separate !important;
+  border-spacing:0 !important;
+  background:#FFFFFF !important;
+  color:#263238 !important;
+  font-size:13.5px !important;
+  line-height:1.6 !important;
+  margin:0 !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+body.dd-policy-modal-asset table th{
+  background:#3949AB !important;
+  color:#FFFFFF !important;
+  font-weight:900 !important;
+  text-align:left !important;
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid #DDE3F3 !important;
+  white-space:normal !important;
+  vertical-align:top !important;
+}
+
+body.dd-policy-modal-asset table tr:first-child th:first-child{
+  border-top-left-radius:14px !important;
+}
+
+body.dd-policy-modal-asset table tr:first-child th:last-child{
+  border-top-right-radius:14px !important;
+}
+
+body.dd-policy-modal-asset table td{
+  padding:12px 14px !important;
+  border:0 !important;
+  border-bottom:1px solid #DDE3F3 !important;
+  vertical-align:top !important;
+  background:#FFFFFF !important;
+  color:#263238 !important;
+  white-space:normal !important;
+}
+
+body.dd-policy-modal-asset table tbody tr:nth-child(even) td{
+  background:#F8FAFF !important;
+}
+
+body.dd-policy-modal-asset table tbody tr:hover td{
+  background:#EEF2FF !important;
+}
+
+body.dd-policy-modal-asset table tbody tr:last-child td{
+  border-bottom:0 !important;
+}
+
+/* ล้าง style จาก pandas/html_table เดิม */
+body.dd-policy-modal-asset table.dataframe,
+body.dd-policy-modal-asset table.summary-table,
+body.dd-policy-modal-asset table.priority-table,
+body.dd-policy-modal-asset table.whatif-table,
+body.dd-policy-modal-asset table.data-table{
+  width:100% !important;
+  border:0 !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+
+/* parent modal iframe ให้เต็มขึ้น */
+.dd-modal-dialog{
+  width:min(1280px,96vw) !important;
+  max-height:92vh !important;
+}
+
+.dd-modal-body{
+  padding:16px !important;
+  max-height:calc(92vh - 70px) !important;
+}
+
+.dd-clean-detail-frame,
+.dd-policy-detail-frame,
+.dd-iframe{
+  width:100% !important;
+  height:min(78vh,840px) !important;
+  border:0 !important;
+  border-radius:14px !important;
+  background:#FFFFFF !important;
+}
+
+@media(max-width:900px){
+  body.dd-policy-modal-asset table{
+    min-width:720px !important;
+    font-size:13px !important;
+  }
+
+  body.dd-policy-modal-asset table th,
+  body.dd-policy-modal-asset table td{
+    padding:10px 12px !important;
+  }
+
+  .dd-modal-body{
+    padding:12px !important;
+  }
+
+  .dd-clean-detail-frame,
+  .dd-policy-detail-frame,
+  .dd-iframe{
+    height:78vh !important;
+  }
+}
+</style>
+<style id="comfortable-insight-policy-chart-css">
+/* =========================================================
+   1) Pattern กลางสำหรับข้อความสรุปใต้กราฟ
+   ========================================================= */
+
+/* กล่องสรุปใต้กราฟ: ไม่ใช้เส้นประ */
+.section-insight,
+.dd-method-note{
+  background:#F8FAFF !important;
+  border:0 !important;
+  border-left:4px solid #F9A825 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin:16px 0 0 0 !important;
+  box-shadow:none !important;
+  color:#607D8B !important;
+  line-height:1.75 !important;
+}
+
+/* ตัวหนาในข้อความสรุปให้เป็นสีเทาเหมือนกันทั้งระบบ */
+.section-insight b,
+.section-insight strong,
+.section-insight .highlight,
+.section-insight .emphasis,
+.dd-method-note b,
+.dd-method-note strong{
+  color:#607D8B !important;
+  font-weight:800 !important;
+}
+
+/* ถ้ามี span หรือ inline style ที่บังคับสีน้ำเงิน ให้ลดความเข้มลง */
+.section-insight span[style],
+.section-insight b[style],
+.section-insight strong[style]{
+  color:#607D8B !important;
+}
+
+/* =========================================================
+   2) หน้า Policy: กราฟใน card หลักต้องไม่เป็น card ซ้อน
+   ใช้กับ:
+   - จัดลำดับความเร่งด่วนเชิงนโยบาย
+   - วิเคราะห์ทางเลือกเชิงนโยบาย
+   ========================================================= */
+
+.policy-priority-inline-card,
+.policy-whatif-inline-card{
+  overflow:visible !important;
+}
+
+/* chart-wrap ที่ดึงมาจาก asset เดิม ไม่ให้มีกรอบซ้อน */
+.policy-priority-inline-card .chart-wrap,
+.policy-whatif-inline-card .chart-wrap,
+.policy-priority-inline-card .dd-flat-policy-chart,
+.policy-whatif-inline-card .dd-flat-policy-chart{
+  width:100% !important;
+  max-width:100% !important;
+  margin:14px 0 0 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+/* กันกรอบจาก class เดิมที่ติดมากับไฟล์ลูก */
+.policy-priority-inline-card .section-card,
+.policy-priority-inline-card .dashboard-card,
+.policy-priority-inline-card .addon-card,
+.policy-priority-inline-card .data-card,
+.policy-priority-inline-card .summary-table-card,
+.policy-priority-inline-card .data-table-card,
+.policy-whatif-inline-card .section-card,
+.policy-whatif-inline-card .dashboard-card,
+.policy-whatif-inline-card .addon-card,
+.policy-whatif-inline-card .data-card,
+.policy-whatif-inline-card .summary-table-card,
+.policy-whatif-inline-card .data-table-card{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+/* section-head ชั้นที่ 2 ที่ใช้เป็นหัวข้อกราฟ ไม่ให้ดูเป็น block ซ้อน */
+.policy-priority-inline-card > .section-head + .section-head,
+.policy-whatif-inline-card > .section-head + .section-head{
+  border-bottom:0 !important;
+  padding-bottom:0 !important;
+  margin-top:8px !important;
+  margin-bottom:10px !important;
+}
+
+/* Insight ใต้กราฟในสอง card นี้ให้เป็น pattern เดียวกัน */
+.policy-priority-inline-card .section-insight,
+.policy-whatif-inline-card .section-insight{
+  background:#F8FAFF !important;
+  border:0 !important;
+  border-left:4px solid #F9A825 !important;
+  border-radius:14px !important;
+  padding:12px 14px !important;
+  margin:16px 0 0 0 !important;
+  box-shadow:none !important;
+  color:#607D8B !important;
+}
+
+.policy-priority-inline-card .section-insight b,
+.policy-priority-inline-card .section-insight strong,
+.policy-whatif-inline-card .section-insight b,
+.policy-whatif-inline-card .section-insight strong{
+  color:#607D8B !important;
+  font-weight:800 !important;
+}
+
+/* Plotly เต็มพื้นที่ */
+.policy-priority-inline-card .js-plotly-plot,
+.policy-priority-inline-card .plot-container,
+.policy-priority-inline-card .svg-container,
+.policy-whatif-inline-card .js-plotly-plot,
+.policy-whatif-inline-card .plot-container,
+.policy-whatif-inline-card .svg-container{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+/* ลดความรู้สึกแน่นบนมือถือ */
+@media(max-width:980px){
+  .section-insight,
+  .dd-method-note{
+    padding:11px 13px !important;
+  }
+
+  .policy-priority-inline-card .chart-wrap,
+  .policy-whatif-inline-card .chart-wrap{
+    margin-top:12px !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="dashboard-page">
+<header class="page-header">
+<h1 class="page-title">ความคิดเห็น ปัญหา ความต้องการสนับสนุน ทักษะ และการดูแลผู้เรียน</h1>
+<div class="page-subtitle">
+            แสดงการรวมข้อมูลด้านความกังวล ความต้องการสนับสนุน ทักษะที่ผู้เรียนรับรู้
+        </div>
+</header>
+<section class="section-card">
+<div class="section-head">
+<h2 class="section-title">ปัญหาหรือความกังวลเกี่ยวกับกิจกรรมอีสปอร์ต</h2>
+</div>
+<div class="chart-wrap">
+<div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+<script charset="utf-8" src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script> <div class="plotly-graph-div" id="88639d0d-1621-43f8-bb76-7f9c6fbbb11c" style="height:788px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("88639d0d-1621-43f8-bb76-7f9c6fbbb11c")) {                    Plotly.newPlot(                        "88639d0d-1621-43f8-bb76-7f9c6fbbb11c",                        [{"cliponaxis":false,"customdata":["อันดับ : \u003cb\u003e11\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eผู้ปกครองไม่สนับสนุน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e24 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e14.1%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ใช้ข้อมูลนี้ประกอบการออกแบบกิจกรรมและการดูแลผู้เรียนให้เหมาะสม\u003cbr\u003e","อันดับ : \u003cb\u003e9\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eอุปกรณ์ไม่พร้อม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e15.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรนำข้อมูลไปใช้วางแผนเรื่องอินเทอร์เน็ต อุปกรณ์ และพื้นที่กิจกรรม\u003cbr\u003e","อันดับ : \u003cb\u003e10\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eปัญหาสุขภาพ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e27 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e15.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรส่งเสริมการพักผ่อน การดูแลสุขภาพ และการเล่นอย่างสมดุล\u003cbr\u003e","อันดับ : \u003cb\u003e7\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eค่าใช้จ่ายในการเล่นเกม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e30 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e17.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ใช้ข้อมูลนี้ประกอบการออกแบบกิจกรรมและการดูแลผู้เรียนให้เหมาะสม\u003cbr\u003e","อันดับ : \u003cb\u003e8\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eไม่มีปัญหา\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e30 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e17.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : กลุ่มนี้ยังไม่พบข้อกังวล เหมาะกับกิจกรรมทั่วไปหรือกิจกรรมเริ่มต้น เช่น ชมการแข่งขันร่วมกัน หรืออบรมสร้างสื่อดิจิทัล\u003cbr\u003e","อันดับ : \u003cb\u003e6\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eกระทบต่อการเรียน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e32 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e18.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ใช้ข้อมูลนี้ประกอบการออกแบบกิจกรรมและการดูแลผู้เรียนให้เหมาะสม\u003cbr\u003e","อันดับ : \u003cb\u003e5\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eอาจเกิดการติดเกม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e42 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e24.7%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรให้ความรู้เรื่องการเล่นและดูแลผู้เรียนอย่างเหมาะสม\u003cbr\u003e","อันดับ : \u003cb\u003e4\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eความเครียดจากการแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e45 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e26.5%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรจัดกิจกรรมที่ไม่กดดัน และมีครูที่ปรึกษาคอยดูแล\u003cbr\u003e","อันดับ : \u003cb\u003e3\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eพักผ่อนไม่เพียงพอ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e46 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e27.1%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรส่งเสริมการพักผ่อน การดูแลสุขภาพ และการเล่นอย่างสมดุล\u003cbr\u003e","อันดับ : \u003cb\u003e2\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eอินเทอร์เน็ตไม่เสถียร\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e65 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e38.2%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรนำข้อมูลไปใช้วางแผนเรื่องอินเทอร์เน็ต อุปกรณ์ และพื้นที่กิจกรรม\u003cbr\u003e","อันดับ : \u003cb\u003e1\u003c\u002fb\u003e\u003cbr\u003eปัญหาหรือความกังวล : \u003cb\u003eใช้เวลาเล่นมากเกินไป\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e67 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e39.4%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางตอบสนอง : ควรช่วยผู้เรียนวางแผนเวลาเล่นและกำหนดตารางกิจกรรมให้เหมาะสม\u003cbr\u003e"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"ปัญหาหรือความกังวล","orientation":"h","showlegend":false,"text":["24 คน · 14.1%","27 คน · 15.9%","27 คน · 15.9%","30 คน · 17.6%","30 คน · 17.6%","32 คน · 18.8%","42 คน · 24.7%","45 คน · 26.5%","46 คน · 27.1%","65 คน · 38.2%","67 คน · 39.4%"],"textposition":"outside","x":[24,27,27,30,30,32,42,45,46,65,67],"y":["ผู้ปกครองไม่สนับสนุน","อุปกรณ์ไม่พร้อม","ปัญหาสุขภาพ","ค่าใช้จ่ายในการเล่นเกม","ไม่มีปัญหา","กระทบต่อการเรียน","อาจเกิดการติดเกม","ความเครียดจากการแข่งขัน","พักผ่อนไม่เพียงพอ","อินเทอร์เน็ตไม่เสถียร","ใช้เวลาเล่นมากเกินไป"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":330,"r":110,"t":24,"b":88},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":788,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"จำนวนผู้เลือก"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,89.78],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+            ปัญหาที่พบมากที่สุดคือ <b>ใช้เวลาเล่นมากเกินไป</b> (67 คน · 39.4%) ควรนำข้อมูลนี้ไปใช้วางแผนดูแลผู้เรียนและออกแบบกิจกรรมให้เหมาะสม
+        </div>
+<div class="summary-table-card clean-summary-table-card" id="problem-summary-table-card">
+<div class="table-action-row">
+<button class="toggle-table-btn" onclick="toggleSummaryTable('problem-summary-table', this)" type="button">
+                ดูตาราง
+            </button>
+</div>
+<div class="table-collapsible" id="problem-summary-table" style="display:none;">
+<div class="table-open-head">
+<h3>ตารางสรุปปัญหาหรือความกังวล</h3>
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>จำนวนผู้เลือก = นับจำนวนผู้ตอบที่เลือกปัญหาหรือความกังวลนั้น</li><li>ร้อยละ = (จำนวนผู้เลือก ÷ จำนวนผู้ตอบทั้งหมด) × 100</li><li>อันดับ = เรียงจากจำนวนผู้เลือกมากที่สุดไปน้อยที่สุด</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>อันดับ</b>
+<span>ลำดับของประเด็นตามจำนวนผู้เลือก</span>
+</div>
+<div class="explain-item">
+<b>ปัญหาหรือความกังวล</b>
+<span>ประเด็นที่ผู้เรียนเลือกเกี่ยวกับอีสปอร์ต</span>
+</div>
+<div class="explain-item">
+<b>จำนวนผู้เลือก</b>
+<span>จำนวนผู้ตอบที่เลือกประเด็นนั้น</span>
+</div>
+<div class="explain-item">
+<b>ร้อยละ</b>
+<span>สัดส่วนเมื่อเทียบกับผู้ตอบทั้งหมด</span>
+</div>
+<div class="explain-item">
+<b>แนวทางตอบสนอง</b>
+<span>ข้อเสนอเบื้องต้นสำหรับนำไปวางมาตรการดูแล</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table" style="min-width:760px;">
+<thead>
+<tr><th>อันดับ</th><th>ปัญหาหรือความกังวล</th><th>จำนวนผู้เลือก</th><th>ร้อยละ</th><th>แนวทางตอบสนอง</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="text-cell">ใช้เวลาเล่นมากเกินไป</td><td class="num-cell">67 คน</td><td class="num-cell">39.4%</td><td class="text-cell">ควรช่วยผู้เรียนวางแผนเวลาเล่นและกำหนดตารางกิจกรรมให้เหมาะสม</td></tr><tr><td class="num-cell">2</td><td class="text-cell">อินเทอร์เน็ตไม่เสถียร</td><td class="num-cell">65 คน</td><td class="num-cell">38.2%</td><td class="text-cell">ควรนำข้อมูลไปใช้วางแผนเรื่องอินเทอร์เน็ต อุปกรณ์ และพื้นที่กิจกรรม</td></tr><tr><td class="num-cell">3</td><td class="text-cell">พักผ่อนไม่เพียงพอ</td><td class="num-cell">46 คน</td><td class="num-cell">27.1%</td><td class="text-cell">ควรส่งเสริมการพักผ่อน การดูแลสุขภาพ และการเล่นอย่างสมดุล</td></tr><tr><td class="num-cell">4</td><td class="text-cell">ความเครียดจากการแข่งขัน</td><td class="num-cell">45 คน</td><td class="num-cell">26.5%</td><td class="text-cell">ควรจัดกิจกรรมที่ไม่กดดัน และมีครูที่ปรึกษาคอยดูแล</td></tr><tr><td class="num-cell">5</td><td class="text-cell">อาจเกิดการติดเกม</td><td class="num-cell">42 คน</td><td class="num-cell">24.7%</td><td class="text-cell">ควรให้ความรู้เรื่องการเล่นและดูแลผู้เรียนอย่างเหมาะสม</td></tr><tr><td class="num-cell">6</td><td class="text-cell">กระทบต่อการเรียน</td><td class="num-cell">32 คน</td><td class="num-cell">18.8%</td><td class="text-cell">ใช้ข้อมูลนี้ประกอบการออกแบบกิจกรรมและการดูแลผู้เรียนให้เหมาะสม</td></tr><tr><td class="num-cell">7</td><td class="text-cell">ค่าใช้จ่ายในการเล่นเกม</td><td class="num-cell">30 คน</td><td class="num-cell">17.6%</td><td class="text-cell">ใช้ข้อมูลนี้ประกอบการออกแบบกิจกรรมและการดูแลผู้เรียนให้เหมาะสม</td></tr><tr><td class="num-cell">8</td><td class="text-cell">ไม่มีปัญหา</td><td class="num-cell">30 คน</td><td class="num-cell">17.6%</td><td class="text-cell">กลุ่มนี้ยังไม่พบข้อกังวล เหมาะกับกิจกรรมทั่วไปหรือกิจกรรมเริ่มต้น เช่น ชมการแข่งขันร่วมกัน หรืออบรมสร้างสื่อดิจิทัล</td></tr><tr><td class="num-cell">9</td><td class="text-cell">อุปกรณ์ไม่พร้อม</td><td class="num-cell">27 คน</td><td class="num-cell">15.9%</td><td class="text-cell">ควรนำข้อมูลไปใช้วางแผนเรื่องอินเทอร์เน็ต อุปกรณ์ และพื้นที่กิจกรรม</td></tr><tr><td class="num-cell">10</td><td class="text-cell">ปัญหาสุขภาพ</td><td class="num-cell">27 คน</td><td class="num-cell">15.9%</td><td class="text-cell">ควรส่งเสริมการพักผ่อน การดูแลสุขภาพ และการเล่นอย่างสมดุล</td></tr><tr><td class="num-cell">11</td><td class="text-cell">ผู้ปกครองไม่สนับสนุน</td><td class="num-cell">24 คน</td><td class="num-cell">14.1%</td><td class="text-cell">ใช้ข้อมูลนี้ประกอบการออกแบบกิจกรรมและการดูแลผู้เรียนให้เหมาะสม</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+<section class="section-card">
+<div class="section-head">
+<h2 class="section-title">สิ่งที่ผู้เรียนต้องการให้สถานศึกษาสนับสนุน</h2>
+</div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="54412cf5-1fd3-44a5-80a7-cd2a53be8448" style="height:548px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("54412cf5-1fd3-44a5-80a7-cd2a53be8448")) {                    Plotly.newPlot(                        "54412cf5-1fd3-44a5-80a7-cd2a53be8448",                        [{"cliponaxis":false,"customdata":["อันดับ : \u003cb\u003e6\u003c\u002fb\u003e\u003cbr\u003eความต้องการสนับสนุน : \u003cb\u003eทุนหรือการสนับสนุนการแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e43 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e25.3%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางนำไปใช้ : ควรจัดการแข่งขันให้มีระบบ กติกาชัดเจน และส่งเสริมการทำงานเป็นทีม\u003cbr\u003e","อันดับ : \u003cb\u003e5\u003c\u002fb\u003e\u003cbr\u003eความต้องการสนับสนุน : \u003cb\u003eสถานที่สำหรับฝึกซ้อมหรือแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e47 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e27.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางนำไปใช้ : ควรจัดการแข่งขันให้มีระบบ กติกาชัดเจน และส่งเสริมการทำงานเป็นทีม\u003cbr\u003e","อันดับ : \u003cb\u003e4\u003c\u002fb\u003e\u003cbr\u003eความต้องการสนับสนุน : \u003cb\u003eการจัดการแข่งขันอีสปอร์ต\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e55 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e32.4%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางนำไปใช้ : ควรจัดการแข่งขันให้มีระบบ กติกาชัดเจน และส่งเสริมการทำงานเป็นทีม\u003cbr\u003e","อันดับ : \u003cb\u003e3\u003c\u002fb\u003e\u003cbr\u003eความต้องการสนับสนุน : \u003cb\u003eชมรมหรือทีมอีสปอร์ต\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e55 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e32.4%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางนำไปใช้ : เหมาะสำหรับการต่อยอดเป็นชมรมอีสปอร์ต ทีมตัวแทน หรือกิจกรรมต่อเนื่อง\u003cbr\u003e","อันดับ : \u003cb\u003e2\u003c\u002fb\u003e\u003cbr\u003eความต้องการสนับสนุน : \u003cb\u003eอุปกรณ์สำหรับเล่นเกม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e56 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e32.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางนำไปใช้ : ควรเตรียมอุปกรณ์หรือคอมพิวเตอร์ให้เพียงพอต่อการใช้งาน\u003cbr\u003e","อันดับ : \u003cb\u003e1\u003c\u002fb\u003e\u003cbr\u003eความต้องการสนับสนุน : \u003cb\u003eอินเทอร์เน็ต \u002f Wi-Fi\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เลือก : \u003cb\u003e104 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e61.2%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางนำไปใช้ : ควรพัฒนา Wi-Fi หรืออินเทอร์เน็ตให้พร้อมสำหรับการจัดกิจกรรม\u003cbr\u003e"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"ความต้องการสนับสนุน","orientation":"h","showlegend":false,"text":["43 คน · 25.3%","47 คน · 27.6%","55 คน · 32.4%","55 คน · 32.4%","56 คน · 32.9%","104 คน · 61.2%"],"textposition":"outside","x":[43,47,55,55,56,104],"y":["ทุนหรือการสนับสนุนการแข่งขัน","สถานที่สำหรับฝึกซ้อมหรือแข่งขัน","การจัดการแข่งขันอีสปอร์ต","ชมรมหรือทีมอีสปอร์ต","อุปกรณ์สำหรับเล่นเกม","อินเทอร์เน็ต \u002f Wi-Fi"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":330,"r":110,"t":24,"b":88},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":548,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"จำนวนผู้เลือก"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,139.36],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+            สิ่งที่ผู้เรียนต้องการให้สถานศึกษาสนับสนุนมากที่สุดคือ <b>อินเทอร์เน็ต / Wi-Fi</b> (104 คน · 61.2%) ซึ่งสามารถใช้เป็นข้อมูลจัดลำดับทรัพยากรและนโยบายกิจกรรมด้านกีฬาอีสปอร์ต
+        </div>
+<div class="summary-table-card clean-summary-table-card" id="support-summary-table-card">
+<div class="table-action-row">
+<button class="toggle-table-btn" onclick="toggleSummaryTable('support-summary-table', this)" type="button">
+                ดูตาราง
+            </button>
+</div>
+<div class="table-collapsible" id="support-summary-table" style="display:none;">
+<div class="table-open-head">
+<h3>ตารางสรุปความต้องการสนับสนุน</h3>
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>จำนวนผู้เลือก = นับจำนวนผู้ตอบที่เลือกความต้องการสนับสนุนนั้น</li><li>ร้อยละ = (จำนวนผู้เลือก ÷ จำนวนผู้ตอบทั้งหมด) × 100</li><li>อันดับ = เรียงจากจำนวนผู้เลือกมากที่สุดไปน้อยที่สุด</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>อันดับ</b>
+<span>ลำดับความต้องการตามจำนวนผู้เลือก</span>
+</div>
+<div class="explain-item">
+<b>ความต้องการสนับสนุน</b>
+<span>สิ่งที่ผู้เรียนต้องการให้สถานศึกษาสนับสนุน</span>
+</div>
+<div class="explain-item">
+<b>จำนวนผู้เลือก</b>
+<span>จำนวนผู้ตอบที่เลือกความต้องการนั้น</span>
+</div>
+<div class="explain-item">
+<b>ร้อยละ</b>
+<span>สัดส่วนเมื่อเทียบกับผู้ตอบทั้งหมด</span>
+</div>
+<div class="explain-item">
+<b>แนวทางนำไปใช้</b>
+<span>แนวทางใช้ข้อมูลเพื่อจัดลำดับทรัพยากรหรือกิจกรรม</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table" style="min-width:760px;">
+<thead>
+<tr><th>อันดับ</th><th>ความต้องการสนับสนุน</th><th>จำนวนผู้เลือก</th><th>ร้อยละ</th><th>แนวทางนำไปใช้</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="text-cell">อินเทอร์เน็ต / Wi-Fi</td><td class="num-cell">104 คน</td><td class="num-cell">61.2%</td><td class="text-cell">ควรพัฒนา Wi-Fi หรืออินเทอร์เน็ตให้พร้อมสำหรับการจัดกิจกรรม</td></tr><tr><td class="num-cell">2</td><td class="text-cell">อุปกรณ์สำหรับเล่นเกม</td><td class="num-cell">56 คน</td><td class="num-cell">32.9%</td><td class="text-cell">ควรเตรียมอุปกรณ์หรือคอมพิวเตอร์ให้เพียงพอต่อการใช้งาน</td></tr><tr><td class="num-cell">3</td><td class="text-cell">ชมรมหรือทีมอีสปอร์ต</td><td class="num-cell">55 คน</td><td class="num-cell">32.4%</td><td class="text-cell">เหมาะสำหรับการต่อยอดเป็นชมรมอีสปอร์ต ทีมตัวแทน หรือกิจกรรมต่อเนื่อง</td></tr><tr><td class="num-cell">4</td><td class="text-cell">การจัดการแข่งขันอีสปอร์ต</td><td class="num-cell">55 คน</td><td class="num-cell">32.4%</td><td class="text-cell">ควรจัดการแข่งขันให้มีระบบ กติกาชัดเจน และส่งเสริมการทำงานเป็นทีม</td></tr><tr><td class="num-cell">5</td><td class="text-cell">สถานที่สำหรับฝึกซ้อมหรือแข่งขัน</td><td class="num-cell">47 คน</td><td class="num-cell">27.6%</td><td class="text-cell">ควรจัดการแข่งขันให้มีระบบ กติกาชัดเจน และส่งเสริมการทำงานเป็นทีม</td></tr><tr><td class="num-cell">6</td><td class="text-cell">ทุนหรือการสนับสนุนการแข่งขัน</td><td class="num-cell">43 คน</td><td class="num-cell">25.3%</td><td class="text-cell">ควรจัดการแข่งขันให้มีระบบ กติกาชัดเจน และส่งเสริมการทำงานเป็นทีม</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section-note">
+            หมายเหตุ : ผลลัพธ์ใช้สำหรับจัดลำดับทรัพยากรเบื้องต้น ควรพิจารณาร่วมกับงบประมาณและบริบทของสถานศึกษา
+        </div>
+</section>
+<div class="section-divider"></div>
+<section class="section-card">
+<div class="section-head">
+<h2 class="section-title">ทักษะที่ผู้เรียนคิดว่าได้รับจากเกมและกีฬาอีสปอร์ต</h2>
+</div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="76d26b73-2e06-40bc-8fe7-df069c34c72f" style="height:712px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("76d26b73-2e06-40bc-8fe7-df069c34c72f")) {                    Plotly.newPlot(                        "76d26b73-2e06-40bc-8fe7-df069c34c72f",                        [{"cliponaxis":false,"customdata":["อันดับ : \u003cb\u003e9\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการควบคุมอารมณ์ตัวเอง\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e0.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมดูแลตนเอง จัดการเวลา และควบคุมอารมณ์\u003cbr\u003e","อันดับ : \u003cb\u003e8\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eภาษาอังกฤษ\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e16.5%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : ใช้เป็นแนวทางออกแบบกิจกรรมให้ตรงกับทักษะที่ผู้เรียนได้รับ\u003cbr\u003e","อันดับ : \u003cb\u003e7\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการใช้เทคโนโลยีและอุปกรณ์ดิจิทัล\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e22.4%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับการเชื่อมโยงรายวิชา เช่น การวิเคราะห์ข้อมูล, การประยุกต์ AI สำหรับงานธุรกิจ, สื่อดิจิทัล\u003cbr\u003e","อันดับ : \u003cb\u003e6\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eความคิดสร้างสรรค์\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e26.5%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมสร้างคอนเทนต์ โปสเตอร์ วิดีโอ หรือสื่อประชาสัมพันธ์\u003cbr\u003e","อันดับ : \u003cb\u003e5\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการตัดสินใจ\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e35.3%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมแก้ปัญหาและฝึกตัดสินใจจากสถานการณ์จริง\u003cbr\u003e","อันดับ : \u003cb\u003e4\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการวางแผน\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e38.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมวิเคราะห์เกม วางแผน และฝึกตัดสินใจ\u003cbr\u003e","อันดับ : \u003cb\u003e3\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการสื่อสาร\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e42.4%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมพากย์เกม นำเสนอแผน หรือสรุปผลหลังเล่น\u003cbr\u003e","อันดับ : \u003cb\u003e2\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการคิดวิเคราะห์และแก้ปัญหา\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e42.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมแก้ปัญหาและฝึกตัดสินใจจากสถานการณ์จริง\u003cbr\u003e","อันดับ : \u003cb\u003e1\u003c\u002fb\u003e\u003cbr\u003eทักษะที่ผู้เรียนคิดว่าได้รับ : \u003cb\u003eการทำงานเป็นทีม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้เรียนที่เลือกทักษะนี้ : \u003cb\u003e61.2%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางจัดการเรียนรู้ : เหมาะกับกิจกรรมกลุ่ม เช่น ทีมแข่งขัน ทีมวิเคราะห์เกม หรือทีมจัดกิจกรรม\u003cbr\u003e"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"ทักษะที่ผู้เรียนรับรู้","orientation":"h","showlegend":false,"text":["0.6%","16.5%","22.4%","26.5%","35.3%","38.8%","42.4%","42.9%","61.2%"],"textposition":"outside","x":[0.5882352941176471,16.470588235294116,22.35294117647059,26.47058823529412,35.294117647058826,38.82352941176471,42.35294117647059,42.94117647058823,61.1764705882353],"y":["การควบคุมอารมณ์ตัวเอง","ภาษาอังกฤษ","การใช้เทคโนโลยีและอุปกรณ์ดิจิทัล","ความคิดสร้างสรรค์","การตัดสินใจ","การวางแผน","การสื่อสาร","การคิดวิเคราะห์และแก้ปัญหา","การทำงานเป็นทีม"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":330,"r":110,"t":24,"b":90},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":712,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละของผู้ตอบที่เลือกทักษะนี้"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,79.52941176470588],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+            ทักษะที่ผู้เรียนรับรู้ว่าได้รับมากที่สุดคือ <b>การทำงานเป็นทีม</b> คิดเป็น <b>61.2%</b> ของผู้ตอบ จึงเหมาะใช้เป็นแกนหลักในการออกแบบกิจกรรมการเรียนรู้ผ่านอีสปอร์ต
+        </div>
+<div class="summary-table-card clean-summary-table-card" id="skill-summary-table-card">
+<div class="table-action-row">
+<button class="toggle-table-btn" onclick="toggleSummaryTable('skill-summary-table', this)" type="button">
+                ดูตาราง
+            </button>
+</div>
+<div class="table-collapsible" id="skill-summary-table" style="display:none;">
+<div class="table-open-head">
+<h3>ตารางสรุปทักษะที่ผู้เรียนคิดว่าได้รับ</h3>
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>ร้อยละ = (จำนวนผู้ตอบที่เลือกทักษะนั้น ÷ จำนวนผู้ตอบทั้งหมด) × 100</li><li>อันดับ = เรียงจากร้อยละมากที่สุดไปน้อยที่สุด</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>อันดับ</b>
+<span>ลำดับของทักษะตามร้อยละของผู้เลือก</span>
+</div>
+<div class="explain-item">
+<b>ทักษะที่ผู้เรียนคิดว่าได้รับ</b>
+<span>ทักษะที่ผู้เรียนรับรู้ว่าเกิดจากเกมหรืออีสปอร์ต</span>
+</div>
+<div class="explain-item">
+<b>ร้อยละของผู้ตอบที่เลือก</b>
+<span>สัดส่วนผู้ตอบที่เลือกทักษะนั้น</span>
+</div>
+<div class="explain-item">
+<b>แนวทางจัดการเรียนรู้</b>
+<span>แนวทางเชื่อมทักษะกับกิจกรรมการเรียนรู้</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table" style="min-width:760px;">
+<thead>
+<tr><th>อันดับ</th><th>ทักษะที่ผู้เรียนคิดว่าได้รับ</th><th>ร้อยละของผู้ตอบที่เลือก</th><th>แนวทางจัดการเรียนรู้</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="text-cell">การทำงานเป็นทีม</td><td class="num-cell">61.2%</td><td class="text-cell">เหมาะกับกิจกรรมกลุ่ม เช่น ทีมแข่งขัน ทีมวิเคราะห์เกม หรือทีมจัดกิจกรรม</td></tr><tr><td class="num-cell">2</td><td class="text-cell">การคิดวิเคราะห์และแก้ปัญหา</td><td class="num-cell">42.9%</td><td class="text-cell">เหมาะกับกิจกรรมแก้ปัญหาและฝึกตัดสินใจจากสถานการณ์จริง</td></tr><tr><td class="num-cell">3</td><td class="text-cell">การสื่อสาร</td><td class="num-cell">42.4%</td><td class="text-cell">เหมาะกับกิจกรรมพากย์เกม นำเสนอแผน หรือสรุปผลหลังเล่น</td></tr><tr><td class="num-cell">4</td><td class="text-cell">การวางแผน</td><td class="num-cell">38.8%</td><td class="text-cell">เหมาะกับกิจกรรมวิเคราะห์เกม วางแผน และฝึกตัดสินใจ</td></tr><tr><td class="num-cell">5</td><td class="text-cell">การตัดสินใจ</td><td class="num-cell">35.3%</td><td class="text-cell">เหมาะกับกิจกรรมแก้ปัญหาและฝึกตัดสินใจจากสถานการณ์จริง</td></tr><tr><td class="num-cell">6</td><td class="text-cell">ความคิดสร้างสรรค์</td><td class="num-cell">26.5%</td><td class="text-cell">เหมาะกับกิจกรรมสร้างคอนเทนต์ โปสเตอร์ วิดีโอ หรือสื่อประชาสัมพันธ์</td></tr><tr><td class="num-cell">7</td><td class="text-cell">การใช้เทคโนโลยีและอุปกรณ์ดิจิทัล</td><td class="num-cell">22.4%</td><td class="text-cell">เหมาะกับการเชื่อมโยงรายวิชา เช่น การวิเคราะห์ข้อมูล, การประยุกต์ AI สำหรับงานธุรกิจ, สื่อดิจิทัล</td></tr><tr><td class="num-cell">8</td><td class="text-cell">ภาษาอังกฤษ</td><td class="num-cell">16.5%</td><td class="text-cell">ใช้เป็นแนวทางออกแบบกิจกรรมให้ตรงกับทักษะที่ผู้เรียนได้รับ</td></tr><tr><td class="num-cell">9</td><td class="text-cell">การควบคุมอารมณ์ตัวเอง</td><td class="num-cell">0.6%</td><td class="text-cell">เหมาะกับกิจกรรมดูแลตนเอง จัดการเวลา และควบคุมอารมณ์</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+<section class="section-card">
+<div class="section-head">
+<h2 class="section-title">แผนภูมิสี่ส่วน ความสนใจ/ศักยภาพ × ความเสี่ยง</h2>
+</div>
+<div class="chart-wrap">
+<div> <div class="plotly-graph-div" id="74ea208a-b916-4e13-bb0f-6aa76ab56602" style="height:720px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("74ea208a-b916-4e13-bb0f-6aa76ab56602")) {                    Plotly.newPlot(                        "74ea208a-b916-4e13-bb0f-6aa76ab56602",                        [{"customdata":["กลุ่มผู้เรียน : \u003cb\u003eกลุ่มต้องการสนับสนุนและควรดูแลสมดุล\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e5 คน\u003c\u002fb\u003e\u003cbr\u003eคะแนนศักยภาพการเข้าร่วม : \u003cb\u003e61.0\u003c\u002fb\u003e\u003cbr\u003eคะแนนความเสี่ยง\u002fความกังวล : \u003cb\u003e68.0\u003c\u002fb\u003e\u003cbr\u003eคะแนนความต้องการสนับสนุน : \u003cb\u003e63.3\u003c\u002fb\u003e\u003cbr\u003eโซนการวิเคราะห์ : \u003cb\u003eสนใจสูง + เสี่ยงสูง\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางดำเนินการ : ควรส่งเสริมพร้อมดูแล เช่น กำหนดตารางซ้อม พักผ่อนให้พอ และมีครูที่ปรึกษา\u003cbr\u003e\u003cbr\u003eข้อเสนอเชิงนโยบาย : พัฒนาเครือข่ายอินเทอร์เน็ต อุปกรณ์ สุขภาวะดิจิทัล และระบบติดตามเวลา","กลุ่มผู้เรียน : \u003cb\u003eกลุ่มมีศักยภาพพัฒนาเป็นทีม\u002fชมรม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e28 คน\u003c\u002fb\u003e\u003cbr\u003eคะแนนศักยภาพการเข้าร่วม : \u003cb\u003e97.8\u003c\u002fb\u003e\u003cbr\u003eคะแนนความเสี่ยง\u002fความกังวล : \u003cb\u003e37.1\u003c\u002fb\u003e\u003cbr\u003eคะแนนความต้องการสนับสนุน : \u003cb\u003e57.7\u003c\u002fb\u003e\u003cbr\u003eโซนการวิเคราะห์ : \u003cb\u003eสนใจสูง + เสี่ยงต่ำ\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางดำเนินการ : เหมาะสำหรับเริ่มกิจกรรม เช่น ชมรม การแข่งขันภายในกลุ่มย่อย หรือทีมต้นแบบ\u003cbr\u003e\u003cbr\u003eข้อเสนอเชิงนโยบาย : จัดตั้งชมรมหรือทีมอีสปอร์ต พร้อมโค้ช ตารางซ้อม และกติกาสุขภาวะ","กลุ่มผู้เรียน : \u003cb\u003eกลุ่มสนใจต่ำ\u002fเหมาะกับกิจกรรมเบื้องต้น\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e47 คน\u003c\u002fb\u003e\u003cbr\u003eคะแนนศักยภาพการเข้าร่วม : \u003cb\u003e24.1\u003c\u002fb\u003e\u003cbr\u003eคะแนนความเสี่ยง\u002fความกังวล : \u003cb\u003e16.2\u003c\u002fb\u003e\u003cbr\u003eคะแนนความต้องการสนับสนุน : \u003cb\u003e24.5\u003c\u002fb\u003e\u003cbr\u003eโซนการวิเคราะห์ : \u003cb\u003eสนใจต่ำ + เสี่ยงต่ำ\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางดำเนินการ : เหมาะกับกิจกรรมเบื้องต้น เช่น ประชาสัมพันธ์ ทดลองกิจกรรม ประยุกต์กับรายวิชา\u003cbr\u003e\u003cbr\u003eข้อเสนอเชิงนโยบาย : ประชาสัมพันธ์กิจกรรมสายอาชีพ เช่น งานกราฟิก การสร้างสื่อดิจิทัล ทีมงานจัดกิจกรรม และห้องปฏิบัติการวิเคราะห์ข้อมูล","กลุ่มผู้เรียน : \u003cb\u003eกลุ่มสนใจแต่ยังต้องทดลองกิจกรรม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e90 คน\u003c\u002fb\u003e\u003cbr\u003eคะแนนศักยภาพการเข้าร่วม : \u003cb\u003e44.2\u003c\u002fb\u003e\u003cbr\u003eคะแนนความเสี่ยง\u002fความกังวล : \u003cb\u003e21.2\u003c\u002fb\u003e\u003cbr\u003eคะแนนความต้องการสนับสนุน : \u003cb\u003e32.4\u003c\u002fb\u003e\u003cbr\u003eโซนการวิเคราะห์ : \u003cb\u003eสนใจต่ำ + เสี่ยงต่ำ\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางดำเนินการ : เหมาะกับกิจกรรมเบื้องต้น เช่น ประชาสัมพันธ์ ทดลองกิจกรรม ประยุกต์กับรายวิชา\u003cbr\u003e\u003cbr\u003eข้อเสนอเชิงนโยบาย : จัดกิจกรรมทดลอง เช่น กิจกรรมเปิดบ้าน กิจกรรมรับชมการแข่งขันร่วมกัน การแข่งขันขนาดเล็ก และกิจกรรมอบรมเชิงปฏิบัติการวิเคราะห์เกม"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":2},"opacity":0.82,"size":[22.360679774997898,52.91502622129181,68.55654600401044,94.86832980505139]},"mode":"markers+text","name":"กลุ่มผู้เรียน","showlegend":false,"text":["กลุ่มควรดูแล","กลุ่มศักยภาพ","กลุ่มเริ่มต้น","กลุ่มเปิดรับ"],"textfont":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"textposition":["top center","bottom center","middle right","middle left"],"x":[61.0,97.8,24.1,44.2],"y":[68.0,37.1,16.2,21.2],"type":"scatter"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"shapes":[{"fillcolor":"rgba(187,222,251,0.22)","layer":"below","line":{"width":0},"type":"rect","x0":0,"x1":50,"y0":0,"y1":50},{"fillcolor":"rgba(187,222,251,0.22)","layer":"below","line":{"width":0},"type":"rect","x0":50,"x1":100,"y0":0,"y1":50},{"fillcolor":"rgba(187,222,251,0.22)","layer":"below","line":{"width":0},"type":"rect","x0":0,"x1":50,"y0":50,"y1":100},{"fillcolor":"rgba(187,222,251,0.22)","layer":"below","line":{"width":0},"type":"rect","x0":50,"x1":100,"y0":50,"y1":100},{"line":{"color":"#607D8B","dash":"dash","width":1.2},"type":"line","x0":50,"x1":50,"xref":"x","y0":0,"y1":1,"yref":"y domain"},{"line":{"color":"#607D8B","dash":"dash","width":1.2},"type":"line","x0":0,"x1":1,"xref":"x domain","y0":50,"y1":50,"yref":"y"}],"annotations":[{"align":"center","bgcolor":"rgba(255,255,255,0.88)","bordercolor":"#E8EAF6","borderwidth":1,"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"showarrow":false,"text":"\u003cb\u003eควรลงทุนและเริ่มกิจกรรม\u003c\u002fb\u003e\u003cbr\u003eผู้เรียนพร้อมเข้าร่วม และต้องการการสนับสนุน","x":76,"y":88},{"align":"center","bgcolor":"rgba(255,255,255,0.88)","bordercolor":"#E8EAF6","borderwidth":1,"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"showarrow":false,"text":"\u003cb\u003eพร้อมเริ่มได้เร็ว\u003c\u002fb\u003e\u003cbr\u003eเหมาะกับชมรม กิจกรรมทดลอง หรือ Mini Tournament","x":24,"y":88},{"align":"center","bgcolor":"rgba(255,255,255,0.88)","bordercolor":"#E8EAF6","borderwidth":1,"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"showarrow":false,"text":"\u003cb\u003eควรแก้อุปสรรคก่อน\u003c\u002fb\u003e\u003cbr\u003eสนับสนุนพื้นฐานก่อนขยายกิจกรรม","x":76,"y":18},{"align":"center","bgcolor":"rgba(255,255,255,0.88)","bordercolor":"#E8EAF6","borderwidth":1,"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"showarrow":false,"text":"\u003cb\u003eสร้างการรับรู้ก่อน\u003c\u002fb\u003e\u003cbr\u003eเริ่มจากประชาสัมพันธ์และกิจกรรมเบื้องต้น","x":24,"y":18}],"margin":{"l":90,"r":70,"t":24,"b":92},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":720,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"คะแนนศักยภาพการเข้าร่วมกิจกรรม"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,100],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"คะแนนความเสี่ยงและความกังวล"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,100],"showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+</div>
+<div class="section-insight" style="">
+            กลุ่มที่มีจำนวนมากที่สุดคือ <b>กลุ่มสนใจแต่ยังต้องทดลองกิจกรรม</b> (90 คน) อยู่ในโซน <b>สนใจต่ำ + เสี่ยงต่ำ</b> จึงควรใช้เป็นกลุ่มหลักในการออกแบบมาตรการเริ่มต้น
+        </div>
+<div class="summary-table-card clean-summary-table-card" id="quadrant-summary-table-card">
+<div class="table-action-row">
+<button class="toggle-table-btn" onclick="toggleSummaryTable('quadrant-summary-table', this)" type="button">
+                ดูตาราง
+            </button>
+</div>
+<div class="table-collapsible" id="quadrant-summary-table" style="display:none;">
+<div class="table-open-head">
+<h3>ตารางสรุปกลุ่มผู้เรียนจากแผนภูมิสี่ส่วน</h3>
+<details class="table-help-detail">
+<summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
+<div class="table-help-body">
+<div class="formula-note">
+<div class="formula-title">วิธีอ่านตาราง / สูตรที่ใช้คำนวณ</div>
+<ul><li>จำนวนผู้เรียน = นับผู้เรียนในแต่ละกลุ่ม</li><li>คะแนนแต่ละด้าน = ค่าเฉลี่ยของคะแนนผู้เรียนในกลุ่มนั้น</li><li>โซนการวิเคราะห์ = ใช้คะแนนศักยภาพและคะแนนความเสี่ยง แบ่งด้วยเกณฑ์ 50 คะแนน</li></ul>
+</div>
+<div class="table-explain">
+<div class="table-explain-title">ความหมายของคอลัมน์</div>
+<div class="table-explain-grid">
+<div class="explain-item">
+<b>กลุ่มผู้เรียน</b>
+<span>ชื่อกลุ่มนักเรียนที่ได้จากการวิเคราะห์</span>
+</div>
+<div class="explain-item">
+<b>จำนวนผู้เรียน</b>
+<span>จำนวนคนในกลุ่มนั้น</span>
+</div>
+<div class="explain-item">
+<b>คะแนนศักยภาพ</b>
+<span>ค่าเฉลี่ยความพร้อมหรือแนวโน้มเข้าร่วมกิจกรรม</span>
+</div>
+<div class="explain-item">
+<b>คะแนนความเสี่ยง</b>
+<span>ค่าเฉลี่ยระดับความกังวลหรือความเสี่ยง</span>
+</div>
+<div class="explain-item">
+<b>คะแนนความต้องการสนับสนุน</b>
+<span>ค่าเฉลี่ยความต้องการทรัพยากรหรือการช่วยเหลือ</span>
+</div>
+<div class="explain-item">
+<b>โซนการวิเคราะห์</b>
+<span>ตำแหน่งของกลุ่มบแผนภูมิสี่ส่วน</span>
+</div>
+<div class="explain-item">
+<b>แนวทางดำเนินการ</b>
+<span>แนวทางที่เหมาะกับกลุ่มนั้น</span>
+</div>
+<div class="explain-item">
+<b>ข้อเสนอเชิงนโยบาย</b>
+<span>ข้อเสนอสำหรับนำไปใช้วางแผนกิจกรรม</span>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="table-wrapper clean-table-wrapper">
+<table class="smart-table clean-smart-table" style="min-width:760px;">
+<thead>
+<tr><th>กลุ่มผู้เรียน</th><th>จำนวนผู้เรียน</th><th>คะแนนศักยภาพ</th><th>คะแนนความเสี่ยง</th><th>คะแนนความต้องการสนับสนุน</th><th>โซนการวิเคราะห์</th><th>แนวทางดำเนินการ</th><th>ข้อเสนอเชิงนโยบาย</th></tr>
+</thead>
+<tbody>
+<tr><td class="text-cell">กลุ่มสนใจแต่ยังต้องทดลองกิจกรรม</td><td class="num-cell">90 คน</td><td class="num-cell">44.2</td><td class="num-cell">21.2</td><td class="num-cell">32.4</td><td class="text-cell">สนใจต่ำ + เสี่ยงต่ำ</td><td class="text-cell">เหมาะกับกิจกรรมเบื้องต้น เช่น ประชาสัมพันธ์ ทดลองกิจกรรม ประยุกต์กับรายวิชา</td><td class="text-cell">จัดกิจกรรมทดลอง เช่น กิจกรรมเปิดบ้าน กิจกรรมรับชมการแข่งขันร่วมกัน การแข่งขันขนาดเล็ก และกิจกรรมอบรมเชิงปฏิบัติการวิเคราะห์เกม</td></tr><tr><td class="text-cell">กลุ่มต้องการสนับสนุนและควรดูแลสมดุล</td><td class="num-cell">5 คน</td><td class="num-cell">61.0</td><td class="num-cell">68.0</td><td class="num-cell">63.3</td><td class="text-cell">สนใจสูง + เสี่ยงสูง</td><td class="text-cell">ควรส่งเสริมพร้อมดูแล เช่น กำหนดตารางซ้อม พักผ่อนให้พอ และมีครูที่ปรึกษา</td><td class="text-cell">พัฒนาเครือข่ายอินเทอร์เน็ต อุปกรณ์ สุขภาวะดิจิทัล และระบบติดตามเวลา</td></tr><tr><td class="text-cell">กลุ่มสนใจต่ำ/เหมาะกับกิจกรรมเบื้องต้น</td><td class="num-cell">47 คน</td><td class="num-cell">24.1</td><td class="num-cell">16.2</td><td class="num-cell">24.5</td><td class="text-cell">สนใจต่ำ + เสี่ยงต่ำ</td><td class="text-cell">เหมาะกับกิจกรรมเบื้องต้น เช่น ประชาสัมพันธ์ ทดลองกิจกรรม ประยุกต์กับรายวิชา</td><td class="text-cell">ประชาสัมพันธ์กิจกรรมสายอาชีพ เช่น งานกราฟิก การสร้างสื่อดิจิทัล ทีมงานจัดกิจกรรม และห้องปฏิบัติการวิเคราะห์ข้อมูล</td></tr><tr><td class="text-cell">กลุ่มมีศักยภาพพัฒนาเป็นทีม/ชมรม</td><td class="num-cell">28 คน</td><td class="num-cell">97.8</td><td class="num-cell">37.1</td><td class="num-cell">57.7</td><td class="text-cell">สนใจสูง + เสี่ยงต่ำ</td><td class="text-cell">เหมาะสำหรับเริ่มกิจกรรม เช่น ชมรม การแข่งขันภายในกลุ่มย่อย หรือทีมต้นแบบ</td><td class="text-cell">จัดตั้งชมรมหรือทีมอีสปอร์ต พร้อมโค้ช ตารางซ้อม และกติกาสุขภาวะ</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+function toggleSummaryTable(tableId, btn) {
+    const el = document.getElementById(tableId);
+    if (!el) return;
+
+    const isHidden = el.style.display === "none" || el.style.display === "";
+    el.style.display = isHidden ? "block" : "none";
+    btn.textContent = isHidden ? "ซ่อนตาราง" : "ดูตาราง";
+}
+</script>
+<script id="dd-final-refactor-js">
+(function(){
+  const lastFocus = {};
+  function focusables(root){return Array.from(root.querySelectorAll('a[href],button:not([disabled]),textarea,input,select,iframe,[tabindex]:not([tabindex="-1"])')).filter(el=>el.offsetParent!==null || el.tagName==='IFRAME');}
+  window.openDDModal = function(id){const bg=document.getElementById(id); if(!bg) return; lastFocus[id]=document.activeElement; bg.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; const fs=focusables(bg); (fs[0]||bg).focus();};
+  window.closeDDModal = function(id){const bg=document.getElementById(id); if(!bg) return; bg.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus[id] && lastFocus[id].focus) lastFocus[id].focus();};
+  document.addEventListener('keydown', function(e){const open=document.querySelector('.dd-modal-backdrop[aria-hidden="false"]'); if(!open) return; if(e.key==='Escape'){e.preventDefault(); closeDDModal(open.id);} if(e.key==='Tab'){const fs=focusables(open); if(!fs.length) return; const first=fs[0], last=fs[fs.length-1]; if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus();} else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus();}}});
+  document.addEventListener('click', function(e){const bg=e.target.closest('.dd-modal-backdrop'); if(bg && e.target===bg){closeDDModal(bg.id);}});
+})();
+</script>
+</body>
+</html>
