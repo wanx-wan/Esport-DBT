@@ -585,6 +585,104 @@ table.action-table {
     }
 }
 
+    
+/* =========================================================
+   Flat Table Source
+   ใช้เมื่อตารางถูกเรียกไปแสดงใน modal pop-up
+   เป้าหมาย : ไม่ให้ตารางเป็น card ซ้อน card
+   ========================================================= */
+
+.table-section-flat {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+}
+
+.table-section-flat .section-head {
+    margin-bottom: 12px !important;
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.table-section-flat .summary-table-panel {
+    display: block !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.table-section-flat .table-help-body {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    padding: 0 !important;
+    margin-top: 12px !important;
+    overflow: visible !important;
+}
+
+.table-section-flat .formula-note,
+.table-section-flat .table-explanation {
+    background: #F8FAFF !important;
+    border: 0 !important;
+    border-left: 4px solid #3949AB !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+
+    padding: 12px 14px !important;
+}
+
+.table-section-flat .table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.table-section-flat table.action-table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+
+    background: #FFFFFF !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.table-section-flat .section-insight {
+    background: #F8FAFF !important;
+    border: 0 !important;
+    border-left: 4px solid #F9A825 !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+
+    color: #607D8B !important;
+}
+
 
     @media (max-width: 980px) {
         .dashboard-page {
@@ -1606,7 +1704,7 @@ body.dd-policy-modal-asset table.data-table{
 <div class="metric-value" style="font-size:17px;">กิจกรรมเปิดบ้าน / กิจกรรมรับชมการแข่งขันร่วมกัน / เวิร์กช็อปสั้น ๆ</div>
 </div>
 </div>
-<section class="section-card">
+<section class="table-section-flat">
 <div class="section-head">
 <h2 class="section-title">ตารางข้อเสนอการจัดกิจกรรม</h2>
 </div>
