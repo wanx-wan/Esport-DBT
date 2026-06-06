@@ -1909,7 +1909,7 @@ body.dd-policy-modal-asset table.data-table{
 <button class="dd-modal-close" onclick="closeDDModal('dd-modal-ml-predictor')" type="button">ปิด</button>
 </div>
 <div class="dd-modal-body">
-<iframe class="dd-inline-srcdoc-frame dd-iframe dd-ml-predictor-frame" loading="eager" srcdoc="
+<iframe class="dd-inline-srcdoc-frame" srcdoc="
 &lt;!DOCTYPE html&gt;
 
 &lt;html lang=&quot;th&quot;&gt;
@@ -2600,6 +2600,524 @@ body.ml-predictor-lock {
     }
 }
 
+
+
+/* =========================================================
+   FINAL PREDICT PATCH CSS
+   Scope เฉพาะหน้า ML Predictor
+   ========================================================= */
+
+/* -------------------------
+   Select -&gt; Choice Button
+   ------------------------- */
+body.ml-predictor-lock .select-input.ml-native-select-hidden,
+body.ml-predictor-lock select.ml-native-select-hidden {
+    display: none !important;
+}
+
+body.ml-predictor-lock .ml-choice-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+    margin-top: 4px;
+}
+
+body.ml-predictor-lock .ml-choice-btn {
+    appearance: none;
+    width: 100%;
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #DDE3F3;
+    border-radius: 14px;
+    background: #FFFFFF;
+    color: #263238;
+
+    padding: 9px 11px;
+
+    font-family: inherit;
+    font-size: 13.2px;
+    font-weight: 750;
+    line-height: 1.45;
+    text-align: center;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        box-shadow 0.16s ease,
+        transform 0.16s ease;
+}
+
+body.ml-predictor-lock .ml-choice-btn:hover {
+    background: #F4F6FF;
+    border-color: #BFC9EA;
+    transform: translateY(-1px);
+}
+
+body.ml-predictor-lock .ml-choice-btn.is-active {
+    background: #EEF2FF;
+    border-color: #3949AB;
+    color: #1A237E;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10);
+}
+
+body.ml-predictor-lock .ml-choice-btn:focus-visible {
+    outline: 3px solid rgba(249, 168, 37, 0.45);
+    outline-offset: 2px;
+}
+
+/* กัน input / select / button ถูก clip */
+body.ml-predictor-lock .input-card,
+body.ml-predictor-lock .question-card-lock,
+body.ml-predictor-lock .control-shell,
+body.ml-predictor-lock .question-form-flat,
+body.ml-predictor-lock .form-section-card {
+    overflow: visible !important;
+    contain: none !important;
+}
+
+/* -------------------------
+   Smooth Q10-Q13
+   ------------------------- */
+body.ml-predictor-lock .ml-smooth-multi-card {
+    min-height: auto !important;
+    overflow: visible !important;
+    contain: none !important;
+}
+
+body.ml-predictor-lock .ml-smooth-multi-card .input-label,
+body.ml-predictor-lock .ml-smooth-multi-card .input-help {
+    min-height: 0 !important;
+}
+
+body.ml-predictor-lock .ml-smooth-option-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+
+    margin-top: 14px !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    overflow: visible !important;
+}
+
+/* บังคับทุกตัวเลือก รวมถึงตัวแรก ให้ layout เท่ากัน */
+body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option,
+body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:first-child,
+body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:nth-child(n),
+body.ml-predictor-lock .ml-smooth-option {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+    align-items: center !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+
+    margin: 0 !important;
+    padding: 12px 13px !important;
+
+    min-height: 52px !important;
+    height: auto !important;
+
+    background: #FFFFFF !important;
+    border: 1px solid #DDE3F3 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
+
+    color: #263238 !important;
+    font-size: 13.4px !important;
+    font-weight: 700 !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+
+    cursor: pointer !important;
+    user-select: none !important;
+
+    transform: none !important;
+    overflow: visible !important;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease,
+        color 0.18s ease !important;
+}
+
+body.ml-predictor-lock .ml-smooth-option:hover {
+    background: #F4F6FF !important;
+    border-color: #BFC9EA !important;
+    box-shadow: 0 8px 18px rgba(13, 71, 161, 0.070) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* กันตัวเลือกแรกที่ไม่ได้เลือก ไม่ให้ดูเด่น */
+body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:first-child:not(.is-checked):not(:has(input:checked)) {
+    background: #FFFFFF !important;
+    border-color: #DDE3F3 !important;
+    color: #263238 !important;
+    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
+    transform: none !important;
+}
+
+/* checked state */
+body.ml-predictor-lock .ml-smooth-option.is-checked,
+body.ml-predictor-lock .ml-smooth-option:has(input:checked) {
+    background: #EEF2FF !important;
+    border-color: #3949AB !important;
+    color: #1A237E !important;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
+}
+
+/* checkbox */
+body.ml-predictor-lock .ml-smooth-option &gt; input[type=&quot;checkbox&quot;],
+body.ml-predictor-lock .ml-smooth-option:first-child &gt; input[type=&quot;checkbox&quot;],
+body.ml-predictor-lock .ml-smooth-checkbox {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+
+    align-self: center !important;
+    justify-self: center !important;
+
+    position: relative !important;
+    display: inline-block !important;
+
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    max-width: 18px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 2px solid #B7C1E8 !important;
+    border-radius: 6px !important;
+    background: #FFFFFF !important;
+
+    cursor: pointer !important;
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease !important;
+}
+
+body.ml-predictor-lock .ml-smooth-checkbox::after {
+    content: &quot;&quot; !important;
+    position: absolute !important;
+
+    left: 4px !important;
+    top: 1px !important;
+
+    width: 5px !important;
+    height: 9px !important;
+
+    border: solid #FFFFFF !important;
+    border-width: 0 2px 2px 0 !important;
+
+    transform: rotate(45deg) scale(0.65) !important;
+    opacity: 0 !important;
+
+    transition:
+        opacity 0.16s ease,
+        transform 0.16s ease !important;
+}
+
+body.ml-predictor-lock .ml-smooth-checkbox:checked {
+    background: #3949AB !important;
+    border-color: #3949AB !important;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
+}
+
+body.ml-predictor-lock .ml-smooth-checkbox:checked::after {
+    opacity: 1 !important;
+    transform: rotate(45deg) scale(1) !important;
+}
+
+/* ข้อความตัวเลือก */
+body.ml-predictor-lock .ml-smooth-option &gt; .ml-smooth-option-text,
+body.ml-predictor-lock .ml-smooth-option:first-child &gt; .ml-smooth-option-text,
+body.ml-predictor-lock .ml-smooth-option &gt; span,
+body.ml-predictor-lock .ml-smooth-option:first-child &gt; span {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+
+    align-self: center !important;
+    justify-self: stretch !important;
+
+    display: block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: inherit !important;
+    font-size: 13.4px !important;
+    font-weight: 700 !important;
+    line-height: 1.55 !important;
+
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* ลบ br หรือ pseudo ที่ทำให้ตัวเลือกแรกไม่เท่ากัน */
+body.ml-predictor-lock .ml-smooth-option br,
+body.ml-predictor-lock .ml-smooth-option::before,
+body.ml-predictor-lock .ml-smooth-option::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* ลบ class แปลก ๆ ที่อาจทำให้ตัวแรกเด่น */
+body.ml-predictor-lock .ml-smooth-option.is-top:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.is-popular:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.top-option:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.rank-1:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.most-selected:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.most-popular:not(.is-checked):not(:has(input:checked)) {
+    background: #FFFFFF !important;
+    border-color: #DDE3F3 !important;
+    color: #263238 !important;
+    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
+}
+
+body.ml-predictor-lock .ml-smooth-option:focus-within {
+    border-color: #3949AB !important;
+    box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
+}
+
+/* -------------------------
+   Clean Result Card
+   ------------------------- */
+body.ml-predictor-lock .result-card,
+body.ml-predictor-lock .result-under-form {
+    border-radius: 22px !important;
+    padding: 20px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #DDE3F3 !important;
+    box-shadow: 0 10px 26px rgba(13, 71, 161, 0.065) !important;
+}
+
+body.ml-predictor-lock .result-card .section-title {
+    margin: 0 0 12px 0 !important;
+    font-size: clamp(18px, 2vw, 22px) !important;
+    line-height: 1.35 !important;
+}
+
+body.ml-predictor-lock .result-label {
+    margin: 4px 0 6px 0 !important;
+    color: #607D8B !important;
+    font-size: 12.8px !important;
+    line-height: 1.55 !important;
+}
+
+body.ml-predictor-lock .result-percent {
+    margin: 0 0 8px 0 !important;
+    color: #1A237E !important;
+    font-size: clamp(34px, 5vw, 46px) !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.04em !important;
+}
+
+body.ml-predictor-lock .result-status {
+    margin: 0 0 12px 0 !important;
+    padding: 7px 13px !important;
+    border-radius: 999px !important;
+    font-size: 12.8px !important;
+    font-weight: 900 !important;
+}
+
+body.ml-predictor-lock .progress-box {
+    height: 10px !important;
+    margin: 10px 0 14px 0 !important;
+    background: #E8EAF6 !important;
+}
+
+body.ml-predictor-lock .result-text {
+    margin: 0 0 14px 0 !important;
+    color: #263238 !important;
+    font-size: 13.8px !important;
+    line-height: 1.7 !important;
+}
+
+body.ml-predictor-lock .recommend-box {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+body.ml-predictor-lock .clean-result {
+    display: grid;
+    gap: 12px;
+}
+
+body.ml-predictor-lock .clean-result-summary {
+    background: #F8FAFF;
+    border: 1px solid #DDE3F3;
+    border-left: 4px solid #3949AB;
+    border-radius: 16px;
+    padding: 13px 15px;
+}
+
+body.ml-predictor-lock .clean-result-title {
+    color: #1A237E;
+    font-size: 14.5px;
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 4px;
+}
+
+body.ml-predictor-lock .clean-result-desc {
+    color: #53657A;
+    font-size: 13.3px;
+    line-height: 1.7;
+}
+
+body.ml-predictor-lock .clean-result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+body.ml-predictor-lock .clean-result-panel {
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 16px;
+    padding: 13px 14px;
+}
+
+body.ml-predictor-lock .clean-result-panel-title {
+    color: #1A237E;
+    font-size: 13.5px;
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 8px;
+}
+
+body.ml-predictor-lock .clean-result-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 7px;
+}
+
+body.ml-predictor-lock .clean-result-list li {
+    position: relative;
+    padding-left: 18px;
+    color: #263238;
+    font-size: 13.1px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+body.ml-predictor-lock .clean-result-list li::before {
+    content: &quot;•&quot;;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #3949AB;
+    font-weight: 900;
+}
+
+body.ml-predictor-lock .clean-result-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+body.ml-predictor-lock .clean-result-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: #EEF2FF;
+    border: 1px solid #DDE3F3;
+    color: #1A237E;
+    padding: 5px 9px;
+    font-size: 11.8px;
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+body.ml-predictor-lock .clean-result-empty {
+    background: #F8FAFF;
+    border: 1px dashed #B7C1E8;
+    border-radius: 16px;
+    padding: 14px 15px;
+    color: #607D8B;
+    font-size: 13.5px;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    body.ml-predictor-lock .ml-smooth-option-grid {
+        grid-template-columns: 1fr !important;
+        gap: 9px !important;
+        margin-top: 12px !important;
+    }
+
+    body.ml-predictor-lock .ml-smooth-option {
+        min-height: 48px !important;
+        padding: 11px 12px !important;
+        border-radius: 15px !important;
+    }
+}
+
+@media (max-width: 760px) {
+    body.ml-predictor-lock .ml-choice-grid,
+    body.ml-predictor-lock .clean-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body.ml-predictor-lock .result-card,
+    body.ml-predictor-lock .result-under-form {
+        padding: 16px !important;
+        border-radius: 18px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option,
+    body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:first-child,
+    body.ml-predictor-lock .ml-smooth-option {
+        grid-template-columns: 20px minmax(0, 1fr) !important;
+        column-gap: 10px !important;
+        min-height: 46px !important;
+        padding: 10px 11px !important;
+    }
+
+    body.ml-predictor-lock .ml-smooth-option-text {
+        font-size: 13px !important;
+    }
+}
+
 &lt;/style&gt;
 &lt;style id=&quot;predictor-modal-soft-question-card-v10&quot;&gt;
 /* =========================================================
@@ -3008,141 +3526,6 @@ body.ml-predictor-lock {
         min-height: 42px !important;
         font-size: 14px !important;
         line-height: 1.6 !important;
-    }
-}
-&lt;/style&gt;
-&lt;style id=&quot;ml-q10-q13-first-option-equalizer-css&quot;&gt;
-/* =========================================================
-   Equalize first option in Q10-Q13
-   ========================================================= */
-
-/* บังคับตัวเลือกทุกตัว รวมถึงตัวแรก ให้ใช้ layout เดียวกัน */
-body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option,
-body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:first-child,
-body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:nth-child(n) {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    display: grid !important;
-    grid-template-columns: 22px minmax(0, 1fr) !important;
-    grid-auto-flow: column !important;
-    align-items: center !important;
-    column-gap: 12px !important;
-    row-gap: 0 !important;
-
-    margin: 0 !important;
-    padding: 12px 13px !important;
-
-    min-height: 52px !important;
-    height: auto !important;
-
-    background: #FFFFFF !important;
-    border: 1px solid #DDE3F3 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-
-    color: #263238 !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-    text-align: left !important;
-
-    transform: none !important;
-    overflow: visible !important;
-}
-
-/* กันตัวแรกที่ไม่ได้ถูกเลือกไม่ให้ดูเหมือน active/highlight */
-body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:first-child:not(.is-checked):not(:has(input:checked)) {
-    background: #FFFFFF !important;
-    border-color: #DDE3F3 !important;
-    color: #263238 !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-    transform: none !important;
-}
-
-/* checkbox ต้องอยู่ column แรกเสมอ */
-body.ml-predictor-lock .ml-smooth-option &gt; input[type=&quot;checkbox&quot;],
-body.ml-predictor-lock .ml-smooth-option:first-child &gt; input[type=&quot;checkbox&quot;],
-body.ml-predictor-lock .ml-smooth-option &gt; input.ml-smooth-checkbox,
-body.ml-predictor-lock .ml-smooth-option:first-child &gt; input.ml-smooth-checkbox {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-
-    align-self: center !important;
-    justify-self: center !important;
-
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    max-width: 18px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
-}
-
-/* ข้อความต้องอยู่ column ที่สองเสมอ */
-body.ml-predictor-lock .ml-smooth-option &gt; .ml-smooth-option-text,
-body.ml-predictor-lock .ml-smooth-option:first-child &gt; .ml-smooth-option-text,
-body.ml-predictor-lock .ml-smooth-option &gt; span,
-body.ml-predictor-lock .ml-smooth-option:first-child &gt; span {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-
-    align-self: center !important;
-    justify-self: stretch !important;
-
-    display: block !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    color: inherit !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: anywhere !important;
-}
-
-/* ลบ br ที่ทำให้ตัวเลือกแรกตกบรรทัด */
-body.ml-predictor-lock .ml-smooth-option br,
-body.ml-predictor-lock .ml-smooth-option:first-child br {
-    display: none !important;
-}
-
-/* ไม่ให้ class แปลก ๆ ที่อาจมาจาก patch เก่าทำให้ตัวเลือกแรกเด่น */
-body.ml-predictor-lock .ml-smooth-option.is-top:not(.is-checked):not(:has(input:checked)),
-body.ml-predictor-lock .ml-smooth-option.is-popular:not(.is-checked):not(:has(input:checked)),
-body.ml-predictor-lock .ml-smooth-option.top-option:not(.is-checked):not(:has(input:checked)),
-body.ml-predictor-lock .ml-smooth-option.rank-1:not(.is-checked):not(:has(input:checked)) {
-    background: #FFFFFF !important;
-    border-color: #DDE3F3 !important;
-    color: #263238 !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-}
-
-/* checked state ยังทำงานเหมือนเดิม */
-body.ml-predictor-lock .ml-smooth-option.is-checked,
-body.ml-predictor-lock .ml-smooth-option:has(input:checked) {
-    background: #EEF2FF !important;
-    border-color: #3949AB !important;
-    color: #1A237E !important;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
-}
-
-@media (max-width: 560px) {
-    body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option,
-    body.ml-predictor-lock .ml-smooth-option-grid &gt; label.ml-smooth-option:first-child {
-        grid-template-columns: 20px minmax(0, 1fr) !important;
-        column-gap: 10px !important;
-        min-height: 46px !important;
-        padding: 10px 11px !important;
     }
 }
 &lt;/style&gt;
@@ -4050,475 +4433,8 @@ body.dd-policy-modal-asset table.data-table{
   }
 }
 &lt;/style&gt;
-
-&lt;style id=&quot;ml-predictor-single-cell-final-css&quot;&gt;
-/* =========================================================
-   1) Select -&gt; Choice Button
-   ========================================================= */
-
-body.ml-predictor-lock .select-input.ml-native-select-hidden,
-body.ml-predictor-lock select.ml-native-select-hidden {
-    display: none !important;
-}
-
-body.ml-predictor-lock .ml-choice-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 8px;
-    margin-top: 4px;
-}
-
-body.ml-predictor-lock .ml-choice-btn {
-    appearance: none;
-    width: 100%;
-    min-height: 44px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid #DDE3F3;
-    border-radius: 14px;
-    background: #FFFFFF;
-    color: #263238;
-
-    padding: 9px 11px;
-
-    font-family: inherit;
-    font-size: 13.2px;
-    font-weight: 750;
-    line-height: 1.45;
-    text-align: center;
-
-    cursor: pointer;
-    user-select: none;
-
-    transition:
-        background 0.16s ease,
-        border-color 0.16s ease,
-        box-shadow 0.16s ease,
-        transform 0.16s ease;
-}
-
-body.ml-predictor-lock .ml-choice-btn:hover {
-    background: #F4F6FF;
-    border-color: #BFC9EA;
-    transform: translateY(-1px);
-}
-
-body.ml-predictor-lock .ml-choice-btn.is-active {
-    background: #EEF2FF;
-    border-color: #3949AB;
-    color: #1A237E;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10);
-}
-
-body.ml-predictor-lock .ml-choice-btn:focus-visible {
-    outline: 3px solid rgba(249, 168, 37, 0.45);
-    outline-offset: 2px;
-}
-
-/* กันพื้นที่ select/button ถูก clip */
-body.ml-predictor-lock .input-card,
-body.ml-predictor-lock .question-card-lock,
-body.ml-predictor-lock .control-shell,
-body.ml-predictor-lock .question-form-flat,
-body.ml-predictor-lock .form-section-card {
-    overflow: visible !important;
-    contain: none !important;
-}
-
-/* =========================================================
-   2) Smooth Multi-choice Options : ข้อ 10-13
-   ========================================================= */
-
-body.ml-predictor-lock .ml-smooth-multi-card {
-    min-height: auto !important;
-    overflow: visible !important;
-    contain: none !important;
-}
-
-body.ml-predictor-lock .ml-smooth-multi-card .input-label,
-body.ml-predictor-lock .ml-smooth-multi-card .input-help {
-    min-height: 0 !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option-grid {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-
-    margin-top: 14px !important;
-    padding: 0 !important;
-
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-
-    overflow: visible !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    min-height: 52px !important;
-    height: 100% !important;
-
-    display: grid !important;
-    grid-template-columns: 22px minmax(0, 1fr) !important;
-    align-items: center !important;
-    gap: 12px !important;
-
-    margin: 0 !important;
-    padding: 12px 13px !important;
-
-    background: #FFFFFF !important;
-    border: 1px solid #DDE3F3 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-
-    color: #263238 !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-    text-align: left !important;
-
-    cursor: pointer !important;
-    user-select: none !important;
-
-    transform: none !important;
-    transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.18s ease,
-        color 0.18s ease !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option:hover {
-    background: #F4F6FF !important;
-    border-color: #BFC9EA !important;
-    box-shadow: 0 8px 18px rgba(13, 71, 161, 0.070) !important;
-    transform: translateY(-1px) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option.is-checked,
-body.ml-predictor-lock .ml-smooth-option:has(input:checked) {
-    background: #EEF2FF !important;
-    border-color: #3949AB !important;
-    color: #1A237E !important;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-
-    position: relative !important;
-    display: inline-block !important;
-
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    max-width: 18px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border: 2px solid #B7C1E8 !important;
-    border-radius: 6px !important;
-    background: #FFFFFF !important;
-
-    cursor: pointer !important;
-    transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox::after {
-    content: &quot;&quot; !important;
-    position: absolute !important;
-
-    left: 4px !important;
-    top: 1px !important;
-
-    width: 5px !important;
-    height: 9px !important;
-
-    border: solid #FFFFFF !important;
-    border-width: 0 2px 2px 0 !important;
-
-    transform: rotate(45deg) scale(0.65) !important;
-    opacity: 0 !important;
-
-    transition:
-        opacity 0.16s ease,
-        transform 0.16s ease !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox:checked {
-    background: #3949AB !important;
-    border-color: #3949AB !important;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox:checked::after {
-    opacity: 1 !important;
-    transform: rotate(45deg) scale(1) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option-text {
-    display: block !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    color: inherit !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: anywhere !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option::before,
-body.ml-predictor-lock .ml-smooth-option::after {
-    content: none !important;
-    display: none !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option:focus-within {
-    border-color: #3949AB !important;
-    box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
-}
-
-/* =========================================================
-   3) Clean Result Card
-   ========================================================= */
-
-body.ml-predictor-lock .result-card,
-body.ml-predictor-lock .result-under-form,
-body.ml-predictor-lock .ml-result-modal .result-card {
-    border-radius: 22px !important;
-    padding: 20px !important;
-    background: #FFFFFF !important;
-    border: 1px solid #DDE3F3 !important;
-    box-shadow: 0 10px 26px rgba(13, 71, 161, 0.065) !important;
-}
-
-body.ml-predictor-lock .result-card .section-title {
-    margin: 0 0 12px 0 !important;
-    font-size: clamp(18px, 2vw, 22px) !important;
-    line-height: 1.35 !important;
-}
-
-body.ml-predictor-lock .result-label {
-    margin: 4px 0 6px 0 !important;
-    color: #607D8B !important;
-    font-size: 12.8px !important;
-    line-height: 1.55 !important;
-}
-
-body.ml-predictor-lock .result-percent {
-    margin: 0 0 8px 0 !important;
-    color: #1A237E !important;
-    font-size: clamp(34px, 5vw, 46px) !important;
-    line-height: 1 !important;
-    font-weight: 950 !important;
-    letter-spacing: -0.04em !important;
-}
-
-body.ml-predictor-lock .result-status {
-    margin: 0 0 12px 0 !important;
-    padding: 7px 13px !important;
-    border-radius: 999px !important;
-    font-size: 12.8px !important;
-    font-weight: 900 !important;
-}
-
-body.ml-predictor-lock .progress-box {
-    height: 10px !important;
-    margin: 10px 0 14px 0 !important;
-    background: #E8EAF6 !important;
-}
-
-body.ml-predictor-lock .result-text {
-    margin: 0 0 14px 0 !important;
-    color: #263238 !important;
-    font-size: 13.8px !important;
-    line-height: 1.7 !important;
-}
-
-body.ml-predictor-lock .recommend-box {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-}
-
-body.ml-predictor-lock .clean-result {
-    display: grid;
-    gap: 12px;
-}
-
-body.ml-predictor-lock .clean-result-summary {
-    background: #F8FAFF;
-    border: 1px solid #DDE3F3;
-    border-left: 4px solid #3949AB;
-    border-radius: 16px;
-    padding: 13px 15px;
-}
-
-body.ml-predictor-lock .clean-result-title {
-    color: #1A237E;
-    font-size: 14.5px;
-    font-weight: 900;
-    line-height: 1.45;
-    margin-bottom: 4px;
-}
-
-body.ml-predictor-lock .clean-result-desc {
-    color: #53657A;
-    font-size: 13.3px;
-    line-height: 1.7;
-}
-
-body.ml-predictor-lock .clean-result-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-body.ml-predictor-lock .clean-result-panel {
-    background: #FFFFFF;
-    border: 1px solid #DDE3F3;
-    border-radius: 16px;
-    padding: 13px 14px;
-}
-
-body.ml-predictor-lock .clean-result-panel-title {
-    color: #1A237E;
-    font-size: 13.5px;
-    font-weight: 900;
-    line-height: 1.45;
-    margin-bottom: 8px;
-}
-
-body.ml-predictor-lock .clean-result-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 7px;
-}
-
-body.ml-predictor-lock .clean-result-list li {
-    position: relative;
-    padding-left: 18px;
-    color: #263238;
-    font-size: 13.1px;
-    font-weight: 600;
-    line-height: 1.6;
-}
-
-body.ml-predictor-lock .clean-result-list li::before {
-    content: &quot;•&quot;;
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #3949AB;
-    font-weight: 900;
-}
-
-body.ml-predictor-lock .clean-result-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-}
-
-body.ml-predictor-lock .clean-result-tag {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    background: #EEF2FF;
-    border: 1px solid #DDE3F3;
-    color: #1A237E;
-    padding: 5px 9px;
-    font-size: 11.8px;
-    font-weight: 850;
-    line-height: 1.25;
-}
-
-body.ml-predictor-lock .clean-result-empty {
-    background: #F8FAFF;
-    border: 1px dashed #B7C1E8;
-    border-radius: 16px;
-    padding: 14px 15px;
-    color: #607D8B;
-    font-size: 13.5px;
-    line-height: 1.7;
-}
-
-@media (max-width: 900px) {
-    body.ml-predictor-lock .ml-smooth-option-grid {
-        grid-template-columns: 1fr !important;
-        gap: 9px !important;
-        margin-top: 12px !important;
-    }
-
-    body.ml-predictor-lock .ml-smooth-option {
-        min-height: 48px !important;
-        padding: 11px 12px !important;
-        border-radius: 15px !important;
-    }
-}
-
-@media (max-width: 760px) {
-    body.ml-predictor-lock .ml-choice-grid {
-        grid-template-columns: 1fr;
-    }
-
-    body.ml-predictor-lock .clean-result-grid {
-        grid-template-columns: 1fr;
-    }
-
-    body.ml-predictor-lock .result-card,
-    body.ml-predictor-lock .result-under-form,
-    body.ml-predictor-lock .ml-result-modal .result-card {
-        padding: 16px !important;
-        border-radius: 18px !important;
-    }
-}
-
-@media (max-width: 560px) {
-    body.ml-predictor-lock .ml-smooth-option {
-        grid-template-columns: 20px minmax(0, 1fr) !important;
-        gap: 10px !important;
-        min-height: 46px !important;
-        padding: 10px 11px !important;
-    }
-
-    body.ml-predictor-lock .ml-smooth-option-text {
-        font-size: 13px !important;
-    }
-}
-&lt;/style&gt;
 &lt;/head&gt;
-&lt;body class=&quot;ml-predictor-lock predictor-modal-scope modal-embed&quot;&gt;
+&lt;body class=&quot;ml-predictor-lock predictor-modal-scope&quot;&gt;
 &lt;div class=&quot;dashboard-page&quot;&gt;
 &lt;div class=&quot;layout-grid ml-form-only-grid&quot;&gt;
 &lt;section class=&quot;question-form-flat form-section-card&quot;&gt;
@@ -5355,6 +5271,516 @@ document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
     resetResultView();
 });
 
+
+
+(function () {
+    const TARGET_MULTI_IDS = [
+        &quot;game_types&quot;,
+        &quot;gaming_reasons&quot;,
+        &quot;problems&quot;,
+        &quot;support_needs&quot;
+    ];
+
+    function escapeClean(value) {
+        return String(value ?? &quot;&quot;).replace(/[&amp;&lt;&gt;&quot;']/g, function (ch) {
+            return {
+                &quot;&amp;&quot;: &quot;&amp;amp;&quot;,
+                &quot;&lt;&quot;: &quot;&amp;lt;&quot;,
+                &quot;&gt;&quot;: &quot;&amp;gt;&quot;,
+                '&quot;': &quot;&amp;quot;&quot;,
+                &quot;'&quot;: &quot;&amp;#39;&quot;
+            }[ch];
+        });
+    }
+
+    function optionText(option) {
+        return String(option ? option.textContent : &quot;&quot;)
+            .replace(/\s+/g, &quot; &quot;)
+            .trim();
+    }
+
+    function cssEscapeSafe(value) {
+        if (window.CSS &amp;&amp; typeof window.CSS.escape === &quot;function&quot;) {
+            return window.CSS.escape(value);
+        }
+
+        return String(value).replace(/&quot;/g, '\\&quot;');
+    }
+
+    function getQuestionNo(inputId) {
+        const index = TARGET_MULTI_IDS.indexOf(inputId);
+        return index &gt;= 0 ? String(index + 10) : &quot;&quot;;
+    }
+
+    /* =====================================================
+       Select -&gt; Button
+       ===================================================== */
+    function refreshChoiceButtons(selectEl) {
+        if (!selectEl) return;
+
+        const wrap = selectEl.parentElement
+            ? selectEl.parentElement.querySelector(
+                '.ml-choice-grid[data-input-id=&quot;' + selectEl.dataset.inputId + '&quot;]'
+              )
+            : null;
+
+        if (!wrap) return;
+
+        const currentValue = String(selectEl.value);
+
+        wrap.querySelectorAll(&quot;.ml-choice-btn&quot;).forEach(function (btn) {
+            const isActive = String(btn.dataset.value) === currentValue;
+            btn.classList.toggle(&quot;is-active&quot;, isActive);
+            btn.setAttribute(&quot;aria-checked&quot;, isActive ? &quot;true&quot; : &quot;false&quot;);
+        });
+    }
+
+    function enhanceSelect(selectEl) {
+        if (!selectEl || selectEl.dataset.mlChoiceReady === &quot;1&quot;) return;
+
+        const inputId = selectEl.dataset.inputId || &quot;&quot;;
+        const parent = selectEl.parentElement;
+
+        if (!parent) return;
+
+        selectEl.dataset.mlChoiceReady = &quot;1&quot;;
+        selectEl.classList.add(&quot;ml-native-select-hidden&quot;);
+        selectEl.setAttribute(&quot;aria-hidden&quot;, &quot;true&quot;);
+        selectEl.tabIndex = -1;
+
+        const wrap = document.createElement(&quot;div&quot;);
+        wrap.className = &quot;ml-choice-grid&quot;;
+        wrap.dataset.inputId = inputId;
+        wrap.setAttribute(&quot;role&quot;, &quot;radiogroup&quot;);
+
+        Array.from(selectEl.options).forEach(function (opt, idx) {
+            const btn = document.createElement(&quot;button&quot;);
+
+            btn.type = &quot;button&quot;;
+            btn.className = &quot;ml-choice-btn&quot;;
+            btn.dataset.value = String(opt.value);
+            btn.dataset.index = String(idx);
+            btn.setAttribute(&quot;role&quot;, &quot;radio&quot;);
+            btn.setAttribute(&quot;aria-checked&quot;, &quot;false&quot;);
+            btn.textContent = optionText(opt);
+
+            btn.addEventListener(&quot;click&quot;, function () {
+                selectEl.selectedIndex = idx;
+                selectEl.value = opt.value;
+
+                selectEl.dispatchEvent(new Event(&quot;input&quot;, { bubbles: true }));
+                selectEl.dispatchEvent(new Event(&quot;change&quot;, { bubbles: true }));
+
+                refreshChoiceButtons(selectEl);
+            });
+
+            btn.addEventListener(&quot;keydown&quot;, function (event) {
+                if (event.key === &quot;Enter&quot; || event.key === &quot; &quot;) {
+                    event.preventDefault();
+                    btn.click();
+                }
+            });
+
+            wrap.appendChild(btn);
+        });
+
+        parent.appendChild(wrap);
+
+        selectEl.addEventListener(&quot;change&quot;, function () {
+            refreshChoiceButtons(selectEl);
+        });
+
+        refreshChoiceButtons(selectEl);
+    }
+
+    function setupChoiceButtons() {
+        document
+            .querySelectorAll(&quot;select.ml-human-input, select.select-input&quot;)
+            .forEach(enhanceSelect);
+
+        document
+            .querySelectorAll(&quot;select.ml-human-input, select.select-input&quot;)
+            .forEach(refreshChoiceButtons);
+    }
+
+    /* =====================================================
+       Smooth Q10-Q13 + Equalize first option
+       ===================================================== */
+    function normalizeSmoothOption(label) {
+        if (!label) return;
+
+        label.classList.remove(
+            &quot;is-top&quot;,
+            &quot;is-popular&quot;,
+            &quot;top-option&quot;,
+            &quot;rank-1&quot;,
+            &quot;most-selected&quot;,
+            &quot;most-popular&quot;
+        );
+
+        label.querySelectorAll(&quot;br&quot;).forEach(function (br) {
+            br.remove();
+        });
+
+        const input = label.querySelector('input[type=&quot;checkbox&quot;]');
+
+        if (!input) return;
+
+        input.classList.add(&quot;ml-smooth-checkbox&quot;);
+
+        let textEl =
+            label.querySelector(&quot;.ml-smooth-option-text&quot;) ||
+            label.querySelector(&quot;span&quot;) ||
+            label.querySelector(&quot;div&quot;);
+
+        if (!textEl) {
+            const textNodes = [];
+
+            Array.from(label.childNodes).forEach(function (node) {
+                if (
+                    node.nodeType === Node.TEXT_NODE &amp;&amp;
+                    String(node.textContent || &quot;&quot;).trim()
+                ) {
+                    textNodes.push(node);
+                }
+            });
+
+            if (textNodes.length) {
+                textEl = document.createElement(&quot;span&quot;);
+                textEl.className = &quot;ml-smooth-option-text&quot;;
+
+                textNodes.forEach(function (node) {
+                    textEl.appendChild(
+                        document.createTextNode(
+                            String(node.textContent || &quot;&quot;).replace(/\s+/g, &quot; &quot;).trim()
+                        )
+                    );
+                    node.remove();
+                });
+
+                input.insertAdjacentElement(&quot;afterend&quot;, textEl);
+            }
+        }
+
+        if (textEl) {
+            textEl.classList.add(&quot;ml-smooth-option-text&quot;);
+            textEl.textContent = String(textEl.textContent || &quot;&quot;)
+                .replace(/\s+/g, &quot; &quot;)
+                .trim();
+        }
+
+        label.classList.toggle(&quot;is-checked&quot;, input.checked === true);
+        label.setAttribute(&quot;aria-checked&quot;, input.checked ? &quot;true&quot; : &quot;false&quot;);
+    }
+
+    function markSmoothMultiOptions() {
+        TARGET_MULTI_IDS.forEach(function (inputId) {
+            const safeId = cssEscapeSafe(inputId);
+            const inputs = document.querySelectorAll(
+                '.ml-multi-input[data-input-id=&quot;' + safeId + '&quot;]'
+            );
+
+            if (!inputs.length) return;
+
+            const questionNo = getQuestionNo(inputId);
+
+            inputs.forEach(function (input) {
+                input.classList.add(&quot;ml-smooth-checkbox&quot;);
+
+                const label =
+                    input.closest(&quot;label.checkbox-choice&quot;) ||
+                    input.closest(&quot;label&quot;);
+
+                if (label) {
+                    label.classList.add(&quot;ml-smooth-option&quot;);
+                    label.dataset.smoothInputId = inputId;
+                    label.dataset.smoothQuestionNo = questionNo;
+                    label.setAttribute(&quot;role&quot;, &quot;checkbox&quot;);
+
+                    normalizeSmoothOption(label);
+                }
+
+                const grid = input.closest(&quot;.checkbox-grid&quot;);
+
+                if (grid) {
+                    grid.classList.add(&quot;ml-smooth-option-grid&quot;);
+                    grid.dataset.smoothInputId = inputId;
+                    grid.dataset.smoothQuestionNo = questionNo;
+                }
+
+                const card = input.closest(&quot;.input-card, .question-card-lock, article&quot;);
+
+                if (card) {
+                    card.classList.add(&quot;ml-smooth-multi-card&quot;);
+                    card.dataset.smoothInputId = inputId;
+                    card.dataset.smoothQuestionNo = questionNo;
+                }
+
+                if (input.dataset.smoothReady !== &quot;1&quot;) {
+                    input.dataset.smoothReady = &quot;1&quot;;
+
+                    input.addEventListener(&quot;change&quot;, function () {
+                        const label = input.closest(&quot;label&quot;);
+                        normalizeSmoothOption(label);
+                        syncSmoothMultiState();
+                    });
+                }
+            });
+        });
+
+        syncSmoothMultiState();
+    }
+
+    function syncSmoothMultiState() {
+        TARGET_MULTI_IDS.forEach(function (inputId) {
+            const safeId = cssEscapeSafe(inputId);
+            const inputs = document.querySelectorAll(
+                '.ml-multi-input[data-input-id=&quot;' + safeId + '&quot;]'
+            );
+
+            inputs.forEach(function (input) {
+                const label = input.closest(&quot;.ml-smooth-option&quot;);
+
+                if (!label) return;
+
+                const checked = !!input.checked;
+
+                label.classList.toggle(&quot;is-checked&quot;, checked);
+                label.setAttribute(&quot;aria-checked&quot;, checked ? &quot;true&quot; : &quot;false&quot;);
+            });
+        });
+    }
+
+    /* =====================================================
+       Clean Result Card
+       ===================================================== */
+    function cleanItems(items, maxItems) {
+        if (!Array.isArray(items)) return [];
+
+        return items
+            .filter(function (item) {
+                return String(item || &quot;&quot;).trim().length &gt; 0;
+            })
+            .slice(0, maxItems);
+    }
+
+    function renderList(items, fallback) {
+        const clean = cleanItems(items, 2);
+
+        if (clean.length === 0) {
+            clean.push(fallback);
+        }
+
+        return clean.map(function (item) {
+            return &quot;&lt;li&gt;&quot; + escapeClean(item) + &quot;&lt;/li&gt;&quot;;
+        }).join(&quot;&quot;);
+    }
+
+    function selectedText(value, fallback) {
+        const text = String(value || &quot;&quot;).trim();
+        return text || fallback;
+    }
+
+    window.renderActivityRecommendation = function (level, plan, snap) {
+        const title = plan &amp;&amp; plan.title
+            ? plan.title
+            : &quot;แนวทางแนะนำเบื้องต้น&quot;;
+
+        const description = plan &amp;&amp; plan.description
+            ? plan.description
+            : &quot;ใช้ผลประเมินนี้เป็นข้อมูลประกอบการออกแบบกิจกรรม ไม่ใช่ข้อสรุปตัดสินผู้เรียนรายบุคคล&quot;;
+
+        const activities = plan &amp;&amp; Array.isArray(plan.activities)
+            ? plan.activities
+            : [];
+
+        const care = plan &amp;&amp; Array.isArray(plan.care)
+            ? plan.care
+            : [];
+
+        const tags = [];
+
+        if (snap &amp;&amp; snap.interest) {
+            tags.push(&quot;ความสนใจ : &quot; + selectedText(snap.interest, &quot;ไม่ระบุ&quot;));
+        }
+
+        if (snap &amp;&amp; snap.gameIntensity) {
+            tags.push(&quot;พฤติกรรม : &quot; + selectedText(snap.gameIntensity, &quot;ไม่ระบุ&quot;));
+        }
+
+        if (snap &amp;&amp; snap.support) {
+            tags.push(&quot;การสนับสนุน : &quot; + selectedText(snap.support, &quot;ไม่ระบุ&quot;));
+        }
+
+        const tagHtml = tags.slice(0, 3).map(function (item) {
+            return '&lt;span class=&quot;clean-result-tag&quot;&gt;' + escapeClean(item) + &quot;&lt;/span&gt;&quot;;
+        }).join(&quot;&quot;);
+
+        return ''
+            + '&lt;div class=&quot;clean-result&quot;&gt;'
+            + '  &lt;div class=&quot;clean-result-summary&quot;&gt;'
+            + '    &lt;div class=&quot;clean-result-title&quot;&gt;' + escapeClean(title) + '&lt;/div&gt;'
+            + '    &lt;div class=&quot;clean-result-desc&quot;&gt;' + escapeClean(description) + '&lt;/div&gt;'
+            +      (tagHtml ? '&lt;div class=&quot;clean-result-tags&quot;&gt;' + tagHtml + '&lt;/div&gt;' : '')
+            + '  &lt;/div&gt;'
+            + '  &lt;div class=&quot;clean-result-grid&quot;&gt;'
+            + '    &lt;div class=&quot;clean-result-panel&quot;&gt;'
+            + '      &lt;div class=&quot;clean-result-panel-title&quot;&gt;ควรเริ่มจาก&lt;/div&gt;'
+            + '      &lt;ul class=&quot;clean-result-list&quot;&gt;'
+            +          renderList(
+                            activities,
+                            &quot;เริ่มจากกิจกรรมทดลองขนาดเล็ก ให้ผู้เรียนเลือกบทบาทได้ตามความถนัด&quot;
+                        )
+            + '      &lt;/ul&gt;'
+            + '    &lt;/div&gt;'
+            + '    &lt;div class=&quot;clean-result-panel&quot;&gt;'
+            + '      &lt;div class=&quot;clean-result-panel-title&quot;&gt;ดูแลเพิ่มเติม&lt;/div&gt;'
+            + '      &lt;ul class=&quot;clean-result-list&quot;&gt;'
+            +          renderList(
+                            care,
+                            &quot;กำหนดเวลา กติกา และติดตามผลหลังเข้าร่วมกิจกรรมอย่างเหมาะสม&quot;
+                        )
+            + '      &lt;/ul&gt;'
+            + '    &lt;/div&gt;'
+            + '  &lt;/div&gt;'
+            + '&lt;/div&gt;';
+    };
+
+    window.runPrediction = function () {
+        const x = collectInputVector();
+        const prob = forestPredict(x);
+        const percent = Math.max(0, Math.min(100, prob * 100));
+        const level = resultLevel(prob);
+        const snapshot = getInputSnapshot();
+        const activityPlan = buildActivityRecommendation(prob, snapshot);
+
+        const percentEl = document.getElementById(&quot;resultPercent&quot;);
+        if (percentEl) {
+            percentEl.textContent = percent.toLocaleString(&quot;th-TH&quot;, {
+                maximumFractionDigits: 1
+            }) + &quot;%&quot;;
+        }
+
+        const statusEl = document.getElementById(&quot;resultStatus&quot;);
+        if (statusEl) {
+            statusEl.textContent = level.label;
+            statusEl.style.background = &quot;#FFFFFF&quot;;
+            statusEl.style.color = level.color;
+            statusEl.style.border = &quot;1px solid &quot; + level.color;
+        }
+
+        const barEl = document.getElementById(&quot;resultBar&quot;);
+        if (barEl) {
+            barEl.style.width = percent + &quot;%&quot;;
+            barEl.style.background = level.color;
+        }
+
+        const resultTextEl = document.getElementById(&quot;resultText&quot;);
+        if (resultTextEl) {
+            resultTextEl.textContent =
+                level.text + &quot; โดยควรใช้ผลนี้เป็นแนวทางเบื้องต้นในการออกแบบกิจกรรม&quot;;
+        }
+
+        const recommendEl = document.getElementById(&quot;recommendBox&quot;);
+        if (recommendEl) {
+            recommendEl.innerHTML = window.renderActivityRecommendation(
+                level,
+                activityPlan,
+                snapshot
+            );
+        }
+
+        const inlineResult = document.querySelector(&quot;.result-under-form&quot;);
+
+        if (inlineResult) {
+            inlineResult.scrollIntoView({
+                behavior: &quot;smooth&quot;,
+                block: &quot;start&quot;
+            });
+        }
+    };
+
+    const originalResetResultView = window.resetResultView;
+
+    window.resetResultView = function () {
+        if (typeof originalResetResultView === &quot;function&quot;) {
+            originalResetResultView();
+        }
+
+        const recommendEl = document.getElementById(&quot;recommendBox&quot;);
+
+        if (recommendEl) {
+            recommendEl.innerHTML = ''
+                + '&lt;div class=&quot;clean-result-empty&quot;&gt;'
+                + 'กดปุ่ม “ประเมินแนวโน้ม” เพื่อดูผลลัพธ์และแนวทางแนะนำ'
+                + '&lt;/div&gt;';
+        }
+
+        setupChoiceButtons();
+        markSmoothMultiOptions();
+        syncSmoothMultiState();
+    };
+
+    const originalResetForm = window.resetForm;
+
+    window.resetForm = function () {
+        if (typeof originalResetForm === &quot;function&quot;) {
+            originalResetForm();
+        }
+
+        setTimeout(function () {
+            setupChoiceButtons();
+            markSmoothMultiOptions();
+            syncSmoothMultiState();
+        }, 30);
+    };
+
+    document.addEventListener(&quot;change&quot;, function (event) {
+        const target = event.target;
+
+        if (
+            target &amp;&amp;
+            target.matches &amp;&amp;
+            target.matches(&quot;.ml-multi-input&quot;)
+        ) {
+            const label = target.closest(&quot;label&quot;);
+            normalizeSmoothOption(label);
+            syncSmoothMultiState();
+        }
+    });
+
+    document.addEventListener(&quot;click&quot;, function () {
+        setTimeout(syncSmoothMultiState, 30);
+    });
+
+    function initAll() {
+        setupChoiceButtons();
+        markSmoothMultiOptions();
+        syncSmoothMultiState();
+    }
+
+    if (document.readyState === &quot;loading&quot;) {
+        document.addEventListener(&quot;DOMContentLoaded&quot;, initAll);
+    } else {
+        initAll();
+    }
+
+    window.addEventListener(&quot;load&quot;, function () {
+        initAll();
+
+        setTimeout(function () {
+            initAll();
+
+            if (typeof window.resetResultView === &quot;function&quot;) {
+                window.resetResultView();
+            }
+        }, 80);
+
+        setTimeout(initAll, 250);
+        setTimeout(initAll, 500);
+    });
+})();
+
 &lt;/script&gt;
 &lt;script id=&quot;predictor-modal-soft-question-card-script-v10&quot;&gt;
 (function () {
@@ -5634,104 +6060,6 @@ document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
     }, 800);
 })();
 &lt;/script&gt;
-&lt;script id=&quot;ml-q10-q13-first-option-equalizer-js&quot;&gt;
-(function () {
-    function normalizeSmoothOption(label) {
-        if (!label) return;
-
-        label.classList.remove(
-            &quot;is-top&quot;,
-            &quot;is-popular&quot;,
-            &quot;top-option&quot;,
-            &quot;rank-1&quot;,
-            &quot;most-selected&quot;,
-            &quot;most-popular&quot;
-        );
-
-        label.querySelectorAll(&quot;br&quot;).forEach(function (br) {
-            br.remove();
-        });
-
-        const input = label.querySelector('input[type=&quot;checkbox&quot;]');
-
-        if (!input) return;
-
-        input.classList.add(&quot;ml-smooth-checkbox&quot;);
-
-        let textEl =
-            label.querySelector(&quot;.ml-smooth-option-text&quot;) ||
-            label.querySelector(&quot;span&quot;) ||
-            label.querySelector(&quot;div&quot;);
-
-        if (!textEl) {
-            const textNodes = [];
-
-            Array.from(label.childNodes).forEach(function (node) {
-                if (
-                    node.nodeType === Node.TEXT_NODE &amp;&amp;
-                    String(node.textContent || &quot;&quot;).trim()
-                ) {
-                    textNodes.push(node);
-                }
-            });
-
-            if (textNodes.length) {
-                textEl = document.createElement(&quot;span&quot;);
-                textEl.className = &quot;ml-smooth-option-text&quot;;
-
-                textNodes.forEach(function (node) {
-                    textEl.appendChild(
-                        document.createTextNode(
-                            String(node.textContent || &quot;&quot;).replace(/\s+/g, &quot; &quot;).trim()
-                        )
-                    );
-                    node.remove();
-                });
-
-                input.insertAdjacentElement(&quot;afterend&quot;, textEl);
-            }
-        }
-
-        if (textEl) {
-            textEl.classList.add(&quot;ml-smooth-option-text&quot;);
-            textEl.textContent = String(textEl.textContent || &quot;&quot;)
-                .replace(/\s+/g, &quot; &quot;)
-                .trim();
-        }
-
-        label.classList.toggle(&quot;is-checked&quot;, input.checked === true);
-        label.setAttribute(&quot;aria-checked&quot;, input.checked ? &quot;true&quot; : &quot;false&quot;);
-    }
-
-    function normalizeAllSmoothOptions() {
-        document
-            .querySelectorAll(
-                'body.ml-predictor-lock .ml-smooth-option-grid label.ml-smooth-option'
-            )
-            .forEach(normalizeSmoothOption);
-
-        document
-            .querySelectorAll(
-                'body.ml-predictor-lock .ml-smooth-option-grid input[type=&quot;checkbox&quot;]'
-            )
-            .forEach(function (input) {
-                if (input.dataset.firstOptionEqualizerReady === &quot;1&quot;) return;
-
-                input.dataset.firstOptionEqualizerReady = &quot;1&quot;;
-
-                input.addEventListener(&quot;change&quot;, function () {
-                    const label = input.closest(&quot;label&quot;);
-                    normalizeSmoothOption(label);
-                });
-            });
-    }
-
-    document.addEventListener(&quot;DOMContentLoaded&quot;, normalizeAllSmoothOptions);
-    window.addEventListener(&quot;load&quot;, normalizeAllSmoothOptions);
-    setTimeout(normalizeAllSmoothOptions, 200);
-    setTimeout(normalizeAllSmoothOptions, 800);
-})();
-&lt;/script&gt;
 &lt;script id=&quot;dd-final-refactor-js&quot;&gt;
 (function(){
   const lastFocus = {};
@@ -5740,443 +6068,6 @@ document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
   window.closeDDModal = function(id){const bg=document.getElementById(id); if(!bg) return; bg.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus[id] &amp;&amp; lastFocus[id].focus) lastFocus[id].focus();};
   document.addEventListener('keydown', function(e){const open=document.querySelector('.dd-modal-backdrop[aria-hidden=&quot;false&quot;]'); if(!open) return; if(e.key==='Escape'){e.preventDefault(); closeDDModal(open.id);} if(e.key==='Tab'){const fs=focusables(open); if(!fs.length) return; const first=fs[0], last=fs[fs.length-1]; if(e.shiftKey &amp;&amp; document.activeElement===first){e.preventDefault(); last.focus();} else if(!e.shiftKey &amp;&amp; document.activeElement===last){e.preventDefault(); first.focus();}}});
   document.addEventListener('click', function(e){const bg=e.target.closest('.dd-modal-backdrop'); if(bg &amp;&amp; e.target===bg){closeDDModal(bg.id);}});
-})();
-&lt;/script&gt;
-
-&lt;script id=&quot;ml-predictor-single-cell-final-js&quot;&gt;
-(function () {
-    const TARGET_MULTI_IDS = [
-        &quot;game_types&quot;,
-        &quot;gaming_reasons&quot;,
-        &quot;problems&quot;,
-        &quot;support_needs&quot;
-    ];
-
-    function escapeClean(value) {
-        return String(value ?? &quot;&quot;).replace(/[&amp;&lt;&gt;&quot;']/g, function (ch) {
-            return {
-                &quot;&amp;&quot;: &quot;&amp;amp;&quot;,
-                &quot;&lt;&quot;: &quot;&amp;lt;&quot;,
-                &quot;&gt;&quot;: &quot;&amp;gt;&quot;,
-                '&quot;': &quot;&amp;quot;&quot;,
-                &quot;'&quot;: &quot;&amp;#39;&quot;
-            }[ch];
-        });
-    }
-
-    function optionText(option) {
-        return String(option ? option.textContent : &quot;&quot;)
-            .replace(/\s+/g, &quot; &quot;)
-            .trim();
-    }
-
-    function cssEscapeSafe(value) {
-        if (window.CSS &amp;&amp; typeof window.CSS.escape === &quot;function&quot;) {
-            return window.CSS.escape(value);
-        }
-
-        return String(value).replace(/&quot;/g, '\\&quot;');
-    }
-
-    function getQuestionNo(inputId) {
-        const index = TARGET_MULTI_IDS.indexOf(inputId);
-        return index &gt;= 0 ? String(index + 10) : &quot;&quot;;
-    }
-
-    /* =====================================================
-       Select -&gt; Button
-       ===================================================== */
-
-    function refreshChoiceButtons(selectEl) {
-        if (!selectEl) return;
-
-        const wrap = selectEl.parentElement
-            ? selectEl.parentElement.querySelector(
-                '.ml-choice-grid[data-input-id=&quot;' + selectEl.dataset.inputId + '&quot;]'
-              )
-            : null;
-
-        if (!wrap) return;
-
-        const currentValue = String(selectEl.value);
-
-        wrap.querySelectorAll(&quot;.ml-choice-btn&quot;).forEach(function (btn) {
-            const isActive = String(btn.dataset.value) === currentValue;
-            btn.classList.toggle(&quot;is-active&quot;, isActive);
-            btn.setAttribute(&quot;aria-checked&quot;, isActive ? &quot;true&quot; : &quot;false&quot;);
-        });
-    }
-
-    function enhanceSelect(selectEl) {
-        if (!selectEl || selectEl.dataset.mlChoiceReady === &quot;1&quot;) return;
-
-        const inputId = selectEl.dataset.inputId || &quot;&quot;;
-        const parent = selectEl.parentElement;
-
-        if (!parent) return;
-
-        selectEl.dataset.mlChoiceReady = &quot;1&quot;;
-        selectEl.classList.add(&quot;ml-native-select-hidden&quot;);
-        selectEl.setAttribute(&quot;aria-hidden&quot;, &quot;true&quot;);
-        selectEl.tabIndex = -1;
-
-        const wrap = document.createElement(&quot;div&quot;);
-        wrap.className = &quot;ml-choice-grid&quot;;
-        wrap.dataset.inputId = inputId;
-        wrap.setAttribute(&quot;role&quot;, &quot;radiogroup&quot;);
-
-        Array.from(selectEl.options).forEach(function (opt, idx) {
-            const btn = document.createElement(&quot;button&quot;);
-
-            btn.type = &quot;button&quot;;
-            btn.className = &quot;ml-choice-btn&quot;;
-            btn.dataset.value = String(opt.value);
-            btn.dataset.index = String(idx);
-            btn.setAttribute(&quot;role&quot;, &quot;radio&quot;);
-            btn.setAttribute(&quot;aria-checked&quot;, &quot;false&quot;);
-            btn.textContent = optionText(opt);
-
-            btn.addEventListener(&quot;click&quot;, function () {
-                selectEl.selectedIndex = idx;
-                selectEl.value = opt.value;
-
-                selectEl.dispatchEvent(new Event(&quot;input&quot;, { bubbles: true }));
-                selectEl.dispatchEvent(new Event(&quot;change&quot;, { bubbles: true }));
-
-                refreshChoiceButtons(selectEl);
-            });
-
-            btn.addEventListener(&quot;keydown&quot;, function (event) {
-                if (event.key === &quot;Enter&quot; || event.key === &quot; &quot;) {
-                    event.preventDefault();
-                    btn.click();
-                }
-            });
-
-            wrap.appendChild(btn);
-        });
-
-        parent.appendChild(wrap);
-
-        selectEl.addEventListener(&quot;change&quot;, function () {
-            refreshChoiceButtons(selectEl);
-        });
-
-        refreshChoiceButtons(selectEl);
-    }
-
-    function setupChoiceButtons() {
-        document
-            .querySelectorAll(&quot;select.ml-human-input, select.select-input&quot;)
-            .forEach(enhanceSelect);
-
-        document
-            .querySelectorAll(&quot;select.ml-human-input, select.select-input&quot;)
-            .forEach(refreshChoiceButtons);
-    }
-
-    /* =====================================================
-       Smooth Q10-Q13
-       ===================================================== */
-
-    function markSmoothMultiOptions() {
-        TARGET_MULTI_IDS.forEach(function (inputId) {
-            const safeId = cssEscapeSafe(inputId);
-            const inputs = document.querySelectorAll(
-                '.ml-multi-input[data-input-id=&quot;' + safeId + '&quot;]'
-            );
-
-            if (!inputs.length) return;
-
-            const questionNo = getQuestionNo(inputId);
-
-            inputs.forEach(function (input) {
-                input.classList.add(&quot;ml-smooth-checkbox&quot;);
-
-                const label = input.closest(&quot;label.checkbox-choice&quot;) || input.closest(&quot;label&quot;);
-
-                if (label) {
-                    label.classList.add(&quot;ml-smooth-option&quot;);
-                    label.dataset.smoothInputId = inputId;
-                    label.dataset.smoothQuestionNo = questionNo;
-                    label.setAttribute(&quot;role&quot;, &quot;checkbox&quot;);
-
-                    const textEl = label.querySelector(&quot;span&quot;) || label.querySelector(&quot;div&quot;);
-
-                    if (textEl) {
-                        textEl.classList.add(&quot;ml-smooth-option-text&quot;);
-                    }
-                }
-
-                const grid = input.closest(&quot;.checkbox-grid&quot;);
-
-                if (grid) {
-                    grid.classList.add(&quot;ml-smooth-option-grid&quot;);
-                    grid.dataset.smoothInputId = inputId;
-                    grid.dataset.smoothQuestionNo = questionNo;
-                }
-
-                const card = input.closest(&quot;.input-card, .question-card-lock, article&quot;);
-
-                if (card) {
-                    card.classList.add(&quot;ml-smooth-multi-card&quot;);
-                    card.dataset.smoothInputId = inputId;
-                    card.dataset.smoothQuestionNo = questionNo;
-                }
-            });
-        });
-
-        syncSmoothMultiState();
-    }
-
-    function syncSmoothMultiState() {
-        TARGET_MULTI_IDS.forEach(function (inputId) {
-            const safeId = cssEscapeSafe(inputId);
-            const inputs = document.querySelectorAll(
-                '.ml-multi-input[data-input-id=&quot;' + safeId + '&quot;]'
-            );
-
-            inputs.forEach(function (input) {
-                const label = input.closest(&quot;.ml-smooth-option&quot;);
-
-                if (!label) return;
-
-                const checked = !!input.checked;
-
-                label.classList.toggle(&quot;is-checked&quot;, checked);
-                label.setAttribute(&quot;aria-checked&quot;, checked ? &quot;true&quot; : &quot;false&quot;);
-            });
-        });
-    }
-
-    /* =====================================================
-       Clean Result Card
-       ===================================================== */
-
-    function cleanItems(items, maxItems) {
-        if (!Array.isArray(items)) return [];
-
-        return items
-            .filter(function (item) {
-                return String(item || &quot;&quot;).trim().length &gt; 0;
-            })
-            .slice(0, maxItems);
-    }
-
-    function renderList(items, fallback) {
-        const clean = cleanItems(items, 2);
-
-        if (clean.length === 0) {
-            clean.push(fallback);
-        }
-
-        return clean.map(function (item) {
-            return &quot;&lt;li&gt;&quot; + escapeClean(item) + &quot;&lt;/li&gt;&quot;;
-        }).join(&quot;&quot;);
-    }
-
-    function selectedText(value, fallback) {
-        const text = String(value || &quot;&quot;).trim();
-        return text || fallback;
-    }
-
-    window.renderActivityRecommendation = function (level, plan, snap) {
-        const title = plan &amp;&amp; plan.title
-            ? plan.title
-            : &quot;แนวทางแนะนำเบื้องต้น&quot;;
-
-        const description = plan &amp;&amp; plan.description
-            ? plan.description
-            : &quot;ใช้ผลประเมินนี้เป็นข้อมูลประกอบการออกแบบกิจกรรม ไม่ใช่ข้อสรุปตัดสินผู้เรียนรายบุคคล&quot;;
-
-        const activities = plan &amp;&amp; Array.isArray(plan.activities)
-            ? plan.activities
-            : [];
-
-        const care = plan &amp;&amp; Array.isArray(plan.care)
-            ? plan.care
-            : [];
-
-        const tags = [];
-
-        if (snap &amp;&amp; snap.interest) {
-            tags.push(&quot;ความสนใจ : &quot; + selectedText(snap.interest, &quot;ไม่ระบุ&quot;));
-        }
-
-        if (snap &amp;&amp; snap.gameIntensity) {
-            tags.push(&quot;พฤติกรรม : &quot; + selectedText(snap.gameIntensity, &quot;ไม่ระบุ&quot;));
-        }
-
-        if (snap &amp;&amp; snap.support) {
-            tags.push(&quot;การสนับสนุน : &quot; + selectedText(snap.support, &quot;ไม่ระบุ&quot;));
-        }
-
-        const tagHtml = tags.slice(0, 3).map(function (item) {
-            return '&lt;span class=&quot;clean-result-tag&quot;&gt;' + escapeClean(item) + &quot;&lt;/span&gt;&quot;;
-        }).join(&quot;&quot;);
-
-        return ''
-            + '&lt;div class=&quot;clean-result&quot;&gt;'
-            + '  &lt;div class=&quot;clean-result-summary&quot;&gt;'
-            + '    &lt;div class=&quot;clean-result-title&quot;&gt;' + escapeClean(title) + '&lt;/div&gt;'
-            + '    &lt;div class=&quot;clean-result-desc&quot;&gt;' + escapeClean(description) + '&lt;/div&gt;'
-            +      (tagHtml ? '&lt;div class=&quot;clean-result-tags&quot;&gt;' + tagHtml + '&lt;/div&gt;' : '')
-            + '  &lt;/div&gt;'
-            + '  &lt;div class=&quot;clean-result-grid&quot;&gt;'
-            + '    &lt;div class=&quot;clean-result-panel&quot;&gt;'
-            + '      &lt;div class=&quot;clean-result-panel-title&quot;&gt;ควรเริ่มจาก&lt;/div&gt;'
-            + '      &lt;ul class=&quot;clean-result-list&quot;&gt;'
-            +          renderList(
-                            activities,
-                            &quot;เริ่มจากกิจกรรมทดลองขนาดเล็ก ให้ผู้เรียนเลือกบทบาทได้ตามความถนัด&quot;
-                        )
-            + '      &lt;/ul&gt;'
-            + '    &lt;/div&gt;'
-            + '    &lt;div class=&quot;clean-result-panel&quot;&gt;'
-            + '      &lt;div class=&quot;clean-result-panel-title&quot;&gt;ดูแลเพิ่มเติม&lt;/div&gt;'
-            + '      &lt;ul class=&quot;clean-result-list&quot;&gt;'
-            +          renderList(
-                            care,
-                            &quot;กำหนดเวลา กติกา และติดตามผลหลังเข้าร่วมกิจกรรมอย่างเหมาะสม&quot;
-                        )
-            + '      &lt;/ul&gt;'
-            + '    &lt;/div&gt;'
-            + '  &lt;/div&gt;'
-            + '&lt;/div&gt;';
-    };
-
-    window.runPrediction = function () {
-        const x = collectInputVector();
-        const prob = forestPredict(x);
-        const percent = Math.max(0, Math.min(100, prob * 100));
-        const level = resultLevel(prob);
-        const snapshot = getInputSnapshot();
-        const activityPlan = buildActivityRecommendation(prob, snapshot);
-
-        const percentEl = document.getElementById(&quot;resultPercent&quot;);
-        if (percentEl) {
-            percentEl.textContent = percent.toLocaleString(&quot;th-TH&quot;, {
-                maximumFractionDigits: 1
-            }) + &quot;%&quot;;
-        }
-
-        const statusEl = document.getElementById(&quot;resultStatus&quot;);
-        if (statusEl) {
-            statusEl.textContent = level.label;
-            statusEl.style.background = &quot;#FFFFFF&quot;;
-            statusEl.style.color = level.color;
-            statusEl.style.border = &quot;1px solid &quot; + level.color;
-        }
-
-        const barEl = document.getElementById(&quot;resultBar&quot;);
-        if (barEl) {
-            barEl.style.width = percent + &quot;%&quot;;
-            barEl.style.background = level.color;
-        }
-
-        const resultTextEl = document.getElementById(&quot;resultText&quot;);
-        if (resultTextEl) {
-            resultTextEl.textContent = level.text;
-        }
-
-        const recommendEl = document.getElementById(&quot;recommendBox&quot;);
-        if (recommendEl) {
-            recommendEl.innerHTML = window.renderActivityRecommendation(
-                level,
-                activityPlan,
-                snapshot
-            );
-        }
-
-        const inlineResult = document.querySelector(&quot;.result-under-form&quot;);
-
-        if (inlineResult) {
-            inlineResult.scrollIntoView({
-                behavior: &quot;smooth&quot;,
-                block: &quot;start&quot;
-            });
-        } else if (typeof openResultModal === &quot;function&quot;) {
-            openResultModal();
-        }
-    };
-
-    const originalResetResultView = window.resetResultView;
-
-    window.resetResultView = function () {
-        if (typeof originalResetResultView === &quot;function&quot;) {
-            originalResetResultView();
-        }
-
-        const recommendEl = document.getElementById(&quot;recommendBox&quot;);
-
-        if (recommendEl) {
-            recommendEl.innerHTML = ''
-                + '&lt;div class=&quot;clean-result-empty&quot;&gt;'
-                + 'กดปุ่ม “ประเมินแนวโน้ม” เพื่อดูผลลัพธ์และแนวทางแนะนำ'
-                + '&lt;/div&gt;';
-        }
-
-        setupChoiceButtons();
-        markSmoothMultiOptions();
-        syncSmoothMultiState();
-    };
-
-    const originalResetForm = window.resetForm;
-
-    window.resetForm = function () {
-        if (typeof originalResetForm === &quot;function&quot;) {
-            originalResetForm();
-        }
-
-        setTimeout(function () {
-            setupChoiceButtons();
-            markSmoothMultiOptions();
-            syncSmoothMultiState();
-        }, 30);
-    };
-
-    document.addEventListener(&quot;change&quot;, function (event) {
-        const target = event.target;
-
-        if (
-            target &amp;&amp;
-            target.matches &amp;&amp;
-            target.matches(&quot;.ml-multi-input&quot;)
-        ) {
-            syncSmoothMultiState();
-        }
-    });
-
-    document.addEventListener(&quot;click&quot;, function () {
-        setTimeout(syncSmoothMultiState, 30);
-    });
-
-    function initAll() {
-        setupChoiceButtons();
-        markSmoothMultiOptions();
-        syncSmoothMultiState();
-    }
-
-    if (document.readyState === &quot;loading&quot;) {
-        document.addEventListener(&quot;DOMContentLoaded&quot;, initAll);
-    } else {
-        initAll();
-    }
-
-    window.addEventListener(&quot;load&quot;, function () {
-        initAll();
-
-        setTimeout(function () {
-            initAll();
-
-            if (typeof window.resetResultView === &quot;function&quot;) {
-                window.resetResultView();
-            }
-        }, 80);
-
-        setTimeout(initAll, 250);
-        setTimeout(initAll, 500);
-    });
 })();
 &lt;/script&gt;
 &lt;/body&gt;
@@ -7856,7 +7747,7 @@ body.dd-policy-modal-asset table.data-table{
 &lt;tr&gt;&lt;th&gt;กลุ่มอ้างอิง&lt;/th&gt;&lt;th&gt;รายการ&lt;/th&gt;&lt;th&gt;ใช้สนับสนุนส่วนใด&lt;/th&gt;&lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
-&lt;tr&gt;&lt;td&gt;ข้อมูลหลัก&lt;/td&gt;&lt;td&gt;แบบสอบถามนักเรียน นักศึกษา สาขาวิชาเทคโนโลยีธุรกิจดิจิทัล&lt;/td&gt;&lt;td&gt;แหล่งข้อมูล กลุ่มตัวอย่าง พฤติกรรม ความสนใจ และความคิดเห็น&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;เกณฑ์การประเมิน&lt;/td&gt;&lt;td&gt;เกณฑ์การตัดสินผลงานการจัดการข้อมูลที่มีความเป็นเลิศ 100 คะแนน&lt;/td&gt;&lt;td&gt;การออกแบบหน้าสรุปข้อมูล การวิเคราะห์ข้อมูล เทคนิค และการอ้างอิง&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;หลักสูตร ปวช.&lt;/td&gt;&lt;td&gt;หลักสูตรประกาศนียบัตรวิชาชีพ พ.ศ. 2567 เทคโนโลยีธุรกิจดิจิทัล&lt;/td&gt;&lt;td&gt;การเรียนรู้แบบโครงงาน เว็บไซต์ สื่อดิจิทัล ฐานข้อมูล และโปรแกรมสำนักงาน&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;หลักสูตร ปวส.&lt;/td&gt;&lt;td&gt;หลักสูตรประกาศนียบัตรวิชาชีพชั้นสูง พ.ศ. 2567 เทคโนโลยีธุรกิจดิจิทัล&lt;/td&gt;&lt;td&gt;การวิเคราะห์ข้อมูล การประยุกต์ AI สำหรับธุรกิจ การวิเคราะห์ระบบ การออกแบบหน้าจอ และระบบช่วยตัดสินใจ&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;จริยธรรมและสุขภาวะ&lt;/td&gt;&lt;td&gt;แนวคิดการใช้ข้อมูลเพื่อดูแลผู้เรียน ไม่ใช่เพื่อการตัดสินรายบุคคล&lt;/td&gt;&lt;td&gt;ระบบเฝ้าระวัง จริยธรรมการใช้โมเดล การออกแบบนโยบาย และการดูแลผู้เรียน&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;ข้อมูลหลักของงานวิจัย&lt;/td&gt;&lt;td&gt;แบบสอบถามนักเรียน นักศึกษา สาขาวิชาเทคโนโลยีธุรกิจดิจิทัล วิทยาลัยการอาชีพขอนแก่น&lt;/td&gt;&lt;td&gt;แหล่งข้อมูล กลุ่มตัวอย่าง พฤติกรรม ความสนใจ และความคิดเห็น&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;หลักสูตรและการจัดการเรียนรู้&lt;/td&gt;&lt;td&gt;หลักสูตรประกาศนียบัตรวิชาชีพ พ.ศ. 2567 เทคโนโลยีธุรกิจดิจิทัล&lt;/td&gt;&lt;td&gt;การเรียนรู้แบบโครงงาน เว็บไซต์ สื่อดิจิทัล ฐานข้อมูล และโปรแกรมสำนักงาน&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;หลักสูตรและการจัดการเรียนรู้&lt;/td&gt;&lt;td&gt;หลักสูตรประกาศนียบัตรวิชาชีพชั้นสูง พ.ศ. 2567 เทคโนโลยีธุรกิจดิจิทัล&lt;/td&gt;&lt;td&gt;การวิเคราะห์ข้อมูล การประยุกต์ AI สำหรับธุรกิจ การวิเคราะห์ระบบ&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;นโยบาย อุตสาหกรรม และสถานการณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;กฤษณ์ กำจาย. (2561). E-Sport เป็นมากกว่าเกม. สำนักงานส่งเสริมเศรษฐกิจดิจิทัล. https : //www.depa.or.th/th/article-view/esports&lt;/td&gt;&lt;td&gt;แนวคิดอีสปอร์ตในฐานะอุตสาหกรรมดิจิทัล เศรษฐกิจดิจิทัล และการพัฒนาทักษะของผู้เรียน&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;นโยบาย อุตสาหกรรม และสถานการณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;กองพัฒนาข้อมูลและตัวชี้วัดสังคม. (2562). อีสปอร์ต : สถานการณ์ ผลกระทบ และแนวทางการดูแล. ใน ภาวะสังคมไทยไตรมาสหนึ่ง ปี 2562 (น. 30-39). สำนักงานสภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ.&lt;/td&gt;&lt;td&gt;สถานการณ์อีสปอร์ต ผลกระทบเชิงสังคม ความเสี่ยง และแนวทางการดูแลผู้เรียน&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;นโยบาย อุตสาหกรรม และสถานการณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;กุลชา ปรีดาศักดิ์. (2566). แนวทางในการส่งเสริมและพัฒนาอุตสาหกรรมเกมและอีสปอร์ต (Esports) ไทย [วิทยานิพนธ์ปริญญาโท, มหาวิทยาลัยธรรมศาสตร์]. https : //ethesisarchive.library.tu.ac.th/thesis/2023/TU_2023_6423110078_16836_27767.pdf&lt;/td&gt;&lt;td&gt;แนวทางส่งเสริมอุตสาหกรรมเกมและอีสปอร์ต การพัฒนาระบบ และข้อเสนอเชิงนโยบาย&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;นโยบาย อุตสาหกรรม และสถานการณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;พิชญ์วัฒน์ เจนจบ. (2565). การศึกษาเกี่ยวกับสถานการณ์กีฬา Esports ในประเทศไทยและแนวทางการพัฒนาตามแนวคิด Digital Economy [การค้นคว้าอิสระวิทยาศาสตรมหาบัณฑิต, มหาวิทยาลัยธรรมศาสตร์]. https : //ethesisarchive.library.tu.ac.th/thesis/2022/TU_2022_6023036269_10229_27360.pdf&lt;/td&gt;&lt;td&gt;สถานการณ์อีสปอร์ตในประเทศไทย แนวทางการพัฒนาตามแนวคิด Digital Economy และข้อเสนอเชิงนโยบาย&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;นโยบาย อุตสาหกรรม และสถานการณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;ภัทร์ดารัสมิ์ ทองสรวยกร. (2569, 21 พฤษภาคม). รัฐบาลดัน “อีสปอร์ต” เข้าสถานศึกษา เปลี่ยนเกมเป็นเครื่องมือฝึกทักษะ. Thai PBS. https : //www.thaipbs.or.th/news/content/506173&lt;/td&gt;&lt;td&gt;บริบทปัจจุบันของการนำอีสปอร์ตเข้าสถานศึกษา การเชื่อมโยงเกมกับการฝึกทักษะ และความสำคัญเชิงนโยบาย&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;นโยบาย อุตสาหกรรม และสถานการณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;สมาคมกีฬาอีสปอร์ตแห่งประเทศไทย. (2568). ผลงานนักกีฬาทีมชาติไทยในการแข่งขันกีฬาอีสปอร์ตในซีเกมส์ ครั้งที่ 33. https : //tesf.or.th/?p=5069&lt;/td&gt;&lt;td&gt;บริบทความก้าวหน้าของกีฬาอีสปอร์ตในประเทศไทย ผลงานระดับชาติ และการสร้างแรงบันดาลใจในการจัดกิจกรรม&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;พฤติกรรม ความสนใจ และแรงจูงใจด้านอีสปอร์ต&lt;/td&gt;&lt;td&gt;กฤษณะ ขยัน. (2566). ปัจจัยและพฤติกรรมการเล่น E-SPORT ของนักเรียนชั้นมัธยมศึกษาปีที่ 5. วารสารสหวิทยาการวิจัยและนวัตกรรมการศึกษา, 2(1), 68-84.&lt;/td&gt;&lt;td&gt;พฤติกรรมการเล่นเกมของผู้เรียน แรงจูงใจในการเล่น และการอภิปรายผลเกี่ยวกับกลุ่มนักเรียน&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;พฤติกรรม ความสนใจ และแรงจูงใจด้านอีสปอร์ต&lt;/td&gt;&lt;td&gt;ชนาภรณ์ ปัญญาการผล. (2568). การวิเคราะห์พฤติกรรมและแรงจูงใจในการแข่งขันอีสปอร์ตที่นำไปสู่สมรรถนะอีสปอร์ตของนักศึกษาปริญญาตรี มหาวิทยาลัยกรุงเทพธนบุรี. วารสารเสียงธรรมจากมหายาน, 11(5), 40-57.&lt;/td&gt;&lt;td&gt;แรงจูงใจในการแข่งขันอีสปอร์ต สมรรถนะอีสปอร์ต และการเชื่อมโยงกิจกรรมกับการพัฒนาทักษะ&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;พฤติกรรม ความสนใจ และแรงจูงใจด้านอีสปอร์ต&lt;/td&gt;&lt;td&gt;ดนุพล พิริยะวรสกุล. (2563). ศึกษาปัจจัยที่มีต่อพฤติกรรมการรับชมการถ่ายทอดสดกีฬาอีสปอร์ต (E-Sports) ออนไลน์ผ่านช่องทาง Facebook [การค้นคว้าอิสระวิทยาศาสตรมหาบัณฑิต, มหาวิทยาลัยธรรมศาสตร์]. https : //ethesisarchive.library.tu.ac.th/thesis/2020/TU_2020_6223036069_13206_13875.pdf&lt;/td&gt;&lt;td&gt;การติดตามการแข่งขันอีสปอร์ต พฤติกรรมการรับชมออนไลน์ และการวิเคราะห์ความสัมพันธ์ระหว่างการติดตามกับความสนใจเข้าร่วม&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;พฤติกรรม ความสนใจ และแรงจูงใจด้านอีสปอร์ต&lt;/td&gt;&lt;td&gt;ธนกร สิรสุคันธา. (2567). ปัจจัยที่ส่งผลต่อความตั้งใจเล่นกีฬา E-SPORT ของนักศึกษาจีนที่ศึกษาในมหาวิทยาลัยเขตภาคเหนือตอนบน ประเทศไทย. วารสารสังคมศาสตร์วิจัย, 15(1), 35-46.&lt;/td&gt;&lt;td&gt;ปัจจัยที่ส่งผลต่อความตั้งใจเล่นกีฬาอีสปอร์ต ความสนใจ และแนวโน้มการเข้าร่วมกิจกรรม&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ความคิดเห็น การยอมรับ และภาพลักษณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;ชยภัทร สุนทรนนท์. (2562). ความคิดเห็นของนิสิตจุฬาลงกรณ์มหาวิทยาลัยที่มีต่อกีฬาอีสปอร์ต [การค้นคว้าอิสระวิทยาศาสตรมหาบัณฑิต, จุฬาลงกรณ์มหาวิทยาลัย]. https : //digital.car.chula.ac.th/chulaetd/9488&lt;/td&gt;&lt;td&gt;ความคิดเห็นต่อกีฬาอีสปอร์ต การยอมรับกิจกรรม และมุมมองของผู้เรียนในสถาบันการศึกษา&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;ความคิดเห็น การยอมรับ และภาพลักษณ์อีสปอร์ต&lt;/td&gt;&lt;td&gt;ศักรินทร์ หมื่นเดช. (2566). การส่งเสริมภาพลักษณ์อีสปอร์ตต่อประชาชนในประเทศไทย. วารสารมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยราชภัฏพิบูลสงคราม, 17(2), 480-493.&lt;/td&gt;&lt;td&gt;ภาพลักษณ์ของอีสปอร์ต การสื่อสารเชิงบวก และแนวทางประชาสัมพันธ์กิจกรรมในสถานศึกษา&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;สุขภาวะ ผลกระทบ และการดูแลผู้เรียน&lt;/td&gt;&lt;td&gt;นนทวัช แซ่ลิ่ม. (2568). เส้นทางการเป็นนักกีฬาอีสปอร์ตและการจัดการชีวิตตนเองในช่วงวัยรุ่นของนักกีฬาอีสปอร์ต. วารสารมนุษยศาสตร์ปริทรรศน์, 47(2), 50-71.&lt;/td&gt;&lt;td&gt;การดูแลผู้เรียนที่สนใจอีสปอร์ต การจัดการเวลา สุขภาวะ และข้อควรระวังในการจัดกิจกรรม&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;สุขภาวะ ผลกระทบ และการดูแลผู้เรียน&lt;/td&gt;&lt;td&gt;สุวัฒนา เกิดม่วง, ศักดิกร สุวรรณเจริญ, สืบพงษ์ กาฬภักดี, สุวิทย์ คุณาวิศรุต, และปิยะ ทองบาง. (2567). พฤติกรรมการเล่นอีสปอร์ตและผลกระทบต่อสุขภาพของนักเรียนมัธยมปลาย จังหวัดสุพรรณบุรี. วารสารสาธารณสุขล้านนา, 20(1), 41-52.&lt;/td&gt;&lt;td&gt;ผลกระทบต่อสุขภาพ ความกังวลของผู้เรียน การออกแบบมาตรการดูแล และข้อควรระวังในการจัดกิจกรรมอีสปอร์ต&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;

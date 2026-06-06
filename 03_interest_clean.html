@@ -151,36 +151,73 @@
 
 
 /* =========================================================
-   Page 3 Clean Table UI
-   ลด visual noise / ตารางขอบมน / สูตรพับได้
+   Page 3 Flat Table UI
+   ตารางไม่แสดงผลเป็น card
+   ป้องกัน card ซ้อน card เมื่อเรียกผ่าน modal / รวมหน้า
+   ไม่เปลี่ยน logic / ไม่แตะข้อมูล / ไม่แตะกราฟ
    ========================================================= */
 
 .graph-control-note {
     display: none !important;
 }
 
-/* ตอนปิดตาราง เหลือเฉพาะปุ่มเล็กใต้ Insight */
-.summary-table-card {
+/* ---------- Flat Table Container ---------- */
+
+.summary-table-card,
+.clean-summary-table-card,
+.flat-summary-table-block {
     width: 100%;
     max-width: 100%;
-    margin: 12px auto 0 auto;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
+
+    margin: 12px 0 0 0;
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
     box-sizing: border-box;
+    overflow: visible !important;
 }
 
-/* ปุ่มดูตาราง */
-.table-action-row {
+/* เมื่ออยู่ใน section-card ต้องไม่กลายเป็น card ซ้อน */
+.section-card .summary-table-card,
+.section-card .clean-summary-table-card,
+.section-card .flat-summary-table-block {
+    margin-top: 12px;
+    margin-bottom: 0;
+
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    overflow: visible !important;
+}
+
+/* ---------- Button Row ---------- */
+
+.table-action-row,
+.flat-table-action-row {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: 10px;
+
     width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 .toggle-table-btn {
-    border: 0;
+    border: 1px solid #DDE3F3;
     border-radius: 999px;
     background: #EEF2FF;
     color: #1A237E;
@@ -202,31 +239,41 @@
     color: #FFFFFF;
 }
 
-/* กล่องตารางเมื่อเปิด */
-.table-collapsible {
+/* ---------- Collapsible Area ---------- */
+
+.table-collapsible,
+.flat-table-collapsible {
     margin-top: 10px;
-    padding: 14px;
+    padding: 0 !important;
 
-    background: #FFFFFF;
-    border: 1px solid #DDE3F3;
-    border-radius: 18px;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 
-    box-shadow: none;
-    overflow: hidden;
+    overflow: visible !important;
 }
 
-.table-open-head {
+/* ---------- Header inside opened table ---------- */
+
+.table-open-head,
+.flat-table-open-head {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 14px;
 
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #EEF2FF;
+    margin: 0 0 12px 0;
+    padding: 0;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
-.table-open-head h3 {
+.table-open-head h3,
+.flat-table-open-head h3 {
     margin: 0;
     color: #1A237E;
     font-size: 15.5px;
@@ -234,53 +281,75 @@
     line-height: 1.45;
 }
 
-/* พับสูตรและคำอธิบาย */
-.table-help-detail {
+/* ---------- Help Detail ---------- */
+
+.table-help-detail,
+.flat-table-help-detail {
     min-width: 220px;
     max-width: 100%;
 
-    border: 1px solid #DDE3F3;
-    border-radius: 999px;
-    background: #F7F8FC;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
 
-    overflow: hidden;
+    overflow: visible !important;
 }
 
-.table-help-detail summary {
+.table-help-detail summary,
+.flat-table-help-detail summary {
+    display: inline-flex;
+    align-items: center;
+
     cursor: pointer;
+    list-style: none;
+
     padding: 8px 12px;
+    border-radius: 999px;
 
     color: #1A237E;
+    background: #EEF2FF;
+    border: 1px solid #DDE3F3;
+
     font-size: 12.3px;
     font-weight: 900;
     line-height: 1.45;
 
-    list-style-position: inside;
     white-space: nowrap;
 }
 
-.table-help-detail[open] {
-    border-radius: 14px;
-    background: #FFFFFF;
+.table-help-detail summary::-webkit-details-marker,
+.flat-table-help-detail summary::-webkit-details-marker {
+    display: none;
 }
 
-.table-help-detail[open] summary {
-    border-bottom: 1px solid #DDE3F3;
-    background: #F7F8FC;
+.table-help-detail[open] summary,
+.flat-table-help-detail[open] summary {
+    background: #3949AB;
+    color: #FFFFFF;
 }
 
 .table-help-body {
-    padding: 12px;
+    margin-top: 10px;
+    padding: 0;
+
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
 }
 
-/* สูตร / คำอธิบายคอลัมน์ */
+/* ---------- Formula / Explain ---------- */
+
 .formula-note {
-    background: #FFFFFF;
-    border: 1px solid #DDE3F3;
-    border-left: 4px solid #3949AB;
-    border-radius: 13px;
+    background: #F8FAFF !important;
+    border: 0 !important;
+    border-left: 4px solid #3949AB !important;
+    border-radius: 14px !important;
+
     padding: 12px 14px;
-    margin-bottom: 12px;
+    margin: 0 0 10px 0;
+
+    box-shadow: none !important;
 }
 
 .formula-note ul {
@@ -292,11 +361,15 @@
 }
 
 .table-explain {
-    background: #FFFFFF;
-    border: 1px solid #DDE3F3;
-    border-radius: 13px;
+    background: #F8FAFF !important;
+    border: 0 !important;
+    border-left: 4px solid #3949AB !important;
+    border-radius: 14px !important;
+
     padding: 12px 14px;
-    margin-bottom: 0;
+    margin: 0;
+
+    box-shadow: none !important;
 }
 
 .table-explain-title {
@@ -316,6 +389,7 @@
     display: flex;
     flex-direction: column;
     gap: 3px;
+
     font-size: 12.8px;
     line-height: 1.55;
 }
@@ -328,30 +402,46 @@
     color: #607D8B;
 }
 
-/* ตารางจริง */
+/* ---------- Actual Table Wrapper ---------- */
+
 .table-wrapper,
-.clean-table-wrapper {
+.clean-table-wrapper,
+.flat-table-wrapper {
     width: 100%;
     max-width: 100%;
+
+    margin: 12px 0 0 0;
+    padding: 0;
+
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
 
-    background: #FFFFFF;
-    border: 1px solid #DDE3F3;
-    border-radius: 16px;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
+/* ---------- Actual Table ---------- */
+
 .smart-table,
-.clean-smart-table {
+.clean-smart-table,
+.flat-summary-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+
     background: #FFFFFF;
     font-size: 13px;
+
+    border: 0;
+    box-shadow: none;
 }
 
 .smart-table thead th,
-.clean-smart-table thead th {
+.clean-smart-table thead th,
+.flat-summary-table thead th {
     position: sticky;
     top: 0;
     z-index: 1;
@@ -363,48 +453,65 @@
     padding: 11px 13px;
 
     font-weight: 900;
+    border: 0;
     border-bottom: 1px solid #DDE3F3;
     white-space: nowrap;
 }
 
 .smart-table thead th:first-child,
-.clean-smart-table thead th:first-child {
-    border-top-left-radius: 15px;
+.clean-smart-table thead th:first-child,
+.flat-summary-table thead th:first-child {
+    border-top-left-radius: 14px;
 }
 
 .smart-table thead th:last-child,
-.clean-smart-table thead th:last-child {
-    border-top-right-radius: 15px;
+.clean-smart-table thead th:last-child,
+.flat-summary-table thead th:last-child {
+    border-top-right-radius: 14px;
 }
 
 .smart-table tbody td,
-.clean-smart-table tbody td {
+.clean-smart-table tbody td,
+.flat-summary-table tbody td {
     padding: 11px 13px;
+    border: 0;
     border-bottom: 1px solid #EEF2FF;
 
     color: #263238;
+    background: #FFFFFF;
+
     vertical-align: top;
     line-height: 1.6;
 }
 
+.smart-table tbody tr:nth-child(even) td,
+.clean-smart-table tbody tr:nth-child(even) td,
+.flat-summary-table tbody tr:nth-child(even) td {
+    background: #F8FAFF;
+}
+
 .smart-table tbody tr:last-child td,
-.clean-smart-table tbody tr:last-child td {
+.clean-smart-table tbody tr:last-child td,
+.flat-summary-table tbody tr:last-child td {
     border-bottom: 0;
 }
 
 .smart-table tbody tr:hover td,
-.clean-smart-table tbody tr:hover td {
-    background: #F7F8FC;
+.clean-smart-table tbody tr:hover td,
+.flat-summary-table tbody tr:hover td {
+    background: #EEF2FF;
 }
 
-/* ยกเลิกแถวแรกสีเหลือง เพื่อลดความรบกวนสายตา */
-.smart-table tbody tr.top-row td,
-.smart-table tbody tr:first-child td {
-    background: transparent !important;
+/* ยกเลิก highlight แถวแรก */
+.smart-table tbody tr:first-child td,
+.clean-smart-table tbody tr:first-child td,
+.flat-summary-table tbody tr:first-child td {
+    background: inherit !important;
 }
 
 .smart-table .num-cell,
-.clean-smart-table .num-cell {
+.clean-smart-table .num-cell,
+.flat-summary-table .num-cell {
     text-align: center;
     white-space: nowrap;
     font-weight: 800;
@@ -412,27 +519,33 @@
 }
 
 .smart-table .text-cell,
-.clean-smart-table .text-cell {
+.clean-smart-table .text-cell,
+.flat-summary-table .text-cell {
     text-align: left;
     white-space: normal;
     word-break: normal;
     overflow-wrap: anywhere;
 }
 
+/* ---------- Table Note ---------- */
+
 .table-note {
     margin-top: 10px;
     padding: 10px 12px;
 
     color: #607D8B;
-    background: #F7F8FC;
+    background: #F8FAFF;
     border-radius: 12px;
 
     font-size: 12.5px;
     line-height: 1.6;
 }
 
+/* ---------- Responsive ---------- */
+
 @media (max-width: 980px) {
-    .table-action-row {
+    .table-action-row,
+    .flat-table-action-row {
         justify-content: stretch;
     }
 
@@ -440,24 +553,23 @@
         width: 100%;
     }
 
-    .table-collapsible {
-        padding: 12px;
-        border-radius: 16px;
-    }
-
-    .table-open-head {
+    .table-open-head,
+    .flat-table-open-head {
         flex-direction: column;
         align-items: stretch;
         gap: 10px;
     }
 
-    .table-help-detail {
+    .table-help-detail,
+    .flat-table-help-detail {
         width: 100%;
         min-width: 0;
-        border-radius: 14px;
     }
 
-    .table-help-detail summary {
+    .table-help-detail summary,
+    .flat-table-help-detail summary {
+        width: 100%;
+        justify-content: center;
         white-space: normal;
     }
 
@@ -468,79 +580,19 @@
 
 @media (max-width: 520px) {
     .smart-table,
-    .clean-smart-table {
+    .clean-smart-table,
+    .flat-summary-table {
         font-size: 12.8px;
     }
 
     .smart-table thead th,
     .clean-smart-table thead th,
+    .flat-summary-table thead th,
     .smart-table tbody td,
-    .clean-smart-table tbody td {
+    .clean-smart-table tbody td,
+    .flat-summary-table tbody td {
         padding: 10px 11px;
     }
-}
-
-/* =========================================================
-   PATCH : Flat Summary Table Source for Modal Popup
-   ใช้เฉพาะตารางที่มี class clean-summary-table-flat
-   ป้องกัน card ซ้อน card เมื่อย้ายเข้า modal popup
-   ========================================================= */
-
-.summary-table-card.clean-summary-table-flat {
-    width: 100%;
-    max-width: 100%;
-    margin: 12px auto 0 auto;
-    padding: 0 !important;
-
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-}
-
-/* กล่องตารางตอนเปิด ไม่ทำเป็น card อีกชั้น */
-.clean-summary-table-flat .table-collapsible {
-    margin-top: 10px !important;
-    padding: 0 !important;
-
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-
-    box-shadow: none !important;
-    overflow: visible !important;
-}
-
-/* หัวตารางไม่ทำเป็น block/card ซ้อน */
-.clean-summary-table-flat .table-open-head {
-    margin-bottom: 12px !important;
-    padding-bottom: 0 !important;
-    border-bottom: 0 !important;
-}
-
-/* ปุ่มสูตร/คำอธิบายยังอยู่ แต่ไม่ทำให้กล่องรวมดูเป็น card */
-.clean-summary-table-flat .table-help-detail {
-    box-shadow: none !important;
-}
-
-/* ส่วนสูตรและคำอธิบาย ลดความเป็น card ซ้อน */
-.clean-summary-table-flat .formula-note,
-.clean-summary-table-flat .table-explain {
-    background: #F8FAFF !important;
-    border: 0 !important;
-    border-left: 4px solid #3949AB !important;
-    border-radius: 14px !important;
-    box-shadow: none !important;
-}
-
-/* ตารางจริงยังมีกรอบบาง ๆ เพื่ออ่านง่าย แต่ไม่ใช่ card ซ้อน */
-.clean-summary-table-flat .table-wrapper,
-.clean-summary-table-flat .clean-table-wrapper {
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
 }
 
 
@@ -1586,10 +1638,10 @@ body.dd-policy-modal-asset table.data-table{
 <div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-03-1')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
 <div class="chart-wrap">
 <div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
-<script charset="utf-8" src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script> <div class="plotly-graph-div" id="ebe8a491-8eff-42b6-823c-9595cee2fca6" style="height:600px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("ebe8a491-8eff-42b6-823c-9595cee2fca6")) {                    Plotly.newPlot(                        "ebe8a491-8eff-42b6-823c-9595cee2fca6",                        [{"cliponaxis":false,"customdata":["ตัวชี้วัด : \u003cb\u003eสนใจเข้าร่วมทันที\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e16 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e9.4%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eสนใจหรืออาจเข้าร่วมกิจกรรม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e50 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e29.4%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eสนใจระดับมาก\u002fมากที่สุด\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e33 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e19.4%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eเคยติดตามการแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e76 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e44.7%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eรู้จักหรือเคยได้ยินอีสปอร์ต\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e159 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e93.5%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"ตัวชี้วัดความสนใจ","orientation":"h","showlegend":false,"text":["16 คน\u003cbr\u003e9.4%","50 คน\u003cbr\u003e29.4%","33 คน\u003cbr\u003e19.4%","76 คน\u003cbr\u003e44.7%","159 คน\u003cbr\u003e93.5%"],"textposition":"outside","x":[9.411764705882353,29.411764705882355,19.411764705882355,44.70588235294118,93.52941176470588],"y":["สนใจเข้าร่วมทันที","สนใจหรืออาจเข้าร่วมกิจกรรม","สนใจระดับมาก\u002fมากที่สุด","เคยติดตามการแข่งขัน","รู้จักหรือเคยได้ยินอีสปอร์ต"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":310,"r":90,"t":24,"b":90},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":600,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละของผู้ตอบทั้งหมด"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,100],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+<script charset="utf-8" src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script> <div class="plotly-graph-div" id="fe6c68e8-d6ed-41ce-9276-dc0c280db290" style="height:600px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("fe6c68e8-d6ed-41ce-9276-dc0c280db290")) {                    Plotly.newPlot(                        "fe6c68e8-d6ed-41ce-9276-dc0c280db290",                        [{"cliponaxis":false,"customdata":["ตัวชี้วัด : \u003cb\u003eสนใจเข้าร่วมทันที\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e16 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e9.4%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eสนใจหรืออาจเข้าร่วมกิจกรรม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e50 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e29.4%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eสนใจระดับมาก\u002fมากที่สุด\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e33 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e19.4%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eเคยติดตามการแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e76 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e44.7%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า","ตัวชี้วัด : \u003cb\u003eรู้จักหรือเคยได้ยินอีสปอร์ต\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้เรียน : \u003cb\u003e159 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e93.5%\u003c\u002fb\u003e ของผู้ตอบทั้งหมด\u003cbr\u003e\u003cbr\u003eหมายเหตุ : ตัวชี้วัดนี้นับแบบแยกอิสระ ไม่บังคับว่าต้องผ่านขั้นก่อนหน้า"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"ตัวชี้วัดความสนใจ","orientation":"h","showlegend":false,"text":["16 คน\u003cbr\u003e9.4%","50 คน\u003cbr\u003e29.4%","33 คน\u003cbr\u003e19.4%","76 คน\u003cbr\u003e44.7%","159 คน\u003cbr\u003e93.5%"],"textposition":"outside","x":[9.411764705882353,29.411764705882355,19.411764705882355,44.70588235294118,93.52941176470588],"y":["สนใจเข้าร่วมทันที","สนใจหรืออาจเข้าร่วมกิจกรรม","สนใจระดับมาก\u002fมากที่สุด","เคยติดตามการแข่งขัน","รู้จักหรือเคยได้ยินอีสปอร์ต"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":310,"r":90,"t":24,"b":90},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":600,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละของผู้ตอบทั้งหมด"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,100],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
 </div>
 <div class="section-insight" style="">
-            กลุ่มที่สนใจหรืออาจเข้าร่วมกิจกรรมมี <b>50 คน</b> (29.4% ของผู้ตอบทั้งหมด) และกลุ่มที่พร้อมเข้าร่วมทันทีมี <b>16 คน</b> (9.4%) จึงควรใช้ข้อมูลนี้ออกแบบกิจกรรมที่มีหลายระดับ ตั้งแต่กิจกรรมทดลองจนถึงทีมแข่งขันจริง
+            เมื่อพิจารณาแบบตัวชี้วัดอิสระ พบว่ากลุ่มที่สนใจหรืออาจเข้าร่วมกิจกรรมมี <b>50 คน</b> (29.4% ของผู้ตอบทั้งหมด) และกลุ่มที่พร้อมเข้าร่วมทันทีมี <b>16 คน</b> (9.4%) จึงควรใช้ข้อมูลนี้ออกแบบกิจกรรมที่มีหลายระดับ ตั้งแต่กิจกรรมทดลองจนถึงทีมแข่งขันจริง
         </div>
 </section>
 <div class="section-divider"></div>
@@ -1598,7 +1650,7 @@ body.dd-policy-modal-asset table.data-table{
 <h2 class="section-title">การติดตามการแข่งขันกับความสนใจเข้าร่วม</h2><div class="dd-obj-row"><span class="dd-obj-badge">OBJ2 : ความสนใจ</span></div>
 <div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-03-2')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
 <div class="chart-wrap">
-<div> <div class="plotly-graph-div" id="11a90e46-7996-4948-aea8-8a2bdf73ebe5" style="height:560px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("11a90e46-7996-4948-aea8-8a2bdf73ebe5")) {                    Plotly.newPlot(                        "11a90e46-7996-4948-aea8-8a2bdf73ebe5",                        [{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่สนใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e37.2%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่สนใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e13 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e17.1%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#E8EAF6","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"ไม่สนใจ","text":["37.2%","17.1%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[37.234042553191486,17.105263157894736],"type":"bar"},{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่แน่ใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e47 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e50.0%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่แน่ใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e25 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e32.9%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#9FA8DA","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"ไม่แน่ใจ","text":["50.0%","32.9%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[50.0,32.89473684210527],"type":"bar"},{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eอาจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e11 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e11.7%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eอาจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e23 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e30.3%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"อาจเข้าร่วม","text":["11.7%","30.3%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[11.702127659574469,30.263157894736842],"type":"bar"},{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eสนใจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e1 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e1.1%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eสนใจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e15 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e19.7%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"สนใจเข้าร่วม","text":["1.1%","19.7%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[1.0638297872340425,19.736842105263158],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":82,"r":48,"t":24,"b":120},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":560,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":true,"legend":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"text":"ความสนใจเข้าร่วม"},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"orientation":"h","yanchor":"top","y":-0.2,"xanchor":"center","x":0.5},"barmode":"group","bargap":0.3,"bargroupgap":0.14,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"การติดตามการแข่งขันอีสปอร์ต"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true},"yaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละภายในกลุ่ม"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,66.0],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+<div> <div class="plotly-graph-div" id="8b1ae193-fb3a-4506-8739-b0f12200cd07" style="height:560px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("8b1ae193-fb3a-4506-8739-b0f12200cd07")) {                    Plotly.newPlot(                        "8b1ae193-fb3a-4506-8739-b0f12200cd07",                        [{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่สนใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e35 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e37.2%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่สนใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e13 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e17.1%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#E8EAF6","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"ไม่สนใจ","text":["37.2%","17.1%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[37.234042553191486,17.105263157894736],"type":"bar"},{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่แน่ใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e47 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e50.0%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eไม่แน่ใจ\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e25 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e32.9%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#9FA8DA","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"ไม่แน่ใจ","text":["50.0%","32.9%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[50.0,32.89473684210527],"type":"bar"},{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eอาจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e11 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e11.7%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eอาจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e23 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e30.3%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#5C6BC0","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"อาจเข้าร่วม","text":["11.7%","30.3%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[11.702127659574469,30.263157894736842],"type":"bar"},{"cliponaxis":false,"customdata":["การติดตามการแข่งขัน : \u003cb\u003eไม่เคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eสนใจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e1 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e1.1%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่","การติดตามการแข่งขัน : \u003cb\u003eเคย\u003c\u002fb\u003e\u003cbr\u003eความสนใจเข้าร่วม : \u003cb\u003eสนใจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eจำนวนผู้ตอบ : \u003cb\u003e15 คน\u003c\u002fb\u003e\u003cbr\u003eคิดเป็น : \u003cb\u003e19.7%\u003c\u002fb\u003e ภายในกลุ่มนี้\u003cbr\u003e\u003cbr\u003eใช้เพื่อเปรียบเทียบว่าการเคยติดตามการแข่งขัน\u003cbr\u003eสัมพันธ์กับแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ตหรือไม่"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.2},"opacity":0.94},"name":"สนใจเข้าร่วม","text":["1.1%","19.7%"],"textposition":"outside","x":["ไม่เคย","เคย"],"y":[1.0638297872340425,19.736842105263158],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":82,"r":48,"t":24,"b":120},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":560,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":true,"legend":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"text":"ความสนใจเข้าร่วม"},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"orientation":"h","yanchor":"top","y":-0.2,"xanchor":"center","x":0.5},"barmode":"group","bargap":0.3,"bargroupgap":0.14,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"การติดตามการแข่งขันอีสปอร์ต"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true},"yaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละภายในกลุ่ม"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,66.0],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
 </div>
 <div class="section-insight" style="">
             กลุ่มที่ <b>เคยติดตามการแข่งขัน</b> มีแนวโน้มสนใจหรืออาจเข้าร่วม <b>50.0%</b> เทียบกับกลุ่มที่ไม่เคยติดตาม <b>12.8%</b> ต่างกัน <b>37.2 จุดร้อยละ</b>
@@ -1610,7 +1662,7 @@ body.dd-policy-modal-asset table.data-table{
 <h2 class="section-title">บทบาทที่ผู้เรียนสนใจเข้าร่วมในกิจกรรมอีสปอร์ต</h2><div class="dd-obj-row"><span class="dd-obj-badge">OBJ2 : ความสนใจ</span></div>
 <div class="dd-title-actions"><button class="dd-modal-trigger" onclick="openDDModal('dd-modal-03-3')" type="button">ตารางสรุป / วิธีอ่าน / สูตร</button></div></div>
 <div class="chart-wrap">
-<div> <div class="plotly-graph-div" id="de202a1a-7b4d-4bf7-b041-e1f54edce625" style="height:544px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("de202a1a-7b4d-4bf7-b041-e1f54edce625")) {                    Plotly.newPlot(                        "de202a1a-7b4d-4bf7-b041-e1f54edce625",                        [{"cliponaxis":false,"customdata":["อันดับ : \u003cb\u003e6\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eสตรีม \u002f พากย์เกม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e0.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : ใช้ประกอบการออกแบบกิจกรรมอีสปอร์ตให้สอดคล้องกับความสนใจของผู้เรียน\u003cbr\u003e","อันดับ : \u003cb\u003e5\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eสร้างคอนเทนต์\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e1.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับเชื่อมกับงานสื่อดิจิทัล กราฟิก วิดีโอ และประชาสัมพันธ์\u003cbr\u003e","อันดับ : \u003cb\u003e4\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eทีมงานจัดกิจกรรม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e2.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับพัฒนาเป็นทีมจัดการแข่งขัน ฝ่ายประสานงาน และงาน Event\u003cbr\u003e","อันดับ : \u003cb\u003e3\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eไม่สนใจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e10.0%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เป็นกลุ่มที่ควรใช้กิจกรรมเบา ๆ เพื่อสร้างการรับรู้ ไม่ควรบังคับเข้าร่วมการแข่งขัน\u003cbr\u003e","อันดับ : \u003cb\u003e2\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eผู้เข้าแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e14.1%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับจัดทีมแข่งขัน ทดลองคัดเลือกตัวแทน หรือฝึกวินัยการซ้อม\u003cbr\u003e","อันดับ : \u003cb\u003e1\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eผู้ชม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e70.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับกิจกรรม รับชมการแข่งขัน วิเคราะห์การแข่งขัน และสร้างแรงจูงใจเบื้องต้น\u003cbr\u003e"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"บทบาทที่สนใจ","orientation":"h","showlegend":false,"text":["0.6%","1.8%","2.9%","10.0%","14.1%","70.6%"],"textposition":"outside","x":[0.5882352941176471,1.7647058823529411,2.941176470588235,10.0,14.117647058823529,70.58823529411765],"y":["สตรีม \u002f พากย์เกม","สร้างคอนเทนต์","ทีมงานจัดกิจกรรม","ไม่สนใจเข้าร่วม","ผู้เข้าแข่งขัน","ผู้ชม"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":300,"r":90,"t":24,"b":90},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":544,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละของผู้ตอบที่เลือกบทบาทนี้"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,91.76470588235296],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
+<div> <div class="plotly-graph-div" id="d7454741-4e9c-4388-a7a6-784e3475876f" style="height:544px; width:100%;"></div> <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("d7454741-4e9c-4388-a7a6-784e3475876f")) {                    Plotly.newPlot(                        "d7454741-4e9c-4388-a7a6-784e3475876f",                        [{"cliponaxis":false,"customdata":["อันดับ : \u003cb\u003e6\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eสตรีม \u002f พากย์เกม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e0.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : ใช้ประกอบการออกแบบกิจกรรมอีสปอร์ตให้สอดคล้องกับความสนใจของผู้เรียน\u003cbr\u003e","อันดับ : \u003cb\u003e5\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eสร้างคอนเทนต์\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e1.8%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับเชื่อมกับงานสื่อดิจิทัล กราฟิก วิดีโอ และประชาสัมพันธ์\u003cbr\u003e","อันดับ : \u003cb\u003e4\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eทีมงานจัดกิจกรรม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e2.9%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับพัฒนาเป็นทีมจัดการแข่งขัน ฝ่ายประสานงาน และงาน Event\u003cbr\u003e","อันดับ : \u003cb\u003e3\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eไม่สนใจเข้าร่วม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e10.0%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เป็นกลุ่มที่ควรใช้กิจกรรมเบา ๆ เพื่อสร้างการรับรู้ ไม่ควรบังคับเข้าร่วมการแข่งขัน\u003cbr\u003e","อันดับ : \u003cb\u003e2\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eผู้เข้าแข่งขัน\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e14.1%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับจัดทีมแข่งขัน ทดลองคัดเลือกตัวแทน หรือฝึกวินัยการซ้อม\u003cbr\u003e","อันดับ : \u003cb\u003e1\u003c\u002fb\u003e\u003cbr\u003eบทบาทที่สนใจ : \u003cb\u003eผู้ชม\u003c\u002fb\u003e\u003cbr\u003eร้อยละของผู้ตอบที่เลือกบทบาทนี้:  \u003cb\u003e70.6%\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eแนวทางต่อยอด : เหมาะสำหรับกิจกรรม รับชมการแข่งขัน วิเคราะห์การแข่งขัน และสร้างแรงจูงใจเบื้องต้น\u003cbr\u003e"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1A237E","line":{"color":"#FFFFFF","width":1.3},"opacity":0.92},"name":"บทบาทที่สนใจ","orientation":"h","showlegend":false,"text":["0.6%","1.8%","2.9%","10.0%","14.1%","70.6%"],"textposition":"outside","x":[0.5882352941176471,1.7647058823529411,2.941176470588235,10.0,14.117647058823529,70.58823529411765],"y":["สตรีม \u002f พากย์เกม","สร้างคอนเทนต์","ทีมงานจัดกิจกรรม","ไม่สนใจเข้าร่วม","ผู้เข้าแข่งขัน","ผู้ชม"],"type":"bar"}],                        {"template":{"layout":{"colorway":["#1A237E","#3949AB","#5C6BC0","#7986CB","#9FA8DA","#F9A825","#2E7D32","#F57C00","#C62828"],"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":15},"hoverlabel":{"bgcolor":"#FFFFFF","bordercolor":"#DDE3F3","font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14}},"legend":{"font":{"color":"#263238","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13},"orientation":"h","x":0.5,"xanchor":"center","y":-0.2,"yanchor":"bottom"},"margin":{"b":72,"l":72,"r":44,"t":92},"paper_bgcolor":"#F7F8FC","plot_bgcolor":"#FFFFFF","title":{"font":{"color":"#1A237E","family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":22},"x":0.02,"xanchor":"left"}}},"margin":{"l":300,"r":90,"t":24,"b":90},"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"hoverlabel":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"bgcolor":"#FFFFFF","bordercolor":"#E8EAF6"},"uniformtext":{"minsize":10,"mode":"hide"},"autosize":true,"height":544,"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","showlegend":false,"xaxis":{"title":{"font":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":14,"color":"#263238"},"text":"ร้อยละของผู้ตอบที่เลือกบทบาทนี้"},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":12,"color":"#263238"},"range":[0,91.76470588235296],"ticksuffix":"%","showgrid":true,"gridcolor":"#DDE3F3","zeroline":false,"automargin":true},"yaxis":{"title":{"text":""},"tickfont":{"family":"Prompt, Noto Sans Thai, Sarabun, Tahoma, Arial, sans-serif","size":13,"color":"#263238"},"showgrid":false,"automargin":true}},                        {"responsive": true, "displayModeBar": false, "scrollZoom": false, "locale": "th"}                    )                };                            </script> </div>
 </div>
 <div class="section-insight" style="">
             บทบาทที่พบมากที่สุดคือ <b>ผู้ชม</b> (70.6%) สามารถใช้เป็นจุดเริ่มต้นในการออกแบบกิจกรรมอีสปอร์ตในสถานศึกษา
@@ -1624,7 +1676,10 @@ function toggleSummaryTable(tableId, btn) {
 
     const isHidden = el.style.display === "none" || el.style.display === "";
     el.style.display = isHidden ? "block" : "none";
-    btn.textContent = isHidden ? "ซ่อนตาราง" : "ดูตาราง";
+
+    if (btn) {
+        btn.textContent = isHidden ? "ซ่อนตารางข้อมูล" : "แสดงตารางข้อมูล";
+    }
 }
 </script>
 <div aria-hidden="true" aria-labelledby="dd-modal-03-1-title" aria-modal="true" class="dd-modal-backdrop" id="dd-modal-03-1" role="dialog" tabindex="-1">
@@ -1633,13 +1688,13 @@ function toggleSummaryTable(tableId, btn) {
 <h2 class="dd-modal-title" id="dd-modal-03-1-title">ตารางสรุปภาพรวมระดับการรับรู้ ความสนใจ และแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ต</h2>
 <button class="dd-modal-close" onclick="closeDDModal('dd-modal-03-1')" type="button">ปิด</button>
 </div>
-<div class="dd-modal-body"><div class="clean-summary-table-flat dd-modal-content-block clean-table-flat" id="tbl-interest-stage-summary-card">
-<div class="table-action-row">
+<div class="dd-modal-body"><div class="clean-summary-table-card flat-summary-table-block dd-modal-content-block" id="tbl-interest-stage-summary-card">
+<div class="table-action-row flat-table-action-row">
 </div>
-<div class="table-collapsible" id="tbl-interest-stage-summary">
-<div class="table-open-head">
+<div class="table-collapsible flat-table-collapsible" id="tbl-interest-stage-summary">
+<div class="table-open-head flat-table-open-head">
 <h3>ตารางสรุปภาพรวมระดับการรับรู้ ความสนใจ และแนวโน้มเข้าร่วมกิจกรรมอีสปอร์ต</h3>
-<details class="table-help-detail">
+<details class="table-help-detail flat-table-help-detail">
 <summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
 <div class="table-help-body">
 <div class="formula-note">
@@ -1669,13 +1724,78 @@ function toggleSummaryTable(tableId, btn) {
 </div>
 </details>
 </div>
-<div class="table-wrapper clean-table-wrapper">
-<table class="smart-table clean-smart-table" style="min-width:760px;">
+<div class="table-wrapper clean-table-wrapper flat-table-wrapper">
+<table class="smart-table clean-smart-table flat-summary-table" style="min-width:760px;">
 <thead>
 <tr><th>ตัวชี้วัด</th><th>จำนวนผู้เรียน</th><th>ร้อยละของผู้ตอบทั้งหมด</th><th>ความหมาย</th></tr>
 </thead>
 <tbody>
-<tr><td class="text-cell">รู้จักหรือเคยได้ยินอีสปอร์ต</td><td class="num-cell">159 คน</td><td class="num-cell">93.5%</td><td class="text-cell">ผู้เรียนที่รู้จักหรือเคยได้ยินกีฬาอีสปอร์ต</td></tr><tr><td class="text-cell">เคยติดตามการแข่งขัน</td><td class="num-cell">76 คน</td><td class="num-cell">44.7%</td><td class="text-cell">ผู้เรียนที่เคยติดตามการแข่งขันอีสปอร์ต</td></tr><tr><td class="text-cell">สนใจระดับมาก/มากที่สุด</td><td class="num-cell">33 คน</td><td class="num-cell">19.4%</td><td class="text-cell">ผู้เรียนที่ให้ความสนใจอีสปอร์ตระดับมากหรือมากที่สุด</td></tr><tr><td class="text-cell">สนใจหรืออาจเข้าร่วมกิจกรรม</td><td class="num-cell">50 คน</td><td class="num-cell">29.4%</td><td class="text-cell">ผู้เรียนที่ตอบว่าสนใจหรืออาจเข้าร่วมกิจกรรมอีสปอร์ต</td></tr><tr><td class="text-cell">สนใจเข้าร่วมทันที</td><td class="num-cell">16 คน</td><td class="num-cell">9.4%</td><td class="text-cell">ผู้เรียนที่ตอบว่าสนใจเข้าร่วมกิจกรรมอีสปอร์ตทันที</td></tr>
+<tr>
+<td class="text-cell">
+                รู้จักหรือเคยได้ยินอีสปอร์ต
+            </td>
+<td class="num-cell">
+                159 คน
+            </td>
+<td class="num-cell">
+                93.5%
+            </td>
+<td class="text-cell">
+                ผู้เรียนที่รู้จักหรือเคยได้ยินกีฬาอีสปอร์ต
+            </td>
+</tr><tr>
+<td class="text-cell">
+                เคยติดตามการแข่งขัน
+            </td>
+<td class="num-cell">
+                76 คน
+            </td>
+<td class="num-cell">
+                44.7%
+            </td>
+<td class="text-cell">
+                ผู้เรียนที่เคยติดตามการแข่งขันอีสปอร์ต
+            </td>
+</tr><tr>
+<td class="text-cell">
+                สนใจระดับมาก/มากที่สุด
+            </td>
+<td class="num-cell">
+                33 คน
+            </td>
+<td class="num-cell">
+                19.4%
+            </td>
+<td class="text-cell">
+                ผู้เรียนที่ให้ความสนใจอีสปอร์ตระดับมากหรือมากที่สุด
+            </td>
+</tr><tr>
+<td class="text-cell">
+                สนใจหรืออาจเข้าร่วมกิจกรรม
+            </td>
+<td class="num-cell">
+                50 คน
+            </td>
+<td class="num-cell">
+                29.4%
+            </td>
+<td class="text-cell">
+                ผู้เรียนที่ตอบว่าสนใจหรืออาจเข้าร่วมกิจกรรมอีสปอร์ต
+            </td>
+</tr><tr>
+<td class="text-cell">
+                สนใจเข้าร่วมทันที
+            </td>
+<td class="num-cell">
+                16 คน
+            </td>
+<td class="num-cell">
+                9.4%
+            </td>
+<td class="text-cell">
+                ผู้เรียนที่ตอบว่าสนใจเข้าร่วมกิจกรรมอีสปอร์ตทันที
+            </td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1690,13 +1810,13 @@ function toggleSummaryTable(tableId, btn) {
 <h2 class="dd-modal-title" id="dd-modal-03-2-title">ตารางสรุปการติดตามการแข่งขัน × ความสนใจเข้าร่วม</h2>
 <button class="dd-modal-close" onclick="closeDDModal('dd-modal-03-2')" type="button">ปิด</button>
 </div>
-<div class="dd-modal-body"><div class="clean-summary-table-flat dd-modal-content-block clean-table-flat" id="tbl-watch-join-summary-card">
-<div class="table-action-row">
+<div class="dd-modal-body"><div class="clean-summary-table-card flat-summary-table-block dd-modal-content-block" id="tbl-watch-join-summary-card">
+<div class="table-action-row flat-table-action-row">
 </div>
-<div class="table-collapsible" id="tbl-watch-join-summary">
-<div class="table-open-head">
+<div class="table-collapsible flat-table-collapsible" id="tbl-watch-join-summary">
+<div class="table-open-head flat-table-open-head">
 <h3>ตารางสรุปการติดตามการแข่งขัน × ความสนใจเข้าร่วม</h3>
-<details class="table-help-detail">
+<details class="table-help-detail flat-table-help-detail">
 <summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
 <div class="table-help-body">
 <div class="formula-note">
@@ -1726,13 +1846,117 @@ function toggleSummaryTable(tableId, btn) {
 </div>
 </details>
 </div>
-<div class="table-wrapper clean-table-wrapper">
-<table class="smart-table clean-smart-table" style="min-width:720px;">
+<div class="table-wrapper clean-table-wrapper flat-table-wrapper">
+<table class="smart-table clean-smart-table flat-summary-table" style="min-width:720px;">
 <thead>
 <tr><th>การติดตามการแข่งขัน</th><th>ความสนใจเข้าร่วม</th><th>จำนวน</th><th>ร้อยละภายในกลุ่ม</th></tr>
 </thead>
 <tbody>
-<tr><td class="text-cell">ไม่เคย</td><td class="text-cell">ไม่สนใจ</td><td class="num-cell">35 คน</td><td class="num-cell">37.2%</td></tr><tr><td class="text-cell">ไม่เคย</td><td class="text-cell">ไม่แน่ใจ</td><td class="num-cell">47 คน</td><td class="num-cell">50.0%</td></tr><tr><td class="text-cell">ไม่เคย</td><td class="text-cell">อาจเข้าร่วม</td><td class="num-cell">11 คน</td><td class="num-cell">11.7%</td></tr><tr><td class="text-cell">ไม่เคย</td><td class="text-cell">สนใจเข้าร่วม</td><td class="num-cell">1 คน</td><td class="num-cell">1.1%</td></tr><tr><td class="text-cell">เคย</td><td class="text-cell">ไม่สนใจ</td><td class="num-cell">13 คน</td><td class="num-cell">17.1%</td></tr><tr><td class="text-cell">เคย</td><td class="text-cell">ไม่แน่ใจ</td><td class="num-cell">25 คน</td><td class="num-cell">32.9%</td></tr><tr><td class="text-cell">เคย</td><td class="text-cell">อาจเข้าร่วม</td><td class="num-cell">23 คน</td><td class="num-cell">30.3%</td></tr><tr><td class="text-cell">เคย</td><td class="text-cell">สนใจเข้าร่วม</td><td class="num-cell">15 คน</td><td class="num-cell">19.7%</td></tr>
+<tr>
+<td class="text-cell">
+                ไม่เคย
+            </td>
+<td class="text-cell">
+                ไม่สนใจ
+            </td>
+<td class="num-cell">
+                35 คน
+            </td>
+<td class="num-cell">
+                37.2%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                ไม่เคย
+            </td>
+<td class="text-cell">
+                ไม่แน่ใจ
+            </td>
+<td class="num-cell">
+                47 คน
+            </td>
+<td class="num-cell">
+                50.0%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                ไม่เคย
+            </td>
+<td class="text-cell">
+                อาจเข้าร่วม
+            </td>
+<td class="num-cell">
+                11 คน
+            </td>
+<td class="num-cell">
+                11.7%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                ไม่เคย
+            </td>
+<td class="text-cell">
+                สนใจเข้าร่วม
+            </td>
+<td class="num-cell">
+                1 คน
+            </td>
+<td class="num-cell">
+                1.1%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                เคย
+            </td>
+<td class="text-cell">
+                ไม่สนใจ
+            </td>
+<td class="num-cell">
+                13 คน
+            </td>
+<td class="num-cell">
+                17.1%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                เคย
+            </td>
+<td class="text-cell">
+                ไม่แน่ใจ
+            </td>
+<td class="num-cell">
+                25 คน
+            </td>
+<td class="num-cell">
+                32.9%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                เคย
+            </td>
+<td class="text-cell">
+                อาจเข้าร่วม
+            </td>
+<td class="num-cell">
+                23 คน
+            </td>
+<td class="num-cell">
+                30.3%
+            </td>
+</tr><tr>
+<td class="text-cell">
+                เคย
+            </td>
+<td class="text-cell">
+                สนใจเข้าร่วม
+            </td>
+<td class="num-cell">
+                15 คน
+            </td>
+<td class="num-cell">
+                19.7%
+            </td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1747,13 +1971,13 @@ function toggleSummaryTable(tableId, btn) {
 <h2 class="dd-modal-title" id="dd-modal-03-3-title">ตารางสรุปบทบาทที่ผู้เรียนสนใจเข้าร่วม</h2>
 <button class="dd-modal-close" onclick="closeDDModal('dd-modal-03-3')" type="button">ปิด</button>
 </div>
-<div class="dd-modal-body"><div class="clean-summary-table-flat dd-modal-content-block clean-table-flat" id="tbl-participation-summary-card">
-<div class="table-action-row">
+<div class="dd-modal-body"><div class="clean-summary-table-card flat-summary-table-block dd-modal-content-block" id="tbl-participation-summary-card">
+<div class="table-action-row flat-table-action-row">
 </div>
-<div class="table-collapsible" id="tbl-participation-summary">
-<div class="table-open-head">
+<div class="table-collapsible flat-table-collapsible" id="tbl-participation-summary">
+<div class="table-open-head flat-table-open-head">
 <h3>ตารางสรุปบทบาทที่ผู้เรียนสนใจเข้าร่วม</h3>
-<details class="table-help-detail">
+<details class="table-help-detail flat-table-help-detail">
 <summary>วิธีอ่าน / สูตร / ความหมายคอลัมน์</summary>
 <div class="table-help-body">
 <div class="formula-note">
@@ -1783,13 +2007,91 @@ function toggleSummaryTable(tableId, btn) {
 </div>
 </details>
 </div>
-<div class="table-wrapper clean-table-wrapper">
-<table class="smart-table clean-smart-table" style="min-width:720px;">
+<div class="table-wrapper clean-table-wrapper flat-table-wrapper">
+<table class="smart-table clean-smart-table flat-summary-table" style="min-width:720px;">
 <thead>
 <tr><th>อันดับ</th><th>บทบาท</th><th>ร้อยละ</th><th>แนวทางต่อยอด</th></tr>
 </thead>
 <tbody>
-<tr><td class="num-cell">1</td><td class="text-cell">ผู้ชม</td><td class="num-cell">70.6%</td><td class="text-cell">เหมาะสำหรับกิจกรรม รับชมการแข่งขัน วิเคราะห์การแข่งขัน และสร้างแรงจูงใจเบื้องต้น</td></tr><tr><td class="num-cell">2</td><td class="text-cell">ผู้เข้าแข่งขัน</td><td class="num-cell">14.1%</td><td class="text-cell">เหมาะสำหรับจัดทีมแข่งขัน ทดลองคัดเลือกตัวแทน หรือฝึกวินัยการซ้อม</td></tr><tr><td class="num-cell">3</td><td class="text-cell">ไม่สนใจเข้าร่วม</td><td class="num-cell">10.0%</td><td class="text-cell">เป็นกลุ่มที่ควรใช้กิจกรรมเบา ๆ เพื่อสร้างการรับรู้ ไม่ควรบังคับเข้าร่วมการแข่งขัน</td></tr><tr><td class="num-cell">4</td><td class="text-cell">ทีมงานจัดกิจกรรม</td><td class="num-cell">2.9%</td><td class="text-cell">เหมาะสำหรับพัฒนาเป็นทีมจัดการแข่งขัน ฝ่ายประสานงาน และงาน Event</td></tr><tr><td class="num-cell">5</td><td class="text-cell">สร้างคอนเทนต์</td><td class="num-cell">1.8%</td><td class="text-cell">เหมาะสำหรับเชื่อมกับงานสื่อดิจิทัล กราฟิก วิดีโอ และประชาสัมพันธ์</td></tr><tr><td class="num-cell">6</td><td class="text-cell">สตรีม / พากย์เกม</td><td class="num-cell">0.6%</td><td class="text-cell">ใช้ประกอบการออกแบบกิจกรรมอีสปอร์ตให้สอดคล้องกับความสนใจของผู้เรียน</td></tr>
+<tr>
+<td class="num-cell">
+                1
+            </td>
+<td class="text-cell">
+                ผู้ชม
+            </td>
+<td class="num-cell">
+                70.6%
+            </td>
+<td class="text-cell">
+                เหมาะสำหรับกิจกรรม รับชมการแข่งขัน วิเคราะห์การแข่งขัน และสร้างแรงจูงใจเบื้องต้น
+            </td>
+</tr><tr>
+<td class="num-cell">
+                2
+            </td>
+<td class="text-cell">
+                ผู้เข้าแข่งขัน
+            </td>
+<td class="num-cell">
+                14.1%
+            </td>
+<td class="text-cell">
+                เหมาะสำหรับจัดทีมแข่งขัน ทดลองคัดเลือกตัวแทน หรือฝึกวินัยการซ้อม
+            </td>
+</tr><tr>
+<td class="num-cell">
+                3
+            </td>
+<td class="text-cell">
+                ไม่สนใจเข้าร่วม
+            </td>
+<td class="num-cell">
+                10.0%
+            </td>
+<td class="text-cell">
+                เป็นกลุ่มที่ควรใช้กิจกรรมเบา ๆ เพื่อสร้างการรับรู้ ไม่ควรบังคับเข้าร่วมการแข่งขัน
+            </td>
+</tr><tr>
+<td class="num-cell">
+                4
+            </td>
+<td class="text-cell">
+                ทีมงานจัดกิจกรรม
+            </td>
+<td class="num-cell">
+                2.9%
+            </td>
+<td class="text-cell">
+                เหมาะสำหรับพัฒนาเป็นทีมจัดการแข่งขัน ฝ่ายประสานงาน และงาน Event
+            </td>
+</tr><tr>
+<td class="num-cell">
+                5
+            </td>
+<td class="text-cell">
+                สร้างคอนเทนต์
+            </td>
+<td class="num-cell">
+                1.8%
+            </td>
+<td class="text-cell">
+                เหมาะสำหรับเชื่อมกับงานสื่อดิจิทัล กราฟิก วิดีโอ และประชาสัมพันธ์
+            </td>
+</tr><tr>
+<td class="num-cell">
+                6
+            </td>
+<td class="text-cell">
+                สตรีม / พากย์เกม
+            </td>
+<td class="num-cell">
+                0.6%
+            </td>
+<td class="text-cell">
+                ใช้ประกอบการออกแบบกิจกรรมอีสปอร์ตให้สอดคล้องกับความสนใจของผู้เรียน
+            </td>
+</tr>
 </tbody>
 </table>
 </div>
