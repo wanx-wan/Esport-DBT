@@ -689,6 +689,524 @@ body.ml-predictor-lock {
     }
 }
 
+
+
+/* =========================================================
+   FINAL PREDICT PATCH CSS
+   Scope เฉพาะหน้า ML Predictor
+   ========================================================= */
+
+/* -------------------------
+   Select -> Choice Button
+   ------------------------- */
+body.ml-predictor-lock .select-input.ml-native-select-hidden,
+body.ml-predictor-lock select.ml-native-select-hidden {
+    display: none !important;
+}
+
+body.ml-predictor-lock .ml-choice-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+    margin-top: 4px;
+}
+
+body.ml-predictor-lock .ml-choice-btn {
+    appearance: none;
+    width: 100%;
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #DDE3F3;
+    border-radius: 14px;
+    background: #FFFFFF;
+    color: #263238;
+
+    padding: 9px 11px;
+
+    font-family: inherit;
+    font-size: 13.2px;
+    font-weight: 750;
+    line-height: 1.45;
+    text-align: center;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        box-shadow 0.16s ease,
+        transform 0.16s ease;
+}
+
+body.ml-predictor-lock .ml-choice-btn:hover {
+    background: #F4F6FF;
+    border-color: #BFC9EA;
+    transform: translateY(-1px);
+}
+
+body.ml-predictor-lock .ml-choice-btn.is-active {
+    background: #EEF2FF;
+    border-color: #3949AB;
+    color: #1A237E;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10);
+}
+
+body.ml-predictor-lock .ml-choice-btn:focus-visible {
+    outline: 3px solid rgba(249, 168, 37, 0.45);
+    outline-offset: 2px;
+}
+
+/* กัน input / select / button ถูก clip */
+body.ml-predictor-lock .input-card,
+body.ml-predictor-lock .question-card-lock,
+body.ml-predictor-lock .control-shell,
+body.ml-predictor-lock .question-form-flat,
+body.ml-predictor-lock .form-section-card {
+    overflow: visible !important;
+    contain: none !important;
+}
+
+/* -------------------------
+   Smooth Q10-Q13
+   ------------------------- */
+body.ml-predictor-lock .ml-smooth-multi-card {
+    min-height: auto !important;
+    overflow: visible !important;
+    contain: none !important;
+}
+
+body.ml-predictor-lock .ml-smooth-multi-card .input-label,
+body.ml-predictor-lock .ml-smooth-multi-card .input-help {
+    min-height: 0 !important;
+}
+
+body.ml-predictor-lock .ml-smooth-option-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+
+    margin-top: 14px !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    overflow: visible !important;
+}
+
+/* บังคับทุกตัวเลือก รวมถึงตัวแรก ให้ layout เท่ากัน */
+body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option,
+body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:first-child,
+body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:nth-child(n),
+body.ml-predictor-lock .ml-smooth-option {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+    align-items: center !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+
+    margin: 0 !important;
+    padding: 12px 13px !important;
+
+    min-height: 52px !important;
+    height: auto !important;
+
+    background: #FFFFFF !important;
+    border: 1px solid #DDE3F3 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
+
+    color: #263238 !important;
+    font-size: 13.4px !important;
+    font-weight: 700 !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+
+    cursor: pointer !important;
+    user-select: none !important;
+
+    transform: none !important;
+    overflow: visible !important;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease,
+        color 0.18s ease !important;
+}
+
+body.ml-predictor-lock .ml-smooth-option:hover {
+    background: #F4F6FF !important;
+    border-color: #BFC9EA !important;
+    box-shadow: 0 8px 18px rgba(13, 71, 161, 0.070) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* กันตัวเลือกแรกที่ไม่ได้เลือก ไม่ให้ดูเด่น */
+body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:first-child:not(.is-checked):not(:has(input:checked)) {
+    background: #FFFFFF !important;
+    border-color: #DDE3F3 !important;
+    color: #263238 !important;
+    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
+    transform: none !important;
+}
+
+/* checked state */
+body.ml-predictor-lock .ml-smooth-option.is-checked,
+body.ml-predictor-lock .ml-smooth-option:has(input:checked) {
+    background: #EEF2FF !important;
+    border-color: #3949AB !important;
+    color: #1A237E !important;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
+}
+
+/* checkbox */
+body.ml-predictor-lock .ml-smooth-option > input[type="checkbox"],
+body.ml-predictor-lock .ml-smooth-option:first-child > input[type="checkbox"],
+body.ml-predictor-lock .ml-smooth-checkbox {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+
+    align-self: center !important;
+    justify-self: center !important;
+
+    position: relative !important;
+    display: inline-block !important;
+
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    max-width: 18px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 2px solid #B7C1E8 !important;
+    border-radius: 6px !important;
+    background: #FFFFFF !important;
+
+    cursor: pointer !important;
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease !important;
+}
+
+body.ml-predictor-lock .ml-smooth-checkbox::after {
+    content: "" !important;
+    position: absolute !important;
+
+    left: 4px !important;
+    top: 1px !important;
+
+    width: 5px !important;
+    height: 9px !important;
+
+    border: solid #FFFFFF !important;
+    border-width: 0 2px 2px 0 !important;
+
+    transform: rotate(45deg) scale(0.65) !important;
+    opacity: 0 !important;
+
+    transition:
+        opacity 0.16s ease,
+        transform 0.16s ease !important;
+}
+
+body.ml-predictor-lock .ml-smooth-checkbox:checked {
+    background: #3949AB !important;
+    border-color: #3949AB !important;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
+}
+
+body.ml-predictor-lock .ml-smooth-checkbox:checked::after {
+    opacity: 1 !important;
+    transform: rotate(45deg) scale(1) !important;
+}
+
+/* ข้อความตัวเลือก */
+body.ml-predictor-lock .ml-smooth-option > .ml-smooth-option-text,
+body.ml-predictor-lock .ml-smooth-option:first-child > .ml-smooth-option-text,
+body.ml-predictor-lock .ml-smooth-option > span,
+body.ml-predictor-lock .ml-smooth-option:first-child > span {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+
+    align-self: center !important;
+    justify-self: stretch !important;
+
+    display: block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: inherit !important;
+    font-size: 13.4px !important;
+    font-weight: 700 !important;
+    line-height: 1.55 !important;
+
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* ลบ br หรือ pseudo ที่ทำให้ตัวเลือกแรกไม่เท่ากัน */
+body.ml-predictor-lock .ml-smooth-option br,
+body.ml-predictor-lock .ml-smooth-option::before,
+body.ml-predictor-lock .ml-smooth-option::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* ลบ class แปลก ๆ ที่อาจทำให้ตัวแรกเด่น */
+body.ml-predictor-lock .ml-smooth-option.is-top:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.is-popular:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.top-option:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.rank-1:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.most-selected:not(.is-checked):not(:has(input:checked)),
+body.ml-predictor-lock .ml-smooth-option.most-popular:not(.is-checked):not(:has(input:checked)) {
+    background: #FFFFFF !important;
+    border-color: #DDE3F3 !important;
+    color: #263238 !important;
+    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
+}
+
+body.ml-predictor-lock .ml-smooth-option:focus-within {
+    border-color: #3949AB !important;
+    box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
+}
+
+/* -------------------------
+   Clean Result Card
+   ------------------------- */
+body.ml-predictor-lock .result-card,
+body.ml-predictor-lock .result-under-form {
+    border-radius: 22px !important;
+    padding: 20px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #DDE3F3 !important;
+    box-shadow: 0 10px 26px rgba(13, 71, 161, 0.065) !important;
+}
+
+body.ml-predictor-lock .result-card .section-title {
+    margin: 0 0 12px 0 !important;
+    font-size: clamp(18px, 2vw, 22px) !important;
+    line-height: 1.35 !important;
+}
+
+body.ml-predictor-lock .result-label {
+    margin: 4px 0 6px 0 !important;
+    color: #607D8B !important;
+    font-size: 12.8px !important;
+    line-height: 1.55 !important;
+}
+
+body.ml-predictor-lock .result-percent {
+    margin: 0 0 8px 0 !important;
+    color: #1A237E !important;
+    font-size: clamp(34px, 5vw, 46px) !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.04em !important;
+}
+
+body.ml-predictor-lock .result-status {
+    margin: 0 0 12px 0 !important;
+    padding: 7px 13px !important;
+    border-radius: 999px !important;
+    font-size: 12.8px !important;
+    font-weight: 900 !important;
+}
+
+body.ml-predictor-lock .progress-box {
+    height: 10px !important;
+    margin: 10px 0 14px 0 !important;
+    background: #E8EAF6 !important;
+}
+
+body.ml-predictor-lock .result-text {
+    margin: 0 0 14px 0 !important;
+    color: #263238 !important;
+    font-size: 13.8px !important;
+    line-height: 1.7 !important;
+}
+
+body.ml-predictor-lock .recommend-box {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+body.ml-predictor-lock .clean-result {
+    display: grid;
+    gap: 12px;
+}
+
+body.ml-predictor-lock .clean-result-summary {
+    background: #F8FAFF;
+    border: 1px solid #DDE3F3;
+    border-left: 4px solid #3949AB;
+    border-radius: 16px;
+    padding: 13px 15px;
+}
+
+body.ml-predictor-lock .clean-result-title {
+    color: #1A237E;
+    font-size: 14.5px;
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 4px;
+}
+
+body.ml-predictor-lock .clean-result-desc {
+    color: #53657A;
+    font-size: 13.3px;
+    line-height: 1.7;
+}
+
+body.ml-predictor-lock .clean-result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+body.ml-predictor-lock .clean-result-panel {
+    background: #FFFFFF;
+    border: 1px solid #DDE3F3;
+    border-radius: 16px;
+    padding: 13px 14px;
+}
+
+body.ml-predictor-lock .clean-result-panel-title {
+    color: #1A237E;
+    font-size: 13.5px;
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 8px;
+}
+
+body.ml-predictor-lock .clean-result-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 7px;
+}
+
+body.ml-predictor-lock .clean-result-list li {
+    position: relative;
+    padding-left: 18px;
+    color: #263238;
+    font-size: 13.1px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+body.ml-predictor-lock .clean-result-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #3949AB;
+    font-weight: 900;
+}
+
+body.ml-predictor-lock .clean-result-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+body.ml-predictor-lock .clean-result-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: #EEF2FF;
+    border: 1px solid #DDE3F3;
+    color: #1A237E;
+    padding: 5px 9px;
+    font-size: 11.8px;
+    font-weight: 850;
+    line-height: 1.25;
+}
+
+body.ml-predictor-lock .clean-result-empty {
+    background: #F8FAFF;
+    border: 1px dashed #B7C1E8;
+    border-radius: 16px;
+    padding: 14px 15px;
+    color: #607D8B;
+    font-size: 13.5px;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    body.ml-predictor-lock .ml-smooth-option-grid {
+        grid-template-columns: 1fr !important;
+        gap: 9px !important;
+        margin-top: 12px !important;
+    }
+
+    body.ml-predictor-lock .ml-smooth-option {
+        min-height: 48px !important;
+        padding: 11px 12px !important;
+        border-radius: 15px !important;
+    }
+}
+
+@media (max-width: 760px) {
+    body.ml-predictor-lock .ml-choice-grid,
+    body.ml-predictor-lock .clean-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body.ml-predictor-lock .result-card,
+    body.ml-predictor-lock .result-under-form {
+        padding: 16px !important;
+        border-radius: 18px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option,
+    body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:first-child,
+    body.ml-predictor-lock .ml-smooth-option {
+        grid-template-columns: 20px minmax(0, 1fr) !important;
+        column-gap: 10px !important;
+        min-height: 46px !important;
+        padding: 10px 11px !important;
+    }
+
+    body.ml-predictor-lock .ml-smooth-option-text {
+        font-size: 13px !important;
+    }
+}
+
 </style>
 <style id="predictor-modal-soft-question-card-v10">
 /* =========================================================
@@ -1097,141 +1615,6 @@ body.ml-predictor-lock {
         min-height: 42px !important;
         font-size: 14px !important;
         line-height: 1.6 !important;
-    }
-}
-</style>
-<style id="ml-q10-q13-first-option-equalizer-css">
-/* =========================================================
-   Equalize first option in Q10-Q13
-   ========================================================= */
-
-/* บังคับตัวเลือกทุกตัว รวมถึงตัวแรก ให้ใช้ layout เดียวกัน */
-body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option,
-body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:first-child,
-body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:nth-child(n) {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    display: grid !important;
-    grid-template-columns: 22px minmax(0, 1fr) !important;
-    grid-auto-flow: column !important;
-    align-items: center !important;
-    column-gap: 12px !important;
-    row-gap: 0 !important;
-
-    margin: 0 !important;
-    padding: 12px 13px !important;
-
-    min-height: 52px !important;
-    height: auto !important;
-
-    background: #FFFFFF !important;
-    border: 1px solid #DDE3F3 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-
-    color: #263238 !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-    text-align: left !important;
-
-    transform: none !important;
-    overflow: visible !important;
-}
-
-/* กันตัวแรกที่ไม่ได้ถูกเลือกไม่ให้ดูเหมือน active/highlight */
-body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:first-child:not(.is-checked):not(:has(input:checked)) {
-    background: #FFFFFF !important;
-    border-color: #DDE3F3 !important;
-    color: #263238 !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-    transform: none !important;
-}
-
-/* checkbox ต้องอยู่ column แรกเสมอ */
-body.ml-predictor-lock .ml-smooth-option > input[type="checkbox"],
-body.ml-predictor-lock .ml-smooth-option:first-child > input[type="checkbox"],
-body.ml-predictor-lock .ml-smooth-option > input.ml-smooth-checkbox,
-body.ml-predictor-lock .ml-smooth-option:first-child > input.ml-smooth-checkbox {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-
-    align-self: center !important;
-    justify-self: center !important;
-
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    max-width: 18px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
-}
-
-/* ข้อความต้องอยู่ column ที่สองเสมอ */
-body.ml-predictor-lock .ml-smooth-option > .ml-smooth-option-text,
-body.ml-predictor-lock .ml-smooth-option:first-child > .ml-smooth-option-text,
-body.ml-predictor-lock .ml-smooth-option > span,
-body.ml-predictor-lock .ml-smooth-option:first-child > span {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-
-    align-self: center !important;
-    justify-self: stretch !important;
-
-    display: block !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    color: inherit !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: anywhere !important;
-}
-
-/* ลบ br ที่ทำให้ตัวเลือกแรกตกบรรทัด */
-body.ml-predictor-lock .ml-smooth-option br,
-body.ml-predictor-lock .ml-smooth-option:first-child br {
-    display: none !important;
-}
-
-/* ไม่ให้ class แปลก ๆ ที่อาจมาจาก patch เก่าทำให้ตัวเลือกแรกเด่น */
-body.ml-predictor-lock .ml-smooth-option.is-top:not(.is-checked):not(:has(input:checked)),
-body.ml-predictor-lock .ml-smooth-option.is-popular:not(.is-checked):not(:has(input:checked)),
-body.ml-predictor-lock .ml-smooth-option.top-option:not(.is-checked):not(:has(input:checked)),
-body.ml-predictor-lock .ml-smooth-option.rank-1:not(.is-checked):not(:has(input:checked)) {
-    background: #FFFFFF !important;
-    border-color: #DDE3F3 !important;
-    color: #263238 !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-}
-
-/* checked state ยังทำงานเหมือนเดิม */
-body.ml-predictor-lock .ml-smooth-option.is-checked,
-body.ml-predictor-lock .ml-smooth-option:has(input:checked) {
-    background: #EEF2FF !important;
-    border-color: #3949AB !important;
-    color: #1A237E !important;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
-}
-
-@media (max-width: 560px) {
-    body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option,
-    body.ml-predictor-lock .ml-smooth-option-grid > label.ml-smooth-option:first-child {
-        grid-template-columns: 20px minmax(0, 1fr) !important;
-        column-gap: 10px !important;
-        min-height: 46px !important;
-        padding: 10px 11px !important;
     }
 }
 </style>
@@ -2139,474 +2522,6 @@ body.dd-policy-modal-asset table.data-table{
   }
 }
 </style>
-
-
-<style id="ml-predictor-single-cell-final-css">
-/* =========================================================
-   1) Select -> Choice Button
-   ========================================================= */
-
-body.ml-predictor-lock .select-input.ml-native-select-hidden,
-body.ml-predictor-lock select.ml-native-select-hidden {
-    display: none !important;
-}
-
-body.ml-predictor-lock .ml-choice-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 8px;
-    margin-top: 4px;
-}
-
-body.ml-predictor-lock .ml-choice-btn {
-    appearance: none;
-    width: 100%;
-    min-height: 44px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid #DDE3F3;
-    border-radius: 14px;
-    background: #FFFFFF;
-    color: #263238;
-
-    padding: 9px 11px;
-
-    font-family: inherit;
-    font-size: 13.2px;
-    font-weight: 750;
-    line-height: 1.45;
-    text-align: center;
-
-    cursor: pointer;
-    user-select: none;
-
-    transition:
-        background 0.16s ease,
-        border-color 0.16s ease,
-        box-shadow 0.16s ease,
-        transform 0.16s ease;
-}
-
-body.ml-predictor-lock .ml-choice-btn:hover {
-    background: #F4F6FF;
-    border-color: #BFC9EA;
-    transform: translateY(-1px);
-}
-
-body.ml-predictor-lock .ml-choice-btn.is-active {
-    background: #EEF2FF;
-    border-color: #3949AB;
-    color: #1A237E;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10);
-}
-
-body.ml-predictor-lock .ml-choice-btn:focus-visible {
-    outline: 3px solid rgba(249, 168, 37, 0.45);
-    outline-offset: 2px;
-}
-
-/* กันพื้นที่ select/button ถูก clip */
-body.ml-predictor-lock .input-card,
-body.ml-predictor-lock .question-card-lock,
-body.ml-predictor-lock .control-shell,
-body.ml-predictor-lock .question-form-flat,
-body.ml-predictor-lock .form-section-card {
-    overflow: visible !important;
-    contain: none !important;
-}
-
-/* =========================================================
-   2) Smooth Multi-choice Options : ข้อ 10-13
-   ========================================================= */
-
-body.ml-predictor-lock .ml-smooth-multi-card {
-    min-height: auto !important;
-    overflow: visible !important;
-    contain: none !important;
-}
-
-body.ml-predictor-lock .ml-smooth-multi-card .input-label,
-body.ml-predictor-lock .ml-smooth-multi-card .input-help {
-    min-height: 0 !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option-grid {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-
-    margin-top: 14px !important;
-    padding: 0 !important;
-
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-
-    overflow: visible !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    min-height: 52px !important;
-    height: 100% !important;
-
-    display: grid !important;
-    grid-template-columns: 22px minmax(0, 1fr) !important;
-    align-items: center !important;
-    gap: 12px !important;
-
-    margin: 0 !important;
-    padding: 12px 13px !important;
-
-    background: #FFFFFF !important;
-    border: 1px solid #DDE3F3 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 5px 14px rgba(13, 71, 161, 0.045) !important;
-
-    color: #263238 !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-    text-align: left !important;
-
-    cursor: pointer !important;
-    user-select: none !important;
-
-    transform: none !important;
-    transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.18s ease,
-        color 0.18s ease !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option:hover {
-    background: #F4F6FF !important;
-    border-color: #BFC9EA !important;
-    box-shadow: 0 8px 18px rgba(13, 71, 161, 0.070) !important;
-    transform: translateY(-1px) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option.is-checked,
-body.ml-predictor-lock .ml-smooth-option:has(input:checked) {
-    background: #EEF2FF !important;
-    border-color: #3949AB !important;
-    color: #1A237E !important;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-
-    position: relative !important;
-    display: inline-block !important;
-
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    max-width: 18px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border: 2px solid #B7C1E8 !important;
-    border-radius: 6px !important;
-    background: #FFFFFF !important;
-
-    cursor: pointer !important;
-    transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox::after {
-    content: "" !important;
-    position: absolute !important;
-
-    left: 4px !important;
-    top: 1px !important;
-
-    width: 5px !important;
-    height: 9px !important;
-
-    border: solid #FFFFFF !important;
-    border-width: 0 2px 2px 0 !important;
-
-    transform: rotate(45deg) scale(0.65) !important;
-    opacity: 0 !important;
-
-    transition:
-        opacity 0.16s ease,
-        transform 0.16s ease !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox:checked {
-    background: #3949AB !important;
-    border-color: #3949AB !important;
-    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.10) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-checkbox:checked::after {
-    opacity: 1 !important;
-    transform: rotate(45deg) scale(1) !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option-text {
-    display: block !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    color: inherit !important;
-    font-size: 13.4px !important;
-    font-weight: 700 !important;
-    line-height: 1.55 !important;
-
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: anywhere !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option::before,
-body.ml-predictor-lock .ml-smooth-option::after {
-    content: none !important;
-    display: none !important;
-}
-
-body.ml-predictor-lock .ml-smooth-option:focus-within {
-    border-color: #3949AB !important;
-    box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
-}
-
-/* =========================================================
-   3) Clean Result Card
-   ========================================================= */
-
-body.ml-predictor-lock .result-card,
-body.ml-predictor-lock .result-under-form,
-body.ml-predictor-lock .ml-result-modal .result-card {
-    border-radius: 22px !important;
-    padding: 20px !important;
-    background: #FFFFFF !important;
-    border: 1px solid #DDE3F3 !important;
-    box-shadow: 0 10px 26px rgba(13, 71, 161, 0.065) !important;
-}
-
-body.ml-predictor-lock .result-card .section-title {
-    margin: 0 0 12px 0 !important;
-    font-size: clamp(18px, 2vw, 22px) !important;
-    line-height: 1.35 !important;
-}
-
-body.ml-predictor-lock .result-label {
-    margin: 4px 0 6px 0 !important;
-    color: #607D8B !important;
-    font-size: 12.8px !important;
-    line-height: 1.55 !important;
-}
-
-body.ml-predictor-lock .result-percent {
-    margin: 0 0 8px 0 !important;
-    color: #1A237E !important;
-    font-size: clamp(34px, 5vw, 46px) !important;
-    line-height: 1 !important;
-    font-weight: 950 !important;
-    letter-spacing: -0.04em !important;
-}
-
-body.ml-predictor-lock .result-status {
-    margin: 0 0 12px 0 !important;
-    padding: 7px 13px !important;
-    border-radius: 999px !important;
-    font-size: 12.8px !important;
-    font-weight: 900 !important;
-}
-
-body.ml-predictor-lock .progress-box {
-    height: 10px !important;
-    margin: 10px 0 14px 0 !important;
-    background: #E8EAF6 !important;
-}
-
-body.ml-predictor-lock .result-text {
-    margin: 0 0 14px 0 !important;
-    color: #263238 !important;
-    font-size: 13.8px !important;
-    line-height: 1.7 !important;
-}
-
-body.ml-predictor-lock .recommend-box {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-}
-
-body.ml-predictor-lock .clean-result {
-    display: grid;
-    gap: 12px;
-}
-
-body.ml-predictor-lock .clean-result-summary {
-    background: #F8FAFF;
-    border: 1px solid #DDE3F3;
-    border-left: 4px solid #3949AB;
-    border-radius: 16px;
-    padding: 13px 15px;
-}
-
-body.ml-predictor-lock .clean-result-title {
-    color: #1A237E;
-    font-size: 14.5px;
-    font-weight: 900;
-    line-height: 1.45;
-    margin-bottom: 4px;
-}
-
-body.ml-predictor-lock .clean-result-desc {
-    color: #53657A;
-    font-size: 13.3px;
-    line-height: 1.7;
-}
-
-body.ml-predictor-lock .clean-result-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-body.ml-predictor-lock .clean-result-panel {
-    background: #FFFFFF;
-    border: 1px solid #DDE3F3;
-    border-radius: 16px;
-    padding: 13px 14px;
-}
-
-body.ml-predictor-lock .clean-result-panel-title {
-    color: #1A237E;
-    font-size: 13.5px;
-    font-weight: 900;
-    line-height: 1.45;
-    margin-bottom: 8px;
-}
-
-body.ml-predictor-lock .clean-result-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 7px;
-}
-
-body.ml-predictor-lock .clean-result-list li {
-    position: relative;
-    padding-left: 18px;
-    color: #263238;
-    font-size: 13.1px;
-    font-weight: 600;
-    line-height: 1.6;
-}
-
-body.ml-predictor-lock .clean-result-list li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #3949AB;
-    font-weight: 900;
-}
-
-body.ml-predictor-lock .clean-result-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-}
-
-body.ml-predictor-lock .clean-result-tag {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    background: #EEF2FF;
-    border: 1px solid #DDE3F3;
-    color: #1A237E;
-    padding: 5px 9px;
-    font-size: 11.8px;
-    font-weight: 850;
-    line-height: 1.25;
-}
-
-body.ml-predictor-lock .clean-result-empty {
-    background: #F8FAFF;
-    border: 1px dashed #B7C1E8;
-    border-radius: 16px;
-    padding: 14px 15px;
-    color: #607D8B;
-    font-size: 13.5px;
-    line-height: 1.7;
-}
-
-@media (max-width: 900px) {
-    body.ml-predictor-lock .ml-smooth-option-grid {
-        grid-template-columns: 1fr !important;
-        gap: 9px !important;
-        margin-top: 12px !important;
-    }
-
-    body.ml-predictor-lock .ml-smooth-option {
-        min-height: 48px !important;
-        padding: 11px 12px !important;
-        border-radius: 15px !important;
-    }
-}
-
-@media (max-width: 760px) {
-    body.ml-predictor-lock .ml-choice-grid {
-        grid-template-columns: 1fr;
-    }
-
-    body.ml-predictor-lock .clean-result-grid {
-        grid-template-columns: 1fr;
-    }
-
-    body.ml-predictor-lock .result-card,
-    body.ml-predictor-lock .result-under-form,
-    body.ml-predictor-lock .ml-result-modal .result-card {
-        padding: 16px !important;
-        border-radius: 18px !important;
-    }
-}
-
-@media (max-width: 560px) {
-    body.ml-predictor-lock .ml-smooth-option {
-        grid-template-columns: 20px minmax(0, 1fr) !important;
-        gap: 10px !important;
-        min-height: 46px !important;
-        padding: 10px 11px !important;
-    }
-
-    body.ml-predictor-lock .ml-smooth-option-text {
-        font-size: 13px !important;
-    }
-}
-</style>
 </head>
 <body class="ml-predictor-lock predictor-modal-scope">
 <div class="dashboard-page">
@@ -3445,6 +3360,516 @@ document.addEventListener("DOMContentLoaded", function() {
     resetResultView();
 });
 
+
+
+(function () {
+    const TARGET_MULTI_IDS = [
+        "game_types",
+        "gaming_reasons",
+        "problems",
+        "support_needs"
+    ];
+
+    function escapeClean(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function (ch) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[ch];
+        });
+    }
+
+    function optionText(option) {
+        return String(option ? option.textContent : "")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    function cssEscapeSafe(value) {
+        if (window.CSS && typeof window.CSS.escape === "function") {
+            return window.CSS.escape(value);
+        }
+
+        return String(value).replace(/"/g, '\\"');
+    }
+
+    function getQuestionNo(inputId) {
+        const index = TARGET_MULTI_IDS.indexOf(inputId);
+        return index >= 0 ? String(index + 10) : "";
+    }
+
+    /* =====================================================
+       Select -> Button
+       ===================================================== */
+    function refreshChoiceButtons(selectEl) {
+        if (!selectEl) return;
+
+        const wrap = selectEl.parentElement
+            ? selectEl.parentElement.querySelector(
+                '.ml-choice-grid[data-input-id="' + selectEl.dataset.inputId + '"]'
+              )
+            : null;
+
+        if (!wrap) return;
+
+        const currentValue = String(selectEl.value);
+
+        wrap.querySelectorAll(".ml-choice-btn").forEach(function (btn) {
+            const isActive = String(btn.dataset.value) === currentValue;
+            btn.classList.toggle("is-active", isActive);
+            btn.setAttribute("aria-checked", isActive ? "true" : "false");
+        });
+    }
+
+    function enhanceSelect(selectEl) {
+        if (!selectEl || selectEl.dataset.mlChoiceReady === "1") return;
+
+        const inputId = selectEl.dataset.inputId || "";
+        const parent = selectEl.parentElement;
+
+        if (!parent) return;
+
+        selectEl.dataset.mlChoiceReady = "1";
+        selectEl.classList.add("ml-native-select-hidden");
+        selectEl.setAttribute("aria-hidden", "true");
+        selectEl.tabIndex = -1;
+
+        const wrap = document.createElement("div");
+        wrap.className = "ml-choice-grid";
+        wrap.dataset.inputId = inputId;
+        wrap.setAttribute("role", "radiogroup");
+
+        Array.from(selectEl.options).forEach(function (opt, idx) {
+            const btn = document.createElement("button");
+
+            btn.type = "button";
+            btn.className = "ml-choice-btn";
+            btn.dataset.value = String(opt.value);
+            btn.dataset.index = String(idx);
+            btn.setAttribute("role", "radio");
+            btn.setAttribute("aria-checked", "false");
+            btn.textContent = optionText(opt);
+
+            btn.addEventListener("click", function () {
+                selectEl.selectedIndex = idx;
+                selectEl.value = opt.value;
+
+                selectEl.dispatchEvent(new Event("input", { bubbles: true }));
+                selectEl.dispatchEvent(new Event("change", { bubbles: true }));
+
+                refreshChoiceButtons(selectEl);
+            });
+
+            btn.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    btn.click();
+                }
+            });
+
+            wrap.appendChild(btn);
+        });
+
+        parent.appendChild(wrap);
+
+        selectEl.addEventListener("change", function () {
+            refreshChoiceButtons(selectEl);
+        });
+
+        refreshChoiceButtons(selectEl);
+    }
+
+    function setupChoiceButtons() {
+        document
+            .querySelectorAll("select.ml-human-input, select.select-input")
+            .forEach(enhanceSelect);
+
+        document
+            .querySelectorAll("select.ml-human-input, select.select-input")
+            .forEach(refreshChoiceButtons);
+    }
+
+    /* =====================================================
+       Smooth Q10-Q13 + Equalize first option
+       ===================================================== */
+    function normalizeSmoothOption(label) {
+        if (!label) return;
+
+        label.classList.remove(
+            "is-top",
+            "is-popular",
+            "top-option",
+            "rank-1",
+            "most-selected",
+            "most-popular"
+        );
+
+        label.querySelectorAll("br").forEach(function (br) {
+            br.remove();
+        });
+
+        const input = label.querySelector('input[type="checkbox"]');
+
+        if (!input) return;
+
+        input.classList.add("ml-smooth-checkbox");
+
+        let textEl =
+            label.querySelector(".ml-smooth-option-text") ||
+            label.querySelector("span") ||
+            label.querySelector("div");
+
+        if (!textEl) {
+            const textNodes = [];
+
+            Array.from(label.childNodes).forEach(function (node) {
+                if (
+                    node.nodeType === Node.TEXT_NODE &&
+                    String(node.textContent || "").trim()
+                ) {
+                    textNodes.push(node);
+                }
+            });
+
+            if (textNodes.length) {
+                textEl = document.createElement("span");
+                textEl.className = "ml-smooth-option-text";
+
+                textNodes.forEach(function (node) {
+                    textEl.appendChild(
+                        document.createTextNode(
+                            String(node.textContent || "").replace(/\s+/g, " ").trim()
+                        )
+                    );
+                    node.remove();
+                });
+
+                input.insertAdjacentElement("afterend", textEl);
+            }
+        }
+
+        if (textEl) {
+            textEl.classList.add("ml-smooth-option-text");
+            textEl.textContent = String(textEl.textContent || "")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        label.classList.toggle("is-checked", input.checked === true);
+        label.setAttribute("aria-checked", input.checked ? "true" : "false");
+    }
+
+    function markSmoothMultiOptions() {
+        TARGET_MULTI_IDS.forEach(function (inputId) {
+            const safeId = cssEscapeSafe(inputId);
+            const inputs = document.querySelectorAll(
+                '.ml-multi-input[data-input-id="' + safeId + '"]'
+            );
+
+            if (!inputs.length) return;
+
+            const questionNo = getQuestionNo(inputId);
+
+            inputs.forEach(function (input) {
+                input.classList.add("ml-smooth-checkbox");
+
+                const label =
+                    input.closest("label.checkbox-choice") ||
+                    input.closest("label");
+
+                if (label) {
+                    label.classList.add("ml-smooth-option");
+                    label.dataset.smoothInputId = inputId;
+                    label.dataset.smoothQuestionNo = questionNo;
+                    label.setAttribute("role", "checkbox");
+
+                    normalizeSmoothOption(label);
+                }
+
+                const grid = input.closest(".checkbox-grid");
+
+                if (grid) {
+                    grid.classList.add("ml-smooth-option-grid");
+                    grid.dataset.smoothInputId = inputId;
+                    grid.dataset.smoothQuestionNo = questionNo;
+                }
+
+                const card = input.closest(".input-card, .question-card-lock, article");
+
+                if (card) {
+                    card.classList.add("ml-smooth-multi-card");
+                    card.dataset.smoothInputId = inputId;
+                    card.dataset.smoothQuestionNo = questionNo;
+                }
+
+                if (input.dataset.smoothReady !== "1") {
+                    input.dataset.smoothReady = "1";
+
+                    input.addEventListener("change", function () {
+                        const label = input.closest("label");
+                        normalizeSmoothOption(label);
+                        syncSmoothMultiState();
+                    });
+                }
+            });
+        });
+
+        syncSmoothMultiState();
+    }
+
+    function syncSmoothMultiState() {
+        TARGET_MULTI_IDS.forEach(function (inputId) {
+            const safeId = cssEscapeSafe(inputId);
+            const inputs = document.querySelectorAll(
+                '.ml-multi-input[data-input-id="' + safeId + '"]'
+            );
+
+            inputs.forEach(function (input) {
+                const label = input.closest(".ml-smooth-option");
+
+                if (!label) return;
+
+                const checked = !!input.checked;
+
+                label.classList.toggle("is-checked", checked);
+                label.setAttribute("aria-checked", checked ? "true" : "false");
+            });
+        });
+    }
+
+    /* =====================================================
+       Clean Result Card
+       ===================================================== */
+    function cleanItems(items, maxItems) {
+        if (!Array.isArray(items)) return [];
+
+        return items
+            .filter(function (item) {
+                return String(item || "").trim().length > 0;
+            })
+            .slice(0, maxItems);
+    }
+
+    function renderList(items, fallback) {
+        const clean = cleanItems(items, 2);
+
+        if (clean.length === 0) {
+            clean.push(fallback);
+        }
+
+        return clean.map(function (item) {
+            return "<li>" + escapeClean(item) + "</li>";
+        }).join("");
+    }
+
+    function selectedText(value, fallback) {
+        const text = String(value || "").trim();
+        return text || fallback;
+    }
+
+    window.renderActivityRecommendation = function (level, plan, snap) {
+        const title = plan && plan.title
+            ? plan.title
+            : "แนวทางแนะนำเบื้องต้น";
+
+        const description = plan && plan.description
+            ? plan.description
+            : "ใช้ผลประเมินนี้เป็นข้อมูลประกอบการออกแบบกิจกรรม ไม่ใช่ข้อสรุปตัดสินผู้เรียนรายบุคคล";
+
+        const activities = plan && Array.isArray(plan.activities)
+            ? plan.activities
+            : [];
+
+        const care = plan && Array.isArray(plan.care)
+            ? plan.care
+            : [];
+
+        const tags = [];
+
+        if (snap && snap.interest) {
+            tags.push("ความสนใจ : " + selectedText(snap.interest, "ไม่ระบุ"));
+        }
+
+        if (snap && snap.gameIntensity) {
+            tags.push("พฤติกรรม : " + selectedText(snap.gameIntensity, "ไม่ระบุ"));
+        }
+
+        if (snap && snap.support) {
+            tags.push("การสนับสนุน : " + selectedText(snap.support, "ไม่ระบุ"));
+        }
+
+        const tagHtml = tags.slice(0, 3).map(function (item) {
+            return '<span class="clean-result-tag">' + escapeClean(item) + "</span>";
+        }).join("");
+
+        return ''
+            + '<div class="clean-result">'
+            + '  <div class="clean-result-summary">'
+            + '    <div class="clean-result-title">' + escapeClean(title) + '</div>'
+            + '    <div class="clean-result-desc">' + escapeClean(description) + '</div>'
+            +      (tagHtml ? '<div class="clean-result-tags">' + tagHtml + '</div>' : '')
+            + '  </div>'
+            + '  <div class="clean-result-grid">'
+            + '    <div class="clean-result-panel">'
+            + '      <div class="clean-result-panel-title">ควรเริ่มจาก</div>'
+            + '      <ul class="clean-result-list">'
+            +          renderList(
+                            activities,
+                            "เริ่มจากกิจกรรมทดลองขนาดเล็ก ให้ผู้เรียนเลือกบทบาทได้ตามความถนัด"
+                        )
+            + '      </ul>'
+            + '    </div>'
+            + '    <div class="clean-result-panel">'
+            + '      <div class="clean-result-panel-title">ดูแลเพิ่มเติม</div>'
+            + '      <ul class="clean-result-list">'
+            +          renderList(
+                            care,
+                            "กำหนดเวลา กติกา และติดตามผลหลังเข้าร่วมกิจกรรมอย่างเหมาะสม"
+                        )
+            + '      </ul>'
+            + '    </div>'
+            + '  </div>'
+            + '</div>';
+    };
+
+    window.runPrediction = function () {
+        const x = collectInputVector();
+        const prob = forestPredict(x);
+        const percent = Math.max(0, Math.min(100, prob * 100));
+        const level = resultLevel(prob);
+        const snapshot = getInputSnapshot();
+        const activityPlan = buildActivityRecommendation(prob, snapshot);
+
+        const percentEl = document.getElementById("resultPercent");
+        if (percentEl) {
+            percentEl.textContent = percent.toLocaleString("th-TH", {
+                maximumFractionDigits: 1
+            }) + "%";
+        }
+
+        const statusEl = document.getElementById("resultStatus");
+        if (statusEl) {
+            statusEl.textContent = level.label;
+            statusEl.style.background = "#FFFFFF";
+            statusEl.style.color = level.color;
+            statusEl.style.border = "1px solid " + level.color;
+        }
+
+        const barEl = document.getElementById("resultBar");
+        if (barEl) {
+            barEl.style.width = percent + "%";
+            barEl.style.background = level.color;
+        }
+
+        const resultTextEl = document.getElementById("resultText");
+        if (resultTextEl) {
+            resultTextEl.textContent =
+                level.text + " โดยควรใช้ผลนี้เป็นแนวทางเบื้องต้นในการออกแบบกิจกรรม";
+        }
+
+        const recommendEl = document.getElementById("recommendBox");
+        if (recommendEl) {
+            recommendEl.innerHTML = window.renderActivityRecommendation(
+                level,
+                activityPlan,
+                snapshot
+            );
+        }
+
+        const inlineResult = document.querySelector(".result-under-form");
+
+        if (inlineResult) {
+            inlineResult.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    };
+
+    const originalResetResultView = window.resetResultView;
+
+    window.resetResultView = function () {
+        if (typeof originalResetResultView === "function") {
+            originalResetResultView();
+        }
+
+        const recommendEl = document.getElementById("recommendBox");
+
+        if (recommendEl) {
+            recommendEl.innerHTML = ''
+                + '<div class="clean-result-empty">'
+                + 'กดปุ่ม “ประเมินแนวโน้ม” เพื่อดูผลลัพธ์และแนวทางแนะนำ'
+                + '</div>';
+        }
+
+        setupChoiceButtons();
+        markSmoothMultiOptions();
+        syncSmoothMultiState();
+    };
+
+    const originalResetForm = window.resetForm;
+
+    window.resetForm = function () {
+        if (typeof originalResetForm === "function") {
+            originalResetForm();
+        }
+
+        setTimeout(function () {
+            setupChoiceButtons();
+            markSmoothMultiOptions();
+            syncSmoothMultiState();
+        }, 30);
+    };
+
+    document.addEventListener("change", function (event) {
+        const target = event.target;
+
+        if (
+            target &&
+            target.matches &&
+            target.matches(".ml-multi-input")
+        ) {
+            const label = target.closest("label");
+            normalizeSmoothOption(label);
+            syncSmoothMultiState();
+        }
+    });
+
+    document.addEventListener("click", function () {
+        setTimeout(syncSmoothMultiState, 30);
+    });
+
+    function initAll() {
+        setupChoiceButtons();
+        markSmoothMultiOptions();
+        syncSmoothMultiState();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initAll);
+    } else {
+        initAll();
+    }
+
+    window.addEventListener("load", function () {
+        initAll();
+
+        setTimeout(function () {
+            initAll();
+
+            if (typeof window.resetResultView === "function") {
+                window.resetResultView();
+            }
+        }, 80);
+
+        setTimeout(initAll, 250);
+        setTimeout(initAll, 500);
+    });
+})();
+
 </script>
 <script id="predictor-modal-soft-question-card-script-v10">
 (function () {
@@ -3724,104 +4149,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 800);
 })();
 </script>
-<script id="ml-q10-q13-first-option-equalizer-js">
-(function () {
-    function normalizeSmoothOption(label) {
-        if (!label) return;
-
-        label.classList.remove(
-            "is-top",
-            "is-popular",
-            "top-option",
-            "rank-1",
-            "most-selected",
-            "most-popular"
-        );
-
-        label.querySelectorAll("br").forEach(function (br) {
-            br.remove();
-        });
-
-        const input = label.querySelector('input[type="checkbox"]');
-
-        if (!input) return;
-
-        input.classList.add("ml-smooth-checkbox");
-
-        let textEl =
-            label.querySelector(".ml-smooth-option-text") ||
-            label.querySelector("span") ||
-            label.querySelector("div");
-
-        if (!textEl) {
-            const textNodes = [];
-
-            Array.from(label.childNodes).forEach(function (node) {
-                if (
-                    node.nodeType === Node.TEXT_NODE &&
-                    String(node.textContent || "").trim()
-                ) {
-                    textNodes.push(node);
-                }
-            });
-
-            if (textNodes.length) {
-                textEl = document.createElement("span");
-                textEl.className = "ml-smooth-option-text";
-
-                textNodes.forEach(function (node) {
-                    textEl.appendChild(
-                        document.createTextNode(
-                            String(node.textContent || "").replace(/\s+/g, " ").trim()
-                        )
-                    );
-                    node.remove();
-                });
-
-                input.insertAdjacentElement("afterend", textEl);
-            }
-        }
-
-        if (textEl) {
-            textEl.classList.add("ml-smooth-option-text");
-            textEl.textContent = String(textEl.textContent || "")
-                .replace(/\s+/g, " ")
-                .trim();
-        }
-
-        label.classList.toggle("is-checked", input.checked === true);
-        label.setAttribute("aria-checked", input.checked ? "true" : "false");
-    }
-
-    function normalizeAllSmoothOptions() {
-        document
-            .querySelectorAll(
-                'body.ml-predictor-lock .ml-smooth-option-grid label.ml-smooth-option'
-            )
-            .forEach(normalizeSmoothOption);
-
-        document
-            .querySelectorAll(
-                'body.ml-predictor-lock .ml-smooth-option-grid input[type="checkbox"]'
-            )
-            .forEach(function (input) {
-                if (input.dataset.firstOptionEqualizerReady === "1") return;
-
-                input.dataset.firstOptionEqualizerReady = "1";
-
-                input.addEventListener("change", function () {
-                    const label = input.closest("label");
-                    normalizeSmoothOption(label);
-                });
-            });
-    }
-
-    document.addEventListener("DOMContentLoaded", normalizeAllSmoothOptions);
-    window.addEventListener("load", normalizeAllSmoothOptions);
-    setTimeout(normalizeAllSmoothOptions, 200);
-    setTimeout(normalizeAllSmoothOptions, 800);
-})();
-</script>
 <script id="dd-final-refactor-js">
 (function(){
   const lastFocus = {};
@@ -3830,444 +4157,6 @@ document.addEventListener("DOMContentLoaded", function() {
   window.closeDDModal = function(id){const bg=document.getElementById(id); if(!bg) return; bg.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus[id] && lastFocus[id].focus) lastFocus[id].focus();};
   document.addEventListener('keydown', function(e){const open=document.querySelector('.dd-modal-backdrop[aria-hidden="false"]'); if(!open) return; if(e.key==='Escape'){e.preventDefault(); closeDDModal(open.id);} if(e.key==='Tab'){const fs=focusables(open); if(!fs.length) return; const first=fs[0], last=fs[fs.length-1]; if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus();} else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus();}}});
   document.addEventListener('click', function(e){const bg=e.target.closest('.dd-modal-backdrop'); if(bg && e.target===bg){closeDDModal(bg.id);}});
-})();
-</script>
-
-
-<script id="ml-predictor-single-cell-final-js">
-(function () {
-    const TARGET_MULTI_IDS = [
-        "game_types",
-        "gaming_reasons",
-        "problems",
-        "support_needs"
-    ];
-
-    function escapeClean(value) {
-        return String(value ?? "").replace(/[&<>"']/g, function (ch) {
-            return {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[ch];
-        });
-    }
-
-    function optionText(option) {
-        return String(option ? option.textContent : "")
-            .replace(/\s+/g, " ")
-            .trim();
-    }
-
-    function cssEscapeSafe(value) {
-        if (window.CSS && typeof window.CSS.escape === "function") {
-            return window.CSS.escape(value);
-        }
-
-        return String(value).replace(/"/g, '\\"');
-    }
-
-    function getQuestionNo(inputId) {
-        const index = TARGET_MULTI_IDS.indexOf(inputId);
-        return index >= 0 ? String(index + 10) : "";
-    }
-
-    /* =====================================================
-       Select -> Button
-       ===================================================== */
-
-    function refreshChoiceButtons(selectEl) {
-        if (!selectEl) return;
-
-        const wrap = selectEl.parentElement
-            ? selectEl.parentElement.querySelector(
-                '.ml-choice-grid[data-input-id="' + selectEl.dataset.inputId + '"]'
-              )
-            : null;
-
-        if (!wrap) return;
-
-        const currentValue = String(selectEl.value);
-
-        wrap.querySelectorAll(".ml-choice-btn").forEach(function (btn) {
-            const isActive = String(btn.dataset.value) === currentValue;
-            btn.classList.toggle("is-active", isActive);
-            btn.setAttribute("aria-checked", isActive ? "true" : "false");
-        });
-    }
-
-    function enhanceSelect(selectEl) {
-        if (!selectEl || selectEl.dataset.mlChoiceReady === "1") return;
-
-        const inputId = selectEl.dataset.inputId || "";
-        const parent = selectEl.parentElement;
-
-        if (!parent) return;
-
-        selectEl.dataset.mlChoiceReady = "1";
-        selectEl.classList.add("ml-native-select-hidden");
-        selectEl.setAttribute("aria-hidden", "true");
-        selectEl.tabIndex = -1;
-
-        const wrap = document.createElement("div");
-        wrap.className = "ml-choice-grid";
-        wrap.dataset.inputId = inputId;
-        wrap.setAttribute("role", "radiogroup");
-
-        Array.from(selectEl.options).forEach(function (opt, idx) {
-            const btn = document.createElement("button");
-
-            btn.type = "button";
-            btn.className = "ml-choice-btn";
-            btn.dataset.value = String(opt.value);
-            btn.dataset.index = String(idx);
-            btn.setAttribute("role", "radio");
-            btn.setAttribute("aria-checked", "false");
-            btn.textContent = optionText(opt);
-
-            btn.addEventListener("click", function () {
-                selectEl.selectedIndex = idx;
-                selectEl.value = opt.value;
-
-                selectEl.dispatchEvent(new Event("input", { bubbles: true }));
-                selectEl.dispatchEvent(new Event("change", { bubbles: true }));
-
-                refreshChoiceButtons(selectEl);
-            });
-
-            btn.addEventListener("keydown", function (event) {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    btn.click();
-                }
-            });
-
-            wrap.appendChild(btn);
-        });
-
-        parent.appendChild(wrap);
-
-        selectEl.addEventListener("change", function () {
-            refreshChoiceButtons(selectEl);
-        });
-
-        refreshChoiceButtons(selectEl);
-    }
-
-    function setupChoiceButtons() {
-        document
-            .querySelectorAll("select.ml-human-input, select.select-input")
-            .forEach(enhanceSelect);
-
-        document
-            .querySelectorAll("select.ml-human-input, select.select-input")
-            .forEach(refreshChoiceButtons);
-    }
-
-    /* =====================================================
-       Smooth Q10-Q13
-       ===================================================== */
-
-    function markSmoothMultiOptions() {
-        TARGET_MULTI_IDS.forEach(function (inputId) {
-            const safeId = cssEscapeSafe(inputId);
-            const inputs = document.querySelectorAll(
-                '.ml-multi-input[data-input-id="' + safeId + '"]'
-            );
-
-            if (!inputs.length) return;
-
-            const questionNo = getQuestionNo(inputId);
-
-            inputs.forEach(function (input) {
-                input.classList.add("ml-smooth-checkbox");
-
-                const label = input.closest("label.checkbox-choice") || input.closest("label");
-
-                if (label) {
-                    label.classList.add("ml-smooth-option");
-                    label.dataset.smoothInputId = inputId;
-                    label.dataset.smoothQuestionNo = questionNo;
-                    label.setAttribute("role", "checkbox");
-
-                    const textEl = label.querySelector("span") || label.querySelector("div");
-
-                    if (textEl) {
-                        textEl.classList.add("ml-smooth-option-text");
-                    }
-                }
-
-                const grid = input.closest(".checkbox-grid");
-
-                if (grid) {
-                    grid.classList.add("ml-smooth-option-grid");
-                    grid.dataset.smoothInputId = inputId;
-                    grid.dataset.smoothQuestionNo = questionNo;
-                }
-
-                const card = input.closest(".input-card, .question-card-lock, article");
-
-                if (card) {
-                    card.classList.add("ml-smooth-multi-card");
-                    card.dataset.smoothInputId = inputId;
-                    card.dataset.smoothQuestionNo = questionNo;
-                }
-            });
-        });
-
-        syncSmoothMultiState();
-    }
-
-    function syncSmoothMultiState() {
-        TARGET_MULTI_IDS.forEach(function (inputId) {
-            const safeId = cssEscapeSafe(inputId);
-            const inputs = document.querySelectorAll(
-                '.ml-multi-input[data-input-id="' + safeId + '"]'
-            );
-
-            inputs.forEach(function (input) {
-                const label = input.closest(".ml-smooth-option");
-
-                if (!label) return;
-
-                const checked = !!input.checked;
-
-                label.classList.toggle("is-checked", checked);
-                label.setAttribute("aria-checked", checked ? "true" : "false");
-            });
-        });
-    }
-
-    /* =====================================================
-       Clean Result Card
-       ===================================================== */
-
-    function cleanItems(items, maxItems) {
-        if (!Array.isArray(items)) return [];
-
-        return items
-            .filter(function (item) {
-                return String(item || "").trim().length > 0;
-            })
-            .slice(0, maxItems);
-    }
-
-    function renderList(items, fallback) {
-        const clean = cleanItems(items, 2);
-
-        if (clean.length === 0) {
-            clean.push(fallback);
-        }
-
-        return clean.map(function (item) {
-            return "<li>" + escapeClean(item) + "</li>";
-        }).join("");
-    }
-
-    function selectedText(value, fallback) {
-        const text = String(value || "").trim();
-        return text || fallback;
-    }
-
-    window.renderActivityRecommendation = function (level, plan, snap) {
-        const title = plan && plan.title
-            ? plan.title
-            : "แนวทางแนะนำเบื้องต้น";
-
-        const description = plan && plan.description
-            ? plan.description
-            : "ใช้ผลประเมินนี้เป็นข้อมูลประกอบการออกแบบกิจกรรม ไม่ใช่ข้อสรุปตัดสินผู้เรียนรายบุคคล";
-
-        const activities = plan && Array.isArray(plan.activities)
-            ? plan.activities
-            : [];
-
-        const care = plan && Array.isArray(plan.care)
-            ? plan.care
-            : [];
-
-        const tags = [];
-
-        if (snap && snap.interest) {
-            tags.push("ความสนใจ : " + selectedText(snap.interest, "ไม่ระบุ"));
-        }
-
-        if (snap && snap.gameIntensity) {
-            tags.push("พฤติกรรม : " + selectedText(snap.gameIntensity, "ไม่ระบุ"));
-        }
-
-        if (snap && snap.support) {
-            tags.push("การสนับสนุน : " + selectedText(snap.support, "ไม่ระบุ"));
-        }
-
-        const tagHtml = tags.slice(0, 3).map(function (item) {
-            return '<span class="clean-result-tag">' + escapeClean(item) + "</span>";
-        }).join("");
-
-        return ''
-            + '<div class="clean-result">'
-            + '  <div class="clean-result-summary">'
-            + '    <div class="clean-result-title">' + escapeClean(title) + '</div>'
-            + '    <div class="clean-result-desc">' + escapeClean(description) + '</div>'
-            +      (tagHtml ? '<div class="clean-result-tags">' + tagHtml + '</div>' : '')
-            + '  </div>'
-            + '  <div class="clean-result-grid">'
-            + '    <div class="clean-result-panel">'
-            + '      <div class="clean-result-panel-title">ควรเริ่มจาก</div>'
-            + '      <ul class="clean-result-list">'
-            +          renderList(
-                            activities,
-                            "เริ่มจากกิจกรรมทดลองขนาดเล็ก ให้ผู้เรียนเลือกบทบาทได้ตามความถนัด"
-                        )
-            + '      </ul>'
-            + '    </div>'
-            + '    <div class="clean-result-panel">'
-            + '      <div class="clean-result-panel-title">ดูแลเพิ่มเติม</div>'
-            + '      <ul class="clean-result-list">'
-            +          renderList(
-                            care,
-                            "กำหนดเวลา กติกา และติดตามผลหลังเข้าร่วมกิจกรรมอย่างเหมาะสม"
-                        )
-            + '      </ul>'
-            + '    </div>'
-            + '  </div>'
-            + '</div>';
-    };
-
-    window.runPrediction = function () {
-        const x = collectInputVector();
-        const prob = forestPredict(x);
-        const percent = Math.max(0, Math.min(100, prob * 100));
-        const level = resultLevel(prob);
-        const snapshot = getInputSnapshot();
-        const activityPlan = buildActivityRecommendation(prob, snapshot);
-
-        const percentEl = document.getElementById("resultPercent");
-        if (percentEl) {
-            percentEl.textContent = percent.toLocaleString("th-TH", {
-                maximumFractionDigits: 1
-            }) + "%";
-        }
-
-        const statusEl = document.getElementById("resultStatus");
-        if (statusEl) {
-            statusEl.textContent = level.label;
-            statusEl.style.background = "#FFFFFF";
-            statusEl.style.color = level.color;
-            statusEl.style.border = "1px solid " + level.color;
-        }
-
-        const barEl = document.getElementById("resultBar");
-        if (barEl) {
-            barEl.style.width = percent + "%";
-            barEl.style.background = level.color;
-        }
-
-        const resultTextEl = document.getElementById("resultText");
-        if (resultTextEl) {
-            resultTextEl.textContent = level.text;
-        }
-
-        const recommendEl = document.getElementById("recommendBox");
-        if (recommendEl) {
-            recommendEl.innerHTML = window.renderActivityRecommendation(
-                level,
-                activityPlan,
-                snapshot
-            );
-        }
-
-        const inlineResult = document.querySelector(".result-under-form");
-
-        if (inlineResult) {
-            inlineResult.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        } else if (typeof openResultModal === "function") {
-            openResultModal();
-        }
-    };
-
-    const originalResetResultView = window.resetResultView;
-
-    window.resetResultView = function () {
-        if (typeof originalResetResultView === "function") {
-            originalResetResultView();
-        }
-
-        const recommendEl = document.getElementById("recommendBox");
-
-        if (recommendEl) {
-            recommendEl.innerHTML = ''
-                + '<div class="clean-result-empty">'
-                + 'กดปุ่ม “ประเมินแนวโน้ม” เพื่อดูผลลัพธ์และแนวทางแนะนำ'
-                + '</div>';
-        }
-
-        setupChoiceButtons();
-        markSmoothMultiOptions();
-        syncSmoothMultiState();
-    };
-
-    const originalResetForm = window.resetForm;
-
-    window.resetForm = function () {
-        if (typeof originalResetForm === "function") {
-            originalResetForm();
-        }
-
-        setTimeout(function () {
-            setupChoiceButtons();
-            markSmoothMultiOptions();
-            syncSmoothMultiState();
-        }, 30);
-    };
-
-    document.addEventListener("change", function (event) {
-        const target = event.target;
-
-        if (
-            target &&
-            target.matches &&
-            target.matches(".ml-multi-input")
-        ) {
-            syncSmoothMultiState();
-        }
-    });
-
-    document.addEventListener("click", function () {
-        setTimeout(syncSmoothMultiState, 30);
-    });
-
-    function initAll() {
-        setupChoiceButtons();
-        markSmoothMultiOptions();
-        syncSmoothMultiState();
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initAll);
-    } else {
-        initAll();
-    }
-
-    window.addEventListener("load", function () {
-        initAll();
-
-        setTimeout(function () {
-            initAll();
-
-            if (typeof window.resetResultView === "function") {
-                window.resetResultView();
-            }
-        }, 80);
-
-        setTimeout(initAll, 250);
-        setTimeout(initAll, 500);
-    });
 })();
 </script>
 </body>
