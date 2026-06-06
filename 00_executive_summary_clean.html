@@ -6200,7 +6200,7 @@ document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;/&gt;
 &lt;meta content=&quot;width=device-width, initial-scale=1.0&quot; name=&quot;viewport&quot;/&gt;
-&lt;title&gt;คุณภาพข้อมูล วิธีวิเคราะห์ และหลักฐานประกอบ&lt;/title&gt;
+&lt;title&gt;&lt;/title&gt;
 &lt;style&gt;
     :root {
         --primary: #1A237E;
@@ -7393,349 +7393,381 @@ body.dd-policy-modal-asset table.data-table{
 &lt;body&gt;
 &lt;div class=&quot;dashboard-page&quot;&gt;
 &lt;header class=&quot;page-header&quot;&gt;
-&lt;h1 class=&quot;page-title&quot;&gt;คุณภาพข้อมูล วิธีวิเคราะห์ และหลักฐานประกอบ&lt;/h1&gt;
-&lt;div class=&quot;page-subtitle&quot;&gt;รวมคุณภาพข้อมูล วิธีจัดการข้อมูล พจนานุกรมข้อมูล ค่าว่าง และแหล่งอ้างอิง เพื่อใช้ตรวจสอบความน่าเชื่อถือของการวิเคราะห์&lt;/div&gt;
+&lt;h1 class=&quot;page-title&quot;&gt;&lt;/h1&gt;
+&lt;div class=&quot;page-subtitle&quot;&gt;&lt;/div&gt;
 &lt;/header&gt;
 &lt;style id=&quot;page611-clean-ui&quot;&gt;
-          .page611-clean-scope,
-          .page611-clean-scope * {
-              box-sizing: border-box;
-          }
+        .page611-clean-scope,
+        .page611-clean-scope * {
+            box-sizing: border-box;
+        }
 
-          .page611-clean-scope {
-              width: 100%;
-              max-width: 100%;
-              min-width: 0;
-          }
+        .page611-clean-scope {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+        }
 
-          .page611-clean-scope &gt; .addon-grid,
-          .compact-addon-grid {
-              display: grid !important;
-              grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
-              gap: 22px !important;
-              row-gap: 22px !important;
-              width: 100% !important;
-              max-width: 100% !important;
-          }
+        .page611-clean-scope &gt; .addon-grid,
+        .compact-addon-grid {
+            display: grid !important;
+            grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+            gap: 22px !important;
+            row-gap: 22px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
 
-          .page611-clean-scope &gt; .addon-grid &gt; .section-card,
-          .page611-clean-scope &gt; .addon-grid &gt; .data-card,
-          .page611-clean-scope &gt; .addon-grid &gt; .mini-card {
-              grid-column: 1 / -1 !important;
-              width: 100% !important;
-              max-width: 100% !important;
-              min-width: 0 !important;
+        .page611-clean-scope &gt; .addon-grid &gt; .section-card,
+        .page611-clean-scope &gt; .addon-grid &gt; .data-card,
+        .page611-clean-scope &gt; .addon-grid &gt; .mini-card {
+            grid-column: 1 / -1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
 
-              padding: 22px !important;
-              margin-bottom: 0 !important;
+            padding: 22px !important;
+            margin-bottom: 0 !important;
 
-              border-radius: 22px !important;
-              border: 1px solid #DDE3F3 !important;
-              background: #FFFFFF !important;
+            border-radius: 22px !important;
+            border: 1px solid #DDE3F3 !important;
+            background: #FFFFFF !important;
 
-              box-shadow: 0 8px 24px rgba(13, 71, 161, 0.055) !important;
-              overflow: hidden !important;
-          }
+            box-shadow: 0 8px 24px rgba(13, 71, 161, 0.055) !important;
+            overflow: hidden !important;
+        }
 
-          .page611-clean-scope .section-head,
-          .page611-clean-scope .card-head,
-          .page611-clean-scope .mini-head {
-              margin-bottom: 12px !important;
-              padding-bottom: 0 !important;
-              border-bottom: 0 !important;
-          }
+        .page611-clean-scope .section-head,
+        .page611-clean-scope .card-head,
+        .page611-clean-scope .mini-head {
+            margin-bottom: 12px !important;
+            padding-bottom: 0 !important;
+            border-bottom: 0 !important;
+        }
 
-          .page611-clean-scope .section-title,
-          .page611-clean-scope .card-title,
-          .page611-clean-scope .mini-title {
-              color: #1A237E !important;
-              font-size: clamp(19px, 1.8vw, 22px) !important;
-              line-height: 1.4 !important;
-              font-weight: 900 !important;
-          }
+        .page611-clean-scope .section-title,
+        .page611-clean-scope .card-title,
+        .page611-clean-scope .mini-title {
+            color: #1A237E !important;
+            font-size: clamp(19px, 1.8vw, 22px) !important;
+            line-height: 1.4 !important;
+            font-weight: 900 !important;
+        }
 
-          .page611-clean-scope .section-desc,
-          .page611-clean-scope .card-desc,
-          .page611-clean-scope .mini-desc {
-              margin-top: 6px !important;
-              color: #607D8B !important;
-              font-size: 13.2px !important;
-              line-height: 1.65 !important;
-          }
+        .page611-clean-scope .section-desc,
+        .page611-clean-scope .card-desc,
+        .page611-clean-scope .mini-desc {
+            margin-top: 6px !important;
+            color: #607D8B !important;
+            font-size: 13.2px !important;
+            line-height: 1.65 !important;
+        }
 
-          .page611-metric-strip {
-              display: grid;
-              grid-template-columns: repeat(4, minmax(0, 1fr));
-              gap: 12px;
-              margin-bottom: 14px;
-          }
+        .page611-metric-strip {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 14px;
+        }
 
-          .page611-metric-item {
-              min-height: 92px;
-              padding: 13px 14px;
+        .page611-metric-item {
+            min-height: 92px;
+            padding: 13px 14px;
 
-              background: #F7F8FC;
-              border: 1px solid #DDE3F3;
-              border-radius: 16px;
+            background: #F7F8FC;
+            border: 1px solid #DDE3F3;
+            border-radius: 16px;
 
-              overflow: hidden;
-          }
+            overflow: hidden;
+        }
 
-          .page611-metric-label {
-              margin: 0 0 5px 0;
-              color: #607D8B;
-              font-size: 12.5px;
-              line-height: 1.55;
-              font-weight: 800;
-          }
+        .page611-metric-label {
+            margin: 0 0 5px 0;
+            color: #607D8B;
+            font-size: 12.5px;
+            line-height: 1.55;
+            font-weight: 800;
+        }
 
-          .page611-metric-value {
-              margin: 0;
-              color: #1A237E;
-              font-size: clamp(19px, 1.9vw, 24px);
-              line-height: 1.25;
-              font-weight: 900;
-              overflow-wrap: anywhere;
-          }
+        .page611-metric-value {
+            margin: 0;
+            color: #1A237E;
+            font-size: clamp(19px, 1.9vw, 24px);
+            line-height: 1.25;
+            font-weight: 900;
+            overflow-wrap: anywhere;
+        }
 
-          .page611-metric-note {
-              margin-top: 4px;
-              color: #607D8B;
-              font-size: 12.2px;
-              line-height: 1.5;
-          }
+        .page611-metric-note {
+            margin-top: 4px;
+            color: #607D8B;
+            font-size: 12.2px;
+            line-height: 1.5;
+        }
 
-          .page611-note-grid {
-              display: grid;
-              grid-template-columns: repeat(2, minmax(0, 1fr));
-              gap: 12px;
-              margin-top: 12px;
-          }
+        .page611-note-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
 
-          .page611-note-card {
-              background: #F7F8FC;
-              border: 1px solid #DDE3F3;
-              border-left: 4px solid #3949AB;
-              border-radius: 14px;
-              padding: 11px 14px;
-              color: #607D8B;
-              font-size: 13.2px;
-              line-height: 1.65;
-          }
+        .page611-note-card {
+            background: #F7F8FC;
+            border: 1px solid #DDE3F3;
+            border-left: 4px solid #3949AB;
+            border-radius: 14px;
+            padding: 11px 14px;
+            color: #607D8B;
+            font-size: 13.2px;
+            line-height: 1.65;
+        }
 
-          .page611-note-card b {
-              color: #1A237E;
-          }
+        .page611-note-card b {
+            color: #1A237E;
+        }
 
-          .page611-table-zone {
-              width: 100%;
-              margin-top: 4px;
-          }
+        .page611-table-zone {
+            width: 100%;
+            margin-top: 4px;
+        }
 
-          .page611-table-scroll {
-              width: 100%;
-              max-width: 100%;
-              overflow-x: auto;
-              -webkit-overflow-scrolling: touch;
+        .page611-table-scroll {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
 
-              border: 1px solid #DDE3F3;
-              border-radius: 18px;
-              background: #FFFFFF;
-          }
+            border: 1px solid #DDE3F3;
+            border-radius: 18px;
+            background: #FFFFFF;
+        }
 
-          .page611-table-scroll table {
-              width: 100%;
-              min-width: 1080px;
-              border-collapse: separate !important;
-              border-spacing: 0 !important;
-              background: #FFFFFF;
-              margin-bottom: 0 !important;
-              font-size: 13px;
-          }
+        .page611-table-scroll table {
+            width: 100%;
+            min-width: var(--min-width, 1080px);
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            background: #FFFFFF;
+            margin-bottom: 0 !important;
+            font-size: 13px;
+        }
 
-          .page611-table-scroll th {
-              background: #1A237E !important;
-              color: #FFFFFF !important;
-              text-align: left !important;
+        .page611-table-scroll th {
+            background: #1A237E !important;
+            color: #FFFFFF !important;
+            text-align: left !important;
 
-              padding: 11px 13px !important;
-              border-bottom: 1px solid #DDE3F3 !important;
+            padding: 11px 13px !important;
+            border-bottom: 1px solid #DDE3F3 !important;
 
-              font-weight: 900 !important;
-              white-space: nowrap !important;
-              line-height: 1.45 !important;
-          }
+            font-weight: 900 !important;
+            white-space: nowrap !important;
+            line-height: 1.45 !important;
+        }
 
-          .page611-table-scroll tr:first-child th:first-child,
-          .page611-table-scroll thead th:first-child {
-              border-top-left-radius: 17px;
-          }
+        .page611-table-scroll tr:first-child th:first-child,
+        .page611-table-scroll thead th:first-child {
+            border-top-left-radius: 17px;
+        }
 
-          .page611-table-scroll tr:first-child th:last-child,
-          .page611-table-scroll thead th:last-child {
-              border-top-right-radius: 17px;
-          }
+        .page611-table-scroll tr:first-child th:last-child,
+        .page611-table-scroll thead th:last-child {
+            border-top-right-radius: 17px;
+        }
 
-          .page611-table-scroll td {
-              padding: 11px 13px !important;
-              border-bottom: 1px solid #EEF2FF !important;
-              color: #263238 !important;
-              vertical-align: top !important;
-              line-height: 1.6 !important;
-              word-break: normal !important;
-              overflow-wrap: anywhere !important;
-          }
+        .page611-table-scroll td {
+            padding: 11px 13px !important;
+            border-bottom: 1px solid #EEF2FF !important;
+            color: #263238 !important;
+            vertical-align: top !important;
+            line-height: 1.6 !important;
+            word-break: normal !important;
+            overflow-wrap: anywhere !important;
+        }
 
-          .page611-table-scroll tr:last-child td {
-              border-bottom: 0 !important;
-          }
+        .page611-table-scroll tr:last-child td {
+            border-bottom: 0 !important;
+        }
 
-          .page611-table-scroll tr:hover td {
-              background: #F7F8FC !important;
-          }
+        .page611-table-scroll tr:hover td {
+            background: #F7F8FC !important;
+        }
 
-          .page611-detail-grid {
-              display: grid;
-              grid-template-columns: repeat(2, minmax(0, 1fr));
-              gap: 12px;
-              margin-top: 12px;
-          }
+        .page611-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
 
-          .page611-detail {
-              width: 100%;
-          }
+        .page611-detail {
+            width: 100%;
+        }
 
-          .page611-detail &gt; summary {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 100%;
+        .page611-detail &gt; summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
 
-              border-radius: 999px;
-              background: #EEF2FF;
-              color: #1A237E;
+            border-radius: 999px;
+            background: #EEF2FF;
+            color: #1A237E;
 
-              padding: 8px 14px;
-              min-height: 34px;
+            padding: 8px 14px;
+            min-height: 34px;
 
-              font-size: 12.8px;
-              line-height: 1.4;
-              font-weight: 900;
+            font-size: 12.8px;
+            line-height: 1.4;
+            font-weight: 900;
 
-              cursor: pointer;
-              list-style: none;
-              user-select: none;
-          }
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+        }
 
-          .page611-detail &gt; summary::-webkit-details-marker {
-              display: none;
-          }
+        .page611-detail &gt; summary::-webkit-details-marker {
+            display: none;
+        }
 
-          .page611-detail &gt; summary:hover {
-              background: #3949AB;
-              color: #FFFFFF;
-          }
+        .page611-detail &gt; summary:hover {
+            background: #3949AB;
+            color: #FFFFFF;
+        }
 
-          .page611-detail-panel {
-              margin-top: 10px;
-              padding: 14px;
+        .page611-detail-panel {
+            margin-top: 10px;
+            padding: 14px;
 
-              background: #FFFFFF;
-              border: 1px solid #DDE3F3;
-              border-radius: 18px;
+            background: #FFFFFF;
+            border: 1px solid #DDE3F3;
+            border-radius: 18px;
 
-              overflow: hidden;
-          }
+            overflow: hidden;
+        }
 
-          .page611-detail-head {
-              margin-bottom: 10px;
-              padding-bottom: 10px;
-              border-bottom: 1px solid #EEF2FF;
-          }
+        .page611-detail-head {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #EEF2FF;
+        }
 
-          .page611-detail-title {
-              margin: 0;
-              color: #1A237E;
-              font-size: 15.5px;
-              line-height: 1.45;
-              font-weight: 900;
-          }
+        .page611-detail-title {
+            margin: 0;
+            color: #1A237E;
+            font-size: 15.5px;
+            line-height: 1.45;
+            font-weight: 900;
+        }
 
-          .page611-detail-note {
-              margin: 4px 0 0 0;
-              color: #607D8B;
-              font-size: 12.5px;
-              line-height: 1.6;
-          }
+        .page611-detail-note {
+            margin: 4px 0 0 0;
+            color: #607D8B;
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
 
-          .page611-empty-note {
-              margin: 0;
-              padding: 12px 14px;
+        .page611-empty-note {
+            margin: 0;
+            padding: 12px 14px;
 
-              background: #F7F8FC;
-              border: 1px solid #DDE3F3;
-              border-radius: 14px;
+            background: #F7F8FC;
+            border: 1px solid #DDE3F3;
+            border-radius: 14px;
 
-              color: #607D8B;
-              font-size: 13.2px;
-              line-height: 1.65;
-          }
+            color: #607D8B;
+            font-size: 13.2px;
+            line-height: 1.65;
+        }
 
-          @media (max-width: 980px) {
-              .page611-clean-scope &gt; .addon-grid,
-              .compact-addon-grid {
-                  gap: 18px !important;
-              }
+        @media (max-width: 980px) {
+            .page611-clean-scope &gt; .addon-grid,
+            .compact-addon-grid {
+                gap: 18px !important;
+            }
 
-              .page611-clean-scope &gt; .addon-grid &gt; .section-card,
-              .page611-clean-scope &gt; .addon-grid &gt; .data-card,
-              .page611-clean-scope &gt; .addon-grid &gt; .mini-card {
-                  padding: 18px !important;
-                  border-radius: 18px !important;
-              }
+            .page611-clean-scope &gt; .addon-grid &gt; .section-card,
+            .page611-clean-scope &gt; .addon-grid &gt; .data-card,
+            .page611-clean-scope &gt; .addon-grid &gt; .mini-card {
+                padding: 18px !important;
+                border-radius: 18px !important;
+            }
 
-              .page611-metric-strip {
-                  grid-template-columns: repeat(2, minmax(0, 1fr));
-              }
+            .page611-metric-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
 
-              .page611-detail-grid,
-              .page611-note-grid {
-                  grid-template-columns: 1fr;
-              }
+            .page611-detail-grid,
+            .page611-note-grid {
+                grid-template-columns: 1fr;
+            }
 
-              .page611-detail-panel {
-                  padding: 12px;
-                  border-radius: 16px;
-              }
-          }
+            .page611-detail-panel {
+                padding: 12px;
+                border-radius: 16px;
+            }
+        }
 
-          @media (max-width: 620px) {
-              .page611-metric-strip {
-                  grid-template-columns: 1fr;
-              }
-          }
+        @media (max-width: 620px) {
+            .page611-metric-strip {
+                grid-template-columns: 1fr;
+            }
+        }
 
-          @media (max-width: 520px) {
-              .page611-clean-scope &gt; .addon-grid &gt; .section-card,
-              .page611-clean-scope &gt; .addon-grid &gt; .data-card,
-              .page611-clean-scope &gt; .addon-grid &gt; .mini-card {
-                  padding: 16px !important;
-                  border-radius: 16px !important;
-              }
+        @media (max-width: 520px) {
+            .page611-clean-scope &gt; .addon-grid &gt; .section-card,
+            .page611-clean-scope &gt; .addon-grid &gt; .data-card,
+            .page611-clean-scope &gt; .addon-grid &gt; .mini-card {
+                padding: 16px !important;
+                border-radius: 16px !important;
+            }
 
-              .page611-note-card {
-                  padding: 10px 12px;
-                  font-size: 12.8px;
-              }
-          }
-      &lt;/style&gt;
-&lt;div class=&quot;page611-clean-scope&quot;&gt;
-&lt;div class=&quot;addon-grid compact-addon-grid&quot;&gt;
-&lt;section class=&quot;section-card s12&quot;&gt;
-&lt;div class=&quot;section-head&quot;&gt;
-&lt;h2 class=&quot;section-title&quot;&gt;คุณภาพข้อมูล วิธีวิเคราะห์ และหลักฐานประกอบ&lt;/h2&gt;
-&lt;p class=&quot;section-desc&quot;&gt;รวมข้อมูลคุณภาพข้อมูล วิธีจัดการข้อมูล พจนานุกรมข้อมูล ค่าว่าง และแหล่งอ้างอิงในรูปแบบพับได้&lt;/p&gt;
-&lt;/div&gt;
+            .page611-note-card {
+                padding: 10px 12px;
+                font-size: 12.8px;
+            }
+        }
+    &lt;/style&gt;
+&lt;style id=&quot;page611-flat-modal-no-card&quot;&gt;
+        .page611-flat-modal-scope {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        .page611-flat-modal-scope .page611-metric-strip,
+        .page611-flat-modal-scope .page611-detail-grid,
+        .page611-flat-modal-scope .page611-note-grid,
+        .page611-flat-modal-scope .page611-table-zone {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .page611-flat-modal-scope .section-card,
+        .page611-flat-modal-scope .data-card,
+        .page611-flat-modal-scope .mini-card,
+        .page611-flat-modal-scope .dashboard-card,
+        .page611-flat-modal-scope .addon-card {
+            border: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .page611-flat-modal-scope .page611-detail-panel {
+            box-shadow: none !important;
+        }
+    &lt;/style&gt;
+&lt;div class=&quot;page611-clean-scope page611-flat-modal-scope&quot;&gt;
 &lt;div class=&quot;page611-metric-strip&quot;&gt;
 &lt;article class=&quot;page611-metric-item&quot;&gt;
 &lt;div class=&quot;page611-metric-label&quot;&gt;ข้อมูลดิบ&lt;/div&gt;
@@ -7842,8 +7874,6 @@ body.dd-policy-modal-asset table.data-table{
 &lt;b&gt;การใช้ผล :&lt;/b&gt;
             ผลวิเคราะห์ใช้ประกอบการตัดสินใจและการออกแบบกิจกรรม ไม่ใช่ข้อสรุปเชิงเหตุและผลโดยตรง
         &lt;/div&gt;
-&lt;/div&gt;
-&lt;/section&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
